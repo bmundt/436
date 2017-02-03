@@ -18,9 +18,9 @@ public class MainActivity extends AppCompatActivity {
         */
     }
 
-    public void startTest(View v) {
-        Intent intent = new Intent(MainActivity.this, TapTestActivity.class);
-        intent.putExtra("hand", "left");
+    public void nextScreen(View v)
+    {
+        Intent intent = new Intent(MainActivity.this, InstrScreen.class);
         startActivity(intent);
     }
 }

@@ -18,7 +18,9 @@
                 <category android:name="android.intent.category.HOME" />
             </intent-filter>
         </activity>
-        <activity android:name=".TapTestActivity">
-        </activity>
+        <activity android:name=".TapTestActivity" />
+        <activity android:name=".InstrScreen" />
+        <activity android:name=".testLeftScreen"></activity>
     </application>
+
 </manifest>
