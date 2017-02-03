@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_instr_screen"
     android:layout_width="match_parent"
@@ -11,13 +12,14 @@
     tools:context="com.example.a436.InstrScreen">
 
     <TextView
-        android:text="TextView"
+        android:text="Instructions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/textView3"
-        tools:text="You Reached Instructions!!" />
+        android:layout_alignParentTop="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textSize="30sp" />
 
     <Button
         android:text="Next"
@@ -27,4 +29,31 @@
         android:layout_toEndOf="@+id/textView3"
         android:id="@+id/instr_next"
         android:onClick="nextBut"/>
+
+    <TextView
+        android:text="This will be testing the number of taps that you can do in 10 seconds. It will be testing both hands, first your left then your right. Please use the pointer finger to tap. "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="37dp"
+        android:id="@+id/textView"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:srcCompat="@drawable/indexfinger"
+        android:id="@+id/imageView"
+        android:layout_marginBottom="47dp"
+        android:layout_above="@+id/instr_next"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="150dp" />
+
+    <TextView
+        android:text="Click 'Next' to continue..."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
