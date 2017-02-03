@@ -1,4 +1,4 @@
-package com.example.djkiernicki.a436;
+package com.example.a436;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package com.example.djkiernicki.a436;
+package com.example.a436;
 
 import org.junit.Test;
 
