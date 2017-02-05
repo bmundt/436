@@ -43,6 +43,7 @@ public class TapTestActivity extends AppCompatActivity {
         tryAgain.setVisibility(View.GONE);
         toRightHand.setVisibility(View.GONE);
         toResults.setVisibility(View.GONE);
+        text.setText(hand.toUpperCase() + "HAND TRAIL " + (((MyApp) getApplication()).getTestNum()));
 
         timer = new CountDownTimer(10000, 1000) {
             @Override
@@ -63,21 +64,21 @@ public class TapTestActivity extends AppCompatActivity {
 
 
                 int testNum = ((MyApp) getApplication()).getTestNum();
-                if(testNum == 5 && hand.compareTo("left") == 0){
-                    tap.setVisibility(View.GONE);
-                    toRightHand.setVisibility(View.VISIBLE);
-                } else if(testNum == 5){
+                if(testNum == 1 && hand.compareTo("left") == 0){
+                    tryAgain.setVisibility(View.VISIBLE);
+                    hand = new String("right");
+                } else if(testNum == 1){
                     tap.setVisibility(View.GONE);
                     toResults.setVisibility(View.VISIBLE);
                 } else {
                     tryAgain.setVisibility(View.VISIBLE);
                 }
-
             }
         };
 
         timerStarted = false;
         taps = 0;
+
     }
 
     public void tapButton(View v) {
@@ -85,6 +86,7 @@ public class TapTestActivity extends AppCompatActivity {
             timer.start();
             taps++;
             timerStarted = true;
+            ((TextView) findViewById(R.id.instr)).setVisibility(View.GONE);
         } else {
             taps++;
         }
@@ -94,9 +96,12 @@ public class TapTestActivity extends AppCompatActivity {
         final Button tap = (Button) findViewById(R.id.tap);
         final Button tryAgain = (Button) findViewById(R.id.tryAgain);
 
+        text.setText(hand.toUpperCase() + "HAND TRAIL " + (((MyApp) getApplication()).getTestNum()));
+
         tryAgain.setVisibility(View.GONE);
         timerStarted = false;
         taps = 0;
+        ((TextView) findViewById(R.id.instr)).setVisibility(View.VISIBLE);
     }
 
 }

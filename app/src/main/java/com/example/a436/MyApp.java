@@ -22,18 +22,20 @@ public class MyApp extends Application {
 
     public void newLeftHandTest(int result) {
         // for the transition from right to left
-        if (testNumber > rightHandResults.length) {
+        if (testNumber >= rightHandResults.length-1) {
             testNumber = 0;
         }
+
         leftHandResults[testNumber] = result;
         testNumber++;
     }
 
     public void newRigthHandTest(int result) {
         // for the transition from left to right
-        if (testNumber > rightHandResults.length) {
+        if (testNumber >= rightHandResults.length) {
             testNumber = 0;
         }
+
         rightHandResults[testNumber] = result;
         testNumber++;
     }
