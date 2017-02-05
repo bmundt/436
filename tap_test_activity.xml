@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tap_test_activity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    android:weightSum="10"
+    android:orientation="vertical"
+    tools:context="com.example.a436.TapTestActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/timeLeft"
+        android:textSize="20dp" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_weight="0.2"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:onClick="tryAgainButton"
+        android:id="@+id/tryAgain"
+        android:text="Try Again"/>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_weight="0.2"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:onClick="toRightHandButton"
+        android:id="@+id/toRightHand"
+        android:text="Right Hand Test"/>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_weight="0.2"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:onClick="toResultsButton"
+        android:id="@+id/toResults"
+        android:text="Results"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_weight="9"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:onClick="tapButton"
+        android:id="@+id/tap"
+        android:text="Tap"/>
+
+
+
+</LinearLayout>
