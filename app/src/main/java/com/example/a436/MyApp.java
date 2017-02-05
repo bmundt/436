@@ -54,4 +54,8 @@ public class MyApp extends Application {
         return sum;
     }
 
+    public int getTestNum(){
+        return testNumber;
+    }
+
 }
