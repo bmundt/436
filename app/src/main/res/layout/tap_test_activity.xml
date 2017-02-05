@@ -19,6 +19,32 @@
         android:id="@+id/timeLeft"
         android:textSize="20dp" />
 
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_weight="0.2"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:onClick="tryAgainButton"
+        android:id="@+id/tryAgain"
+        android:text="Try Again"/>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_weight="0.2"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:onClick="toRightHandButton"
+        android:id="@+id/toRightHand"
+        android:text="Right Hand Test"/>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_weight="0.2"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:onClick="toResultsButton"
+        android:id="@+id/toResults"
+        android:text="Results"/>
 
     <Button
         android:layout_width="match_parent"
@@ -26,6 +52,9 @@
         android:layout_height="0dp"
         android:layout_centerInParent="true"
         android:onClick="tapButton"
+        android:id="@+id/tap"
         android:text="Tap"/>
+
+
 
 </LinearLayout>

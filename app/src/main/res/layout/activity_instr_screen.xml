@@ -42,7 +42,6 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:srcCompat="@drawable/indexfinger"
         android:id="@+id/imageView"
         android:layout_marginBottom="47dp"
         android:layout_above="@+id/instr_next"

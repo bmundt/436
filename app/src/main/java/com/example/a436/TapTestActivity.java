@@ -1,5 +1,6 @@
 package com.example.a436;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.app.Activity;
@@ -26,12 +27,23 @@ public class TapTestActivity extends AppCompatActivity {
     public TextView text;
     private String hand;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tap_test_activity);
         text = (TextView) this.findViewById(R.id.timeLeft);
         hand = getIntent().getExtras().getString("hand");
+
+        final Button tap = (Button) findViewById(R.id.tap);
+        final Button tryAgain = (Button) findViewById(R.id.tryAgain);
+        final Button toRightHand = (Button) findViewById(R.id.toRightHand);
+        final Button toResults = (Button) findViewById(R.id.toResults);
+
+        tryAgain.setVisibility(View.GONE);
+        toRightHand.setVisibility(View.GONE);
+        toResults.setVisibility(View.GONE);
+
         timer = new CountDownTimer(10000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -42,11 +54,25 @@ public class TapTestActivity extends AppCompatActivity {
             public void onFinish() {
                 totalTaps = taps;
                 text.setText("Total Taps: " + totalTaps);
-                if (hand == "left") {
+
+                if (hand.compareTo("left") == 0) {
                     ((MyApp) getApplication()).newLeftHandTest(totalTaps);
                 } else {
                     ((MyApp) getApplication()).newRigthHandTest(totalTaps);
                 }
+
+
+                int testNum = ((MyApp) getApplication()).getTestNum();
+                if(testNum == 5 && hand.compareTo("left") == 0){
+                    tap.setVisibility(View.GONE);
+                    toRightHand.setVisibility(View.VISIBLE);
+                } else if(testNum == 5){
+                    tap.setVisibility(View.GONE);
+                    toResults.setVisibility(View.VISIBLE);
+                } else {
+                    tryAgain.setVisibility(View.VISIBLE);
+                }
+
             }
         };
 
@@ -63,4 +89,14 @@ public class TapTestActivity extends AppCompatActivity {
             taps++;
         }
     }
+
+    public void tryAgainButton(View v){
+        final Button tap = (Button) findViewById(R.id.tap);
+        final Button tryAgain = (Button) findViewById(R.id.tryAgain);
+
+        tryAgain.setVisibility(View.GONE);
+        timerStarted = false;
+        taps = 0;
+    }
+
 }
