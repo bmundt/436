@@ -14,8 +14,6 @@ public class testLeftScreen extends AppCompatActivity {
     }
 
     public void startTest(View v) {
-        Intent intent = new Intent(testLeftScreen.this, TapTestActivity.class);
-        intent.putExtra("hand", "left");
-        startActivity(intent);
+
     }
 }

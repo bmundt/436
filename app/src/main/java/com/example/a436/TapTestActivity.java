@@ -1,6 +1,9 @@
 package com.example.a436;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.app.Activity;
@@ -26,6 +29,7 @@ public class TapTestActivity extends AppCompatActivity {
     private CountDownTimer timer;
     public TextView text;
     private String hand;
+    private boolean switchHands = false;
 
 
     @Override
@@ -43,7 +47,7 @@ public class TapTestActivity extends AppCompatActivity {
         tryAgain.setVisibility(View.GONE);
         toRightHand.setVisibility(View.GONE);
         toResults.setVisibility(View.GONE);
-        text.setText(hand.toUpperCase() + "HAND TRAIL " + (((MyApp) getApplication()).getTestNum()));
+        setTestText();
 
         timer = new CountDownTimer(10000, 1000) {
             @Override
@@ -59,14 +63,15 @@ public class TapTestActivity extends AppCompatActivity {
                 if (hand.compareTo("left") == 0) {
                     ((MyApp) getApplication()).newLeftHandTest(totalTaps);
                 } else {
-                    ((MyApp) getApplication()).newRigthHandTest(totalTaps);
+                    ((MyApp) getApplication()).newRightHandTest(totalTaps);
                 }
 
-
-                int testNum = ((MyApp) getApplication()).getTestNum();
+                int testNum = getRealTestNum();
+                System.out.println("Hand: " + hand);
+                System.out.println("Test Number: " +testNum);
                 if(testNum == 1 && hand.compareTo("left") == 0){
                     tryAgain.setVisibility(View.VISIBLE);
-                    hand = new String("right");
+                    switchHands = true;
                 } else if(testNum == 1){
                     tap.setVisibility(View.GONE);
                     toResults.setVisibility(View.VISIBLE);
@@ -86,22 +91,45 @@ public class TapTestActivity extends AppCompatActivity {
             timer.start();
             taps++;
             timerStarted = true;
-            ((TextView) findViewById(R.id.instr)).setVisibility(View.GONE);
         } else {
             taps++;
         }
     }
 
     public void tryAgainButton(View v){
-        final Button tap = (Button) findViewById(R.id.tap);
-        final Button tryAgain = (Button) findViewById(R.id.tryAgain);
+        if (switchHands) {
+            /* Will alert the instructions, also telling them to switch hands
+                    Then after they hit okay will reset the page as right hand.*/
+            AlertDialog instructions = new AlertDialog.Builder(TapTestActivity.this).create();
+            instructions.setTitle("Instructions");
+            instructions.setMessage("Now Switch to your right hand, and perform 5 trials");
+            instructions.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(TapTestActivity.this, TapTestActivity.class);
+                            intent.putExtra("hand", "right");
+                            startActivity(intent);
+                            dialog.dismiss();
+                        }
+                    });
+            instructions.show();
+        } else {
+            final Button tap = (Button) findViewById(R.id.tap);
+            final Button tryAgain = (Button) findViewById(R.id.tryAgain);
 
-        text.setText(hand.toUpperCase() + "HAND TRAIL " + (((MyApp) getApplication()).getTestNum()));
-
-        tryAgain.setVisibility(View.GONE);
-        timerStarted = false;
-        taps = 0;
-        ((TextView) findViewById(R.id.instr)).setVisibility(View.VISIBLE);
+            tryAgain.setVisibility(View.GONE);
+            timerStarted = false;
+            taps = 0;
+            setTestText();
+        }
     }
 
+    private void setTestText() {
+        String handText = hand.substring(0,1).toUpperCase() + hand.substring(1);
+        text.setText(handText + " Hand, Trial: " + getRealTestNum());
+    }
+
+    private int getRealTestNum() {
+        return ((MyApp) getApplication()).getRealTestNum();
+    }
 }

@@ -22,22 +22,22 @@ public class MyApp extends Application {
 
     public void newLeftHandTest(int result) {
         // for the transition from right to left
-        if (testNumber >= rightHandResults.length-1) {
+        if (testNumber >= rightHandResults.length - 1) {
             testNumber = 0;
+        } else {
+            leftHandResults[testNumber] = result;
+            testNumber++;
         }
-
-        leftHandResults[testNumber] = result;
-        testNumber++;
     }
 
-    public void newRigthHandTest(int result) {
+    public void newRightHandTest(int result) {
         // for the transition from left to right
-        if (testNumber >= rightHandResults.length) {
+        if (testNumber >= rightHandResults.length - 1) {
             testNumber = 0;
+        } else {
+            rightHandResults[testNumber] = result;
+            testNumber++;
         }
-
-        rightHandResults[testNumber] = result;
-        testNumber++;
     }
 
     public double getAvgRight() {
@@ -56,8 +56,8 @@ public class MyApp extends Application {
         return sum;
     }
 
-    public int getTestNum(){
-        return testNumber;
+    public int getRealTestNum(){
+        return testNumber + 1;
     }
 
 }

@@ -13,9 +13,10 @@ public class InstrScreen extends AppCompatActivity {
         setContentView(R.layout.activity_instr_screen);
     }
 
-    public void nextBut(View v)
+    public void nextButton(View v)
     {
-        Intent intent = new Intent(InstrScreen.this, testLeftScreen.class);
+        Intent intent = new Intent(InstrScreen.this, TapTestActivity.class);
+        intent.putExtra("hand", "left");
         startActivity(intent);
     }
 }

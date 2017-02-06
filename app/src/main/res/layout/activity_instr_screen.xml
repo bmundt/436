@@ -28,7 +28,7 @@
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/textView3"
         android:id="@+id/instr_next"
-        android:onClick="nextBut"/>
+        android:onClick="nextButton"/>
 
     <TextView
         android:text="This will be testing the number of taps that you can do in 10 seconds. It will be testing both hands, first your left then your right. Please use the pointer finger to tap. "
