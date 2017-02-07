@@ -31,7 +31,7 @@
         android:onClick="nextButton"/>
 
     <TextView
-        android:text="This will be testing the number of taps that you can do in 10 seconds. It will be testing both hands, first your left then your right. Please use the pointer finger to tap. "
+        android:text="This will be testing the number of taps that you can do in 10 seconds. It will be testing both hands, first your left then your right, 5 trials each. Please use the pointer finger to tap. "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="37dp"

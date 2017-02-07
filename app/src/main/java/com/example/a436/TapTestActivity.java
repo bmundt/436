@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.app.Activity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -44,6 +46,7 @@ public class TapTestActivity extends AppCompatActivity {
         final Button toRightHand = (Button) findViewById(R.id.toRightHand);
         final Button toResults = (Button) findViewById(R.id.toResults);
 
+
         tryAgain.setVisibility(View.GONE);
         toRightHand.setVisibility(View.GONE);
         toResults.setVisibility(View.GONE);
@@ -67,8 +70,6 @@ public class TapTestActivity extends AppCompatActivity {
                 }
 
                 int testNum = getRealTestNum();
-                System.out.println("Hand: " + hand);
-                System.out.println("Test Number: " +testNum);
                 if(testNum == 1 && hand.compareTo("left") == 0){
                     tryAgain.setVisibility(View.VISIBLE);
                     switchHands = true;
@@ -102,7 +103,7 @@ public class TapTestActivity extends AppCompatActivity {
                     Then after they hit okay will reset the page as right hand.*/
             AlertDialog instructions = new AlertDialog.Builder(TapTestActivity.this).create();
             instructions.setTitle("Instructions");
-            instructions.setMessage("Now Switch to your right hand, and perform 5 trials");
+            instructions.setMessage("Please Switch to your right hand, and perform 5 trials");
             instructions.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
@@ -122,6 +123,11 @@ public class TapTestActivity extends AppCompatActivity {
             taps = 0;
             setTestText();
         }
+    }
+
+    public void toResultsButton(View v) {
+        Intent resultsIntent = new Intent(TapTestActivity.this, resultsPage.class);
+        startActivity(resultsIntent);
     }
 
     private void setTestText() {

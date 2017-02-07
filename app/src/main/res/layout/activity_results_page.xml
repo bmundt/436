@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:id="@+id/leftHand"
-        android:textSize="20dp"
+        android:textSize="50dp"
         />
     <TextView
         android:text="Right Hand Average: "
@@ -26,6 +26,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/rightHand"
         android:layout_weight="1"
-        android:textSize="20dp"
+        android:textSize="50dp"
         />
 </LinearLayout>

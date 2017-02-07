@@ -20,7 +20,7 @@
         </activity>
         <activity android:name=".TapTestActivity" />
         <activity android:name=".InstrScreen" />
-        <activity android:name=".testLeftScreen"></activity>
+        <activity android:name=".resultsPage"></activity>
     </application>
 
 </manifest>
