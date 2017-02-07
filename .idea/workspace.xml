@@ -50,8 +50,8 @@
       <file leaf-file-name="InstrScreen.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/a436/InstrScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="7" column="14" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
+            <state relative-caret-position="136">
+              <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -2213,7 +2213,14 @@
       <option name="project" value="LOCAL" />
       <updated>1486489641523</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="dk test 2">
+      <created>1486489943680</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1486489943680</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2269,7 +2276,8 @@
     <MESSAGE value="Added Instruction Screens and TestLeftScreen" />
     <MESSAGE value="dk test" />
     <MESSAGE value="revert changes from dk test" />
-    <option name="LAST_COMMIT_MESSAGE" value="revert changes from dk test" />
+    <MESSAGE value="dk test 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="dk test 2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -2599,8 +2607,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/a436/InstrScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="7" column="14" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
+        <state relative-caret-position="136">
+          <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
           <folding />
         </state>
       </provider>
