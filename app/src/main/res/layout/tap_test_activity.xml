@@ -47,13 +47,15 @@
         android:text="Results"/>
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_weight="9"
-        android:layout_height="0dp"
-        android:layout_centerInParent="true"
-        android:onClick="tapButton"
         android:id="@+id/tap"
-        android:text="Tap"/>
+        android:layout_width="1in"
+        android:layout_height="1in"
+        android:text="Tap"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/roundedbutton"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        android:onClick="tapButton" />
 
 
 
