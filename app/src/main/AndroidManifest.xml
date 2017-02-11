@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.a436">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
     <application
         android:name=".MyApp"
         android:allowBackup="true"
@@ -20,7 +21,11 @@
         </activity>
         <activity android:name=".TapTestActivity" />
         <activity android:name=".InstrScreen" />
-        <activity android:name=".resultsPage"></activity>
+        <activity android:name=".resultsPage" />
+        <activity
+            android:name=".DrawingActivity"
+            android:label="@string/title_activity_drawing"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

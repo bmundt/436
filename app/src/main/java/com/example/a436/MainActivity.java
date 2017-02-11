@@ -18,9 +18,15 @@ public class MainActivity extends AppCompatActivity {
         */
     }
 
-    public void nextScreen(View v)
+    public void tapTest(View v)
     {
         Intent intent = new Intent(MainActivity.this, InstrScreen.class);
+        startActivity(intent);
+    }
+
+    public void spiralTest(View v)
+    {
+        Intent intent = new Intent(MainActivity.this, DrawingActivity.class);
         startActivity(intent);
     }
 }
