@@ -1,10 +1,16 @@
 package com.example.a436;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+//import android.support.design.widget.FloatingActionButton;
+//import android.support.design.widget.Snackbar;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AlertDialog;
+
+//import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.util.Log;
 import android.content.pm.PackageManager;
@@ -43,6 +49,23 @@ public class DrawingActivity extends AppCompatActivity {
             saveImage();
         }
         drawView.destroyDrawingCache();
+        Context context = this;
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+        builder1.setMessage("Saving Drawing To Gallery");
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                Intent intent = new Intent(DrawingActivity.this, SpiralResults.class);
+                startActivity(intent);
+            }
+
+        }, 1000);
+
     }
 
     public void saveImage() {

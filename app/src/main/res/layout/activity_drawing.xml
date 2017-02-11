@@ -34,7 +34,7 @@
             android:id="@+id/cancel_btn"
             android:onClick="cancelDrawing"
             android:layout_alignParentLeft="true"
-            android:text="Cancel"/>
+            android:text="Start Over"/>
 
         <Button
             android:layout_width="wrap_content"

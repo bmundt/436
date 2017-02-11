@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void spiralTest(View v)
     {
-        Intent intent = new Intent(MainActivity.this, DrawingActivity.class);
+        Intent intent = new Intent(MainActivity.this, SpiralInstr.class);
         startActivity(intent);
     }
 }
