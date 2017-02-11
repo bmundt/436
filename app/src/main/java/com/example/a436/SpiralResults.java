@@ -10,4 +10,9 @@ public class SpiralResults extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spiral_results);
     }
+
+    @Override
+    public void onBackPressed() {
+        // Do nothing, so back button doesn't work
+    }
 }

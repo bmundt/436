@@ -32,6 +32,11 @@ public class DrawingActivity extends AppCompatActivity {
         drawView = (DrawingView) findViewById(R.id.drawing);
     }
 
+    @Override
+    public void onBackPressed() {
+        // Do nothing, so back button doesn't work
+    }
+
     public void cancelDrawing(View v) {
         drawView.startOver();
     }
