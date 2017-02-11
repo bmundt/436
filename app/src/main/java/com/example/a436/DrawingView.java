@@ -1,5 +1,6 @@
 package com.example.a436;
 
+import android.graphics.PorterDuff;
 import android.view.View;
 import android.content.Context;
 import android.util.AttributeSet;
@@ -37,6 +38,12 @@ public class DrawingView extends View {
         drawPaint.setStrokeCap(Paint.Cap.ROUND);
 
         canvasPaint = new Paint(Paint.DITHER_FLAG);
+    }
+
+    public void startOver() {
+        drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
+        invalidate();
+        destroyDrawingCache();
     }
 
     @Override

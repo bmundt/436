@@ -26,6 +26,10 @@ public class DrawingActivity extends AppCompatActivity {
         drawView = (DrawingView) findViewById(R.id.drawing);
     }
 
+    public void cancelDrawing(View v) {
+        drawView.startOver();
+    }
+
     public void saveDrawing(View v) {
         Log.d("saveDrawing", "reached saveDrawing");
         drawView.setDrawingCacheEnabled(true);
