@@ -25,6 +25,8 @@ public class DrawingActivity extends AppCompatActivity {
     public DrawingView drawView;
     public final int WRITE_EXTERNAL_STORAGE = 1;
 
+    private String url;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +53,8 @@ public class DrawingActivity extends AppCompatActivity {
                     new String[]{ Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     WRITE_EXTERNAL_STORAGE);
         } else {
-            saveImage();
+            url = saveImage();
+
         }
         drawView.destroyDrawingCache();
         Context context = this;
@@ -66,6 +69,7 @@ public class DrawingActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent = new Intent(DrawingActivity.this, SpiralResults.class);
+                intent.putExtra("URL", url);
                 startActivity(intent);
             }
 
@@ -73,11 +77,13 @@ public class DrawingActivity extends AppCompatActivity {
 
     }
 
-    public void saveImage() {
+    public String saveImage() {
         String imgSaved = MediaStore.Images.Media.insertImage(
                 getContentResolver(), drawView.getDrawingCache(),
                 UUID.randomUUID().toString() + ".png", "drawing");
         Log.d("saveImage", "image was saved");
+
+        return imgSaved;
     }
 
     @Override
