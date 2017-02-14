@@ -9,6 +9,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.view.MotionEvent;
+
+import java.util.ArrayList;
+
 /**
  * Created by brmun on 2/11/2017.
  */
@@ -19,6 +22,9 @@ public class DrawingView extends View {
     private int paintColor = 0xFF000000;
     private Canvas drawCanvas;
     private Bitmap canvasBitmap;
+    private ArrayList<Float> xCoords;
+    private ArrayList<Float> yCoords;
+    private ArrayList<Float> pressures;
 
     public DrawingView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -61,8 +67,14 @@ public class DrawingView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        // here you can record the X, Y, and Pressure
         float touchX = event.getX();
         float touchY = event.getY();
+        float pressure = event.getPressure();
+
+        xCoords.add(touchX);
+        yCoords.add(touchY);
+        pressures.add(pressure);
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
