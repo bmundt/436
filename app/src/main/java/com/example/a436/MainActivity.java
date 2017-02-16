@@ -29,4 +29,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, SpiralInstr.class);
         startActivity(intent);
     }
+
+    public void levelTest(View v) {
+        Intent intent = new Intent(MainActivity.this, Level.class);
+        startActivity(intent);
+    }
 }
