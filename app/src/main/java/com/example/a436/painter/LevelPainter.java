@@ -327,7 +327,6 @@ public class LevelPainter implements Runnable {
 
     	}
 		if(System.currentTimeMillis() >= beginTest && System.currentTimeMillis() <= end) {
-			Log.d(TAG, "starting********");
 			Xlist.add(x);
 			Ylist.add(y);
 		}
