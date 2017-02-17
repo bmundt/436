@@ -39,11 +39,12 @@
             android:name=".Level"
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Level.NoTitle"></activity>
+            android:theme="@style/Level.NoTitle" />
         <activity
             android:name=".LevelPreferences"
             android:screenOrientation="portrait"
             android:theme="@style/Level" />
+        <activity android:name=".LevelResults"></activity>
     </application>
 
 </manifest>

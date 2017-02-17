@@ -1,13 +1,18 @@
 package com.example.a436.painter;
 
+import java.lang.reflect.Array;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.example.a436.Level;
+//import com.example.a436.LevelResults;
 import com.example.a436.R;
 import com.example.a436.config.DisplayType;
 import com.example.a436.config.Viscosity;
 import com.example.a436.orientation.Orientation;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -115,7 +120,7 @@ public class LevelPainter implements Runnable {
 	private double angleY;
 	private double speedX;
 	private double speedY;
-	private double x, y;
+	public double x, y;
 	
 	/** Drawables */
 	private Drawable level1D;
@@ -167,6 +172,13 @@ public class LevelPainter implements Runnable {
 	private int taps;
 	private int totalTaps;
 	private CountDownTimer timer;
+	long start = System.currentTimeMillis();
+	long beginTest = start + 5*1000;
+	long end = start + 15*1000;
+	int timing = 0;
+	long last = start;
+	ArrayList Xlist = new ArrayList<Double>(2000);
+	ArrayList Ylist = new ArrayList<Double>(2000);
 
     public LevelPainter(SurfaceHolder surfaceHolder, Context context, 
     		Handler handler, int width, int height,
@@ -204,7 +216,7 @@ public class LevelPainter implements Runnable {
         this.backgroundColor = context.getResources().getColor(R.color.silver);
                 
         // strings
-        this.infoText = context.getString(R.string.calibrate_info);
+        this.infoText = "";
         this.lockText = context.getString(R.string.lock_info);
         
         // typeface
@@ -290,6 +302,7 @@ public class LevelPainter implements Runnable {
 
     @Override
     public void run() {
+		//Log.d(TAG, "This is running");
         Canvas c = null;
         updatePhysics();
         try {
@@ -310,9 +323,24 @@ public class LevelPainter implements Runnable {
     	// lancement du traitement differe en mode eco
     	handler.removeCallbacks(this);
     	if (!wait && !ecoMode) {
-    		handler.postDelayed(this, frameRate - System.currentTimeMillis() + lastTime);
+			handler.postDelayed(this, frameRate - System.currentTimeMillis() + lastTime);
+
     	}
+		if(System.currentTimeMillis() >= beginTest && System.currentTimeMillis() <= end) {
+			Log.d(TAG, "starting********");
+			Xlist.add(x);
+			Ylist.add(y);
+		}
     }
+
+	public ArrayList<Double> getX(){
+		return Xlist;
+	}
+
+	public ArrayList<Double> getY(){
+		return Ylist;
+	}
+
     
     /** Mise en pause du thread */
 	public void pause(boolean paused) {
@@ -361,8 +389,8 @@ public class LevelPainter implements Runnable {
 			    		break;
 			    	case LANDING : 
 				    	posY = (2 * y - minLevelY - maxLevelY) / levelMinusBubbleHeight;
-			    		speedX = (angleX - posX) * viscosityValue;
-			    		speedY = (angleY - posY) * viscosityValue;
+			    		speedX = (angleX - posX) * viscosityValue*2;
+			    		speedY = (angleY - posY) * viscosityValue*2;
 				    	y += speedY * timeDiff;
 			    		break;
 		    	}
@@ -388,15 +416,7 @@ public class LevelPainter implements Runnable {
     	lastTime = currentTime;
     }
 
-	public void startButton(View v) {
-		if (!timerStarted) { // only start timer if not already started
-			timer.start();
-			taps++;
-			timerStarted = true;
-		} else {
-			taps++;
-		}
-	}
+
 
     private void doDraw(Canvas canvas) {
     	canvas.save();
@@ -405,8 +425,8 @@ public class LevelPainter implements Runnable {
 		
     	switch (orientation) {
 	    	case LANDING :
-				Log.d(TAG, "The value of x is: " + x);
-				Log.d(TAG, "The value of y is: " + y);
+				//Log.d(TAG, "The value of x is: " + x);
+				//Log.d(TAG, "The value of y is: " + y);
 	    		canvas.drawText(infoText, middleX, infoY, infoPaint);
 	    		if (lockEnabled) {
 		    		display.setBounds(lockRect);

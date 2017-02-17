@@ -11,14 +11,9 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_weight="1"
+		android:textColor="@color/white"
 		android:id="@+id/timeLeft"
 		android:textSize="20dp"/>
 
-	<Button
-		android:id="@+id/startButton"
-		android:text="Start"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:onClick="startButton"/>
 
 </merge>

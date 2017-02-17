@@ -3,6 +3,7 @@ package com.example.a436;
 import com.example.a436.orientation.Orientation;
 import com.example.a436.orientation.OrientationListener;
 import com.example.a436.orientation.OrientationProvider;
+import com.example.a436.painter.LevelPainter;
 import com.example.a436.view.LevelView;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,6 +16,7 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
@@ -25,6 +27,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /*
  *  This file is part of Level (an Android Bubble Level).
@@ -55,6 +60,7 @@ public class Level extends Activity implements OrientationListener {
 	private OrientationProvider provider;
 	
     private LevelView view;
+	private LevelPainter painter;
     
 	/** Gestion du son */
 	private SoundPool soundPool;
@@ -69,41 +75,66 @@ public class Level extends Activity implements OrientationListener {
 	private CountDownTimer timer;
 	public TextView text;
 
+	ArrayList Xlist = new ArrayList<Double>(2000);
+	ArrayList Ylist = new ArrayList<Double>(2000);
+	private static final String TAG = "MyActivity";
+
+
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		text = (TextView) this.findViewById(R.id.timeLeft);
         CONTEXT = this;
         view = (LevelView) findViewById(R.id.level);
+
         // sound
     	soundPool = new SoundPool(1, AudioManager.STREAM_RING, 0);
     	bipSoundID = soundPool.load(this, R.raw.bip, 1);
     	bipRate = getResources().getInteger(R.integer.bip_rate);
-		text = (TextView) this.findViewById(R.id.timeLeft);
 
-		final Button tap = (Button) findViewById(R.id.startButton);
-
-
-		timer = new CountDownTimer(10000, 1000) {
+		final Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
 			@Override
-			public void onTick(long millisUntilFinished) {
-				tap.setVisibility(View.GONE);
-				text.setText("Seconds remaining: " + millisUntilFinished / 1000);
+			public void run() {
+				text.setText("READY");
 			}
-
+		}, 1000);
+		handler.postDelayed(new Runnable() {
 			@Override
-			public void onFinish() {
-				totalTaps = taps;
-				text.setText("Total Taps:0");
-
+			public void run() {
+				text.setText("SET");
 			}
-		};
+		}, 3000);
+		handler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				text.setText("BALANCE");
+			}
+		}, 5000);
 
-		timerStarted = false;
+		running();
+		//final Button tap = (Button) findViewById(R.id.startButton);
+
 
     }
+
+	public void running() {
+		final Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				Xlist = view.getXList();
+				Ylist = view.getYList();
+				Intent goToNextActivity = new Intent(getApplicationContext(), LevelResults.class);
+				goToNextActivity.putExtra("XList", Xlist);
+				goToNextActivity.putExtra("YList", Ylist);
+				startActivity(goToNextActivity);
+			}
+		}, 19000);
+	}
 
 	public void startButton(View v) {
 		if (!timerStarted) { // only start timer if not already started

@@ -10,11 +10,16 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /*
  *  This file is part of Level (an Android Bubble Level).
@@ -38,13 +43,20 @@ import android.view.View.OnTouchListener;
 public class LevelView extends SurfaceView implements SurfaceHolder.Callback, OnTouchListener {
 
 	private LevelPainter painter;
+	private boolean set = false;
+	private static final String TAG = "MyActivity";
+	long start = System.currentTimeMillis();
+	long end = start + 11*1000;
+	ArrayList Xlist = new ArrayList<Double>(2000);
+	ArrayList Ylist = new ArrayList<Double>(2000);
 
-    public LevelView(Context context, AttributeSet attrs) {
+
+	public LevelView(Context context, AttributeSet attrs) {
         super(context, attrs);
         getHolder().addCallback(this);
         setFocusable(true);
     	setOnTouchListener(this);
-    }
+	}
 
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
@@ -69,8 +81,25 @@ public class LevelView extends SurfaceView implements SurfaceHolder.Callback, On
 				prefs.getBoolean(LevelPreferences.KEY_LOCK, false),
 				prefs.getBoolean(LevelPreferences.KEY_ECONOMY, false));
 	    }
+		final Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				Xlist = painter.getX();
+				Ylist = painter.getY();
+			}
+		}, 17000);
+
     }
 
+	public ArrayList<Double> getXList() {
+		return Xlist;
+	}
+
+	public ArrayList<Double> getYList()
+	{
+		return Ylist;
+	}
     public void surfaceDestroyed(SurfaceHolder holder) {
         if (painter != null) {
         	painter.pause(true);
