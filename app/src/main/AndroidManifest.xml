@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.a436">
 
-
-    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true"/>
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
+        android:required="true" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -34,10 +35,15 @@
         <activity android:name=".SpiralInstr" />
         <activity android:name=".PracticeSpiral" />
         <activity android:name=".SpiralResults" />
-        <activity android:hardwareAccelerated="true" android:name=".Level" android:screenOrientation="portrait" android:theme="@style/Level.NoTitle">
-        </activity>
-
-        <activity android:name=".LevelPreferences" android:screenOrientation="portrait" android:theme="@style/Level"/>
+        <activity
+            android:name=".Level"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Level.NoTitle"></activity>
+        <activity
+            android:name=".LevelPreferences"
+            android:screenOrientation="portrait"
+            android:theme="@style/Level" />
     </application>
 
 </manifest>

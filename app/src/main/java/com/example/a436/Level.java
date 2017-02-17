@@ -14,12 +14,16 @@ import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /*
@@ -59,7 +63,14 @@ public class Level extends Activity implements OrientationListener {
 	private int bipRate;
 	private long lastBip;
 
-    @Override
+	private boolean timerStarted;
+	private int taps;
+	private int totalTaps;
+	private CountDownTimer timer;
+	public TextView text;
+
+
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
@@ -70,7 +81,39 @@ public class Level extends Activity implements OrientationListener {
     	soundPool = new SoundPool(1, AudioManager.STREAM_RING, 0);
     	bipSoundID = soundPool.load(this, R.raw.bip, 1);
     	bipRate = getResources().getInteger(R.integer.bip_rate);
+		text = (TextView) this.findViewById(R.id.timeLeft);
+
+		final Button tap = (Button) findViewById(R.id.startButton);
+
+
+		timer = new CountDownTimer(10000, 1000) {
+			@Override
+			public void onTick(long millisUntilFinished) {
+				tap.setVisibility(View.GONE);
+				text.setText("Seconds remaining: " + millisUntilFinished / 1000);
+			}
+
+			@Override
+			public void onFinish() {
+				totalTaps = taps;
+				text.setText("Total Taps:0");
+
+			}
+		};
+
+		timerStarted = false;
+
     }
+
+	public void startButton(View v) {
+		if (!timerStarted) { // only start timer if not already started
+			timer.start();
+			taps++;
+			timerStarted = true;
+		} else {
+			taps++;
+		}
+	}
     
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

@@ -13,8 +13,11 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.Log;
 import android.view.SurfaceHolder;
+import android.view.View;
 
 /*
  *  This file is part of Level (an Android Bubble Level).
@@ -153,11 +156,17 @@ public class LevelPainter implements Runnable {
 	private static final String LOCKED_BACKGROUND 	= "888888";
 	private boolean lockEnabled;
 	private boolean locked;
+	private static final String TAG = "MyActivity";
 	
 	/** Animation */
 	private boolean ecoMode;
 	private final Handler handler;
 	private long frameRate;
+
+	private boolean timerStarted;
+	private int taps;
+	private int totalTaps;
+	private CountDownTimer timer;
 
     public LevelPainter(SurfaceHolder surfaceHolder, Context context, 
     		Handler handler, int width, int height,
@@ -378,7 +387,17 @@ public class LevelPainter implements Runnable {
     	}
     	lastTime = currentTime;
     }
-    
+
+	public void startButton(View v) {
+		if (!timerStarted) { // only start timer if not already started
+			timer.start();
+			taps++;
+			timerStarted = true;
+		} else {
+			taps++;
+		}
+	}
+
     private void doDraw(Canvas canvas) {
     	canvas.save();
 
@@ -386,6 +405,8 @@ public class LevelPainter implements Runnable {
 		
     	switch (orientation) {
 	    	case LANDING :
+				Log.d(TAG, "The value of x is: " + x);
+				Log.d(TAG, "The value of y is: " + y);
 	    		canvas.drawText(infoText, middleX, infoY, infoPaint);
 	    		if (lockEnabled) {
 		    		display.setBounds(lockRect);
@@ -404,40 +425,40 @@ public class LevelPainter implements Runnable {
 			    				lockForegroundPaint);
 		    		}
 	    		}
-	    		if (showAngle) {
-		    		display.setBounds(
-		    				displayRect.left - (displayRect.width() + displayGap) / 2,
-		    				displayRect.top,
-		    				displayRect.right - (displayRect.width() + displayGap) / 2,
-		    				displayRect.bottom);
-		    		display.draw(canvas);
-		    		display.setBounds(
-		    				displayRect.left + (displayRect.width() + displayGap) / 2,
-		    				displayRect.top,
-		    				displayRect.right + (displayRect.width() + displayGap) / 2,
-		    				displayRect.bottom);
-		    		display.draw(canvas);
-		    		canvas.drawText(
-		    				displayBackgroundText, 
-		    				middleX - (displayRect.width() + displayGap) / 2, 
-		    				displayRect.centerY() + lcdHeight / 2, 
-		    				lcdBackgroundPaint);
-		    		canvas.drawText(
-		    				displayFormat.format(angle2), 
-		    				middleX - (displayRect.width() + displayGap) / 2, 
-		    				displayRect.centerY() + lcdHeight / 2, 
-		    				lcdForegroundPaint);
-		    		canvas.drawText(
-		    				displayBackgroundText, 
-		    				middleX + (displayRect.width() + displayGap) / 2, 
-		    				displayRect.centerY() + lcdHeight / 2, 
-		    				lcdBackgroundPaint);
-		    		canvas.drawText(
-		    				displayFormat.format(angle1), 
-		    				middleX + (displayRect.width() + displayGap) / 2, 
-		    				displayRect.centerY() + lcdHeight / 2, 
-		    				lcdForegroundPaint);
-	    		}
+//	    		if (showAngle) {
+//		    		display.setBounds(
+//		    				displayRect.left - (displayRect.width() + displayGap) / 2,
+//		    				displayRect.top,
+//		    				displayRect.right - (displayRect.width() + displayGap) / 2,
+//		    				displayRect.bottom);
+//		    		display.draw(canvas);
+//		    		display.setBounds(
+//		    				displayRect.left + (displayRect.width() + displayGap) / 2,
+//		    				displayRect.top,
+//		    				displayRect.right + (displayRect.width() + displayGap) / 2,
+//		    				displayRect.bottom);
+//		    		display.draw(canvas);
+//		    		canvas.drawText(
+//		    				displayBackgroundText,
+//		    				middleX - (displayRect.width() + displayGap) / 2,
+//		    				displayRect.centerY() + lcdHeight / 2,
+//		    				lcdBackgroundPaint);
+//		    		canvas.drawText(
+//		    				displayFormat.format(angle2),
+//		    				middleX - (displayRect.width() + displayGap) / 2,
+//		    				displayRect.centerY() + lcdHeight / 2,
+//		    				lcdForegroundPaint);
+//		    		canvas.drawText(
+//		    				displayBackgroundText,
+//		    				middleX + (displayRect.width() + displayGap) / 2,
+//		    				displayRect.centerY() + lcdHeight / 2,
+//		    				lcdBackgroundPaint);
+//		    		canvas.drawText(
+//		    				displayFormat.format(angle1),
+//		    				middleX + (displayRect.width() + displayGap) / 2,
+//		    				displayRect.centerY() + lcdHeight / 2,
+//		    				lcdForegroundPaint);
+//	    		}
 	        	bubble2D.setBounds(
 	        			(int) (x - halfBubbleWidth), 
 	        			(int) (y - halfBubbleHeight), 

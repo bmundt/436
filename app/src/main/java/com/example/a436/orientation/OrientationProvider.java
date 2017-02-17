@@ -78,6 +78,7 @@ public final class OrientationProvider implements SensorEventListener {
     private final float[] R = new float[16];
     private final float[] outR = new float[16];
     private final float[] LOC = new float[3];
+    private static final String TAG = "MyActivity";
 
     private static OrientationProvider provider;
     
@@ -244,22 +245,23 @@ public final class OrientationProvider implements SensorEventListener {
 		}
 		
 		if (!locked || orientation == null) {
-	        if (pitch < -45 && pitch > -135) {
-	            // top side up
-	            orientation = Orientation.TOP;
-	        } else if (pitch > 45 && pitch < 135) {
-	            // bottom side up
-	            orientation = Orientation.BOTTOM;
-	        } else if (roll > 45) {
-	            // right side up
-	            orientation = Orientation.RIGHT;
-	        } else if (roll < -45) {
-	            // left side up
-	            orientation = Orientation.LEFT;
-	        } else {
-	        	// landing
-	        	orientation = Orientation.LANDING;
-	        }
+//	        if (pitch < -45 && pitch > -135) {
+//	            // top side up
+//	            orientation = Orientation.TOP;
+//	        } else if (pitch > 45 && pitch < 135) {
+//	            // bottom side up
+//	            orientation = Orientation.BOTTOM;
+//	        } else if (roll > 45) {
+//	            // right side up
+//	            orientation = Orientation.RIGHT;
+//	        } else if (roll < -45) {
+//	            // left side up
+//	            orientation = Orientation.LEFT;
+//	        } else {
+//	        	// landing
+//	        	orientation = Orientation.LANDING;
+//	        }
+            orientation = Orientation.LANDING;
 		}
 		
 		if (calibrating) {
