@@ -77,6 +77,7 @@ public class Level extends Activity implements OrientationListener {
 
 	ArrayList Xlist = new ArrayList<Double>(2000);
 	ArrayList Ylist = new ArrayList<Double>(2000);
+	int middleX, middleY;
 	private static final String TAG = "MyActivity";
 
 
@@ -128,9 +129,13 @@ public class Level extends Activity implements OrientationListener {
 			public void run() {
 				Xlist = view.getXList();
 				Ylist = view.getYList();
+				middleX = view.getMiddleX();
+				middleY = view.getMiddleY();
 				Intent goToNextActivity = new Intent(getApplicationContext(), LevelResults.class);
 				goToNextActivity.putExtra("XList", Xlist);
 				goToNextActivity.putExtra("YList", Ylist);
+				goToNextActivity.putExtra("middleX", middleX);
+				goToNextActivity.putExtra("middleY", middleY);
 				startActivity(goToNextActivity);
 			}
 		}, 19000);

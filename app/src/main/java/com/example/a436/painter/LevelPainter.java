@@ -341,6 +341,10 @@ public class LevelPainter implements Runnable {
 		return Ylist;
 	}
 
+	public int getMiddleX() { return middleX; }
+
+	public int getMiddleY() { return middleY; }
+
     
     /** Mise en pause du thread */
 	public void pause(boolean paused) {
