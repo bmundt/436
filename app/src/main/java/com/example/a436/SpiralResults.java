@@ -9,11 +9,14 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+
 
 public class SpiralResults extends AppCompatActivity {
 
@@ -27,9 +30,12 @@ public class SpiralResults extends AppCompatActivity {
 
         //get a reference to an image view that holds an image user will see
         resultDisplay = (ImageView) findViewById(R.id.resultDisplay);
-
-
+        Double d = (new Double(getIntent().getStringExtra("score")));
+        TextView text = (TextView) findViewById(R.id.textView9);
+        text.setText("Score: " + d.toString());
         Uri imageUri = Uri.parse(getIntent().getStringExtra("URL"));
+
+        Log.d("Score", d.toString());
 
         //declare stream to read image data from SD card
         InputStream inputStream;

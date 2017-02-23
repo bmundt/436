@@ -100,6 +100,12 @@ public class LevelView extends SurfaceView implements SurfaceHolder.Callback, On
 	{
 		return Ylist;
 	}
+
+	public int getMiddleX() { return painter.getMiddleX(); }
+
+	public int getMiddleY() { return painter.getMiddleY(); }
+
+
     public void surfaceDestroyed(SurfaceHolder holder) {
         if (painter != null) {
         	painter.pause(true);

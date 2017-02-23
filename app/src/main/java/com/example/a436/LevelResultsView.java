@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.AttributeSet;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -13,8 +14,8 @@ public class LevelResultsView extends View {
     ArrayList<Double> XList;
     ArrayList<Double> YList;
 
-    public LevelResultsView(Context context) {
-        super(context);
+    public LevelResultsView(Context context, AttributeSet attrs) {
+        super(context, attrs);
         paint.setColor(Color.BLACK);
         paint.setStrokeWidth(10);
         paint.setStyle(Paint.Style.STROKE);
