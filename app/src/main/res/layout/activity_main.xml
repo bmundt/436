@@ -29,42 +29,56 @@
         android:layout_marginTop="42dp"
         android:id="@+id/textView5" />
 
-    <Button
-        android:text="Tap Test"
+    <ScrollView
         android:layout_width="match_parent"
-        android:id="@+id/tapbutton"
-        android:layout_height="wrap_content"
-        style="@android:style/Widget.Button.Small"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:visibility="visible"
-        android:elevation="0dp"
-        android:onClick="tapTest"
+        android:layout_height="match_parent"
         android:layout_below="@+id/textView5"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="49dp" />
+        android:layout_marginTop="24dp">
 
-    <Button
-        android:text="Spiral Test"
-        android:layout_width="match_parent"
-        android:id="@+id/nextbutton"
-        android:layout_height="wrap_content"
-        style="@android:style/Widget.Button.Small"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:layout_below="@+id/tapbutton"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp"
-        android:onClick="spiralTest"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <Button
-        android:text="Level Test"
-        android:layout_width="match_parent"
-        android:id="@+id/levelButton"
-        android:layout_height="wrap_content"
-        style="@android:style/Widget.Button.Small"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:layout_below="@+id/nextbutton"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp"
-        android:onClick="levelTest"/>
+            <Button
+                android:text="Tap Test"
+                android:layout_width="match_parent"
+                android:id="@+id/tapbutton"
+                android:layout_height="wrap_content"
+                style="@android:style/Widget.Button.Small"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                android:visibility="visible"
+                android:elevation="0dp"
+                android:onClick="tapTest"
+                android:layout_below="@+id/textView5"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="20dp" />
+
+            <Button
+                android:text="Level Test"
+                android:layout_width="match_parent"
+                android:id="@+id/levelButton"
+                android:layout_height="wrap_content"
+                style="@android:style/Widget.Button.Small"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                android:layout_below="@+id/nextbutton"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="20dp"
+                android:onClick="levelTest"/>
+
+            <Button
+                android:text="Spiral Test"
+                android:layout_width="match_parent"
+                android:id="@+id/nextbutton"
+                android:layout_height="wrap_content"
+                style="@android:style/Widget.Button.Small"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                android:layout_below="@+id/tapbutton"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="20dp"
+                android:onClick="spiralTest"/>
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>
