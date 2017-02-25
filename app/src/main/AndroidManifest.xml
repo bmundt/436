@@ -47,7 +47,15 @@
             android:name=".LevelPreferences"
             android:screenOrientation="portrait"
             android:theme="@style/Level" />
-        <activity android:name=".LevelResults"></activity>
+        <activity android:name=".LevelResults" />
+        <activity
+            android:name=".PostResults"
+            android:label="Google Sheets API Android Quickstart" >
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
