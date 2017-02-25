@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <!-- General colors -->
-    <color name="black">#FF000000</color>
+    <color name="black">#ededed</color>
     <color name="white">#FFFFFFFF</color>
     <color name="silver">#FF888888</color>
     <color name="black_reflect">#FF666666</color>
