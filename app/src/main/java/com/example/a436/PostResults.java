@@ -86,6 +86,12 @@ public class PostResults extends Activity
         activityLayout.setOrientation(LinearLayout.VERTICAL);
         activityLayout.setPadding(16, 16, 16, 16);
 
+        SharedPreferences pref = getPreferences(Context.MODE_PRIVATE);
+        patientID = pref.getInt("patientID", 0);
+        tapsAvg = new Double(pref.getFloat("tapsAvg", 0.0F));
+        spiralResult = new Double(pref.getFloat("spiral", 0.0F));
+        levelResult = new Double(pref.getFloat("level", 0.0F));
+
         ViewGroup.LayoutParams tlp = new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -382,13 +388,13 @@ public class PostResults extends Activity
             results.add("Results added to spreadsheet");
             List<List<Object>> values = new ArrayList<List<Object>>();
             List<Object> data1 = new ArrayList<Object>();
-//            data1.add(patientID);
-//            data1.add(taps1);
-//            data1.add(taps2);
-//            data1.add(taps3);
-//            data1.add(tapsAvg);
-//            data1.add(spiralResult);
-//            data1.add(levelResult);
+            data1.add(patientID);
+            data1.add(taps1);
+            data1.add(taps2);
+            data1.add(taps3);
+            data1.add(tapsAvg);
+            data1.add(spiralResult);
+            data1.add(levelResult);
             Calendar calendar = Calendar.getInstance(Locale.getDefault());
             int hour = calendar.get(Calendar.HOUR_OF_DAY);
             int minute = calendar.get(Calendar.MINUTE);

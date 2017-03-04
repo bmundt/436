@@ -1,6 +1,8 @@
 package com.example.a436;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,6 +40,13 @@ public class LevelResults extends Activity {
         Double avgDist = distSum / XList.size();
         avgDist = (double) Math.round(avgDist * 100.0);
         avgDist /= 100;
+
+        if (!((MyApp) getApplication()).getTestMode()) {
+            SharedPreferences pref = getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putFloat("level", avgDist.floatValue());
+            editor.commit();
+        }
         Log.d(TAG, "Avg distance is: " + avgDist);
 
 //        drawView = new LevelResultsView(this);

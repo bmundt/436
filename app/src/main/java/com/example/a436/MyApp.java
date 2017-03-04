@@ -13,11 +13,21 @@ public class MyApp extends Application {
     // we only need one of these because we will be doing all left and then all right
     private int testNumber;
 
+    private boolean testMode = false;
+
     public MyApp() {
         super();
-        leftHandResults = new int[5];
-        rightHandResults = new int[5];
+        leftHandResults = new int[3];
+        rightHandResults = new int[3];
         testNumber = 0;
+    }
+
+    public int trialResults(String hand, int num) {
+        if (hand == "left") {
+            return leftHandResults[num];
+        } else {
+            return rightHandResults[num];
+        }
     }
 
     public void newLeftHandTest(int result) {
@@ -59,5 +69,15 @@ public class MyApp extends Application {
     public int getRealTestNum(){
         return testNumber + 1;
     }
+
+    public void setTestMode(boolean state) {
+        testMode = state;
+    }
+
+
+
+    public boolean getTestMode() { return testMode; }
+
+
 
 }

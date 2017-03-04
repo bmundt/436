@@ -1,6 +1,8 @@
 package com.example.a436;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -31,6 +33,15 @@ public class SpiralResults extends AppCompatActivity {
         //get a reference to an image view that holds an image user will see
         resultDisplay = (ImageView) findViewById(R.id.resultDisplay);
         Double d = (new Double(getIntent().getStringExtra("score")));
+
+        if (!((MyApp) getApplication()).getTestMode()) {
+            SharedPreferences pref = getPreferences(Context.MODE_PRIVATE);
+            // set the values for the different trials
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putFloat("spiral", (float) d.floatValue());
+            editor.commit();
+        }
+
         TextView text = (TextView) findViewById(R.id.textView9);
         text.setText("Score: " + d.toString());
         Uri imageUri = Uri.parse(getIntent().getStringExtra("URL"));

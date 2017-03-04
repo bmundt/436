@@ -1,7 +1,9 @@
 package com.example.a436;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +28,11 @@ public class LoginScreen extends Activity {
             @Override
             public void onClick(View v) {
                 patientID = ed1.getText().toString();
+                SharedPreferences pref = getPreferences(Context.MODE_PRIVATE);
+                // set the values for the different trials
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putInt("patientID", Integer.parseInt(patientID));
+                editor.commit();
                 Toast.makeText(getApplicationContext(),
                         "Signing In...",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(LoginScreen.this, MainActivity.class);
