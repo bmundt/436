@@ -25,15 +25,15 @@
 
         />
 
-    <Button
-        android:text="Past Results"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button2"
-        android:onClick="getPastResults"
-        android:layout_marginTop="12dp"
-        android:layout_below="@+id/textView9"
-        android:layout_centerHorizontal="true" />
+    <!--<Button-->
+        <!--android:text="Past Results"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/button2"-->
+        <!--android:onClick="getPastResults"-->
+        <!--android:layout_marginTop="12dp"-->
+        <!--android:layout_below="@+id/textView9"-->
+        <!--android:layout_centerHorizontal="true" />-->
 
     <TextView
         android:text="Score: "

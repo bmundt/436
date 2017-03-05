@@ -86,7 +86,8 @@ public class PostResults extends Activity
         activityLayout.setOrientation(LinearLayout.VERTICAL);
         activityLayout.setPadding(16, 16, 16, 16);
 
-        SharedPreferences pref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
+                Context.MODE_PRIVATE);
         patientID = pref.getInt("patientID", 0);
         tapsAvg = new Double(pref.getFloat("tapsAvg", 0.0F));
         spiralResult = new Double(pref.getFloat("spiral", 0.0F));

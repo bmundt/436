@@ -42,7 +42,8 @@ public class LevelResults extends Activity {
         avgDist /= 100;
 
         if (!((MyApp) getApplication()).getTestMode()) {
-            SharedPreferences pref = getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
+                    Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = pref.edit();
             editor.putFloat("level", avgDist.floatValue());
             editor.commit();
