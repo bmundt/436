@@ -1,8 +1,9 @@
 package com.example.a436;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -45,6 +46,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void levelTest(View v) {
         Intent intent = new Intent(MainActivity.this, Level.class);
+        startActivity(intent);
+    }
+
+    public void reactionTest(View v) {
+        Intent intent = new Intent(MainActivity.this, ReactionInstr.class);
         startActivity(intent);
     }
 

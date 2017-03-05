@@ -1,5 +1,6 @@
 package com.example.a436;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,7 +9,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,7 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 
-public class SpiralResults extends AppCompatActivity {
+public class SpiralResults extends Activity {
 
     public static final int IMAGE_GALLERY_REQUEST = 20;
     private ImageView resultDisplay;
