@@ -1,8 +1,11 @@
 package com.example.a436;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -12,6 +15,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         setContentView(R.layout.activity_main);
         /*
             Insturctions methods would go here, and then make an
@@ -29,6 +35,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
+                Context.MODE_PRIVATE);
+        int patientID = pref.getInt("patientID", -1);
+        Log.d("Main", "This is the patient ID: " + patientID);
+        if (patientID == -1) {
+            Intent intent = new Intent(MainActivity.this, LoginScreen.class);
+            startActivity(intent);
+        }
     }
 
     public void tapTest(View v)

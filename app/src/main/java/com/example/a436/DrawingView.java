@@ -54,9 +54,6 @@ public class DrawingView extends View {
         drawPaint.setStrokeCap(Paint.Cap.ROUND);
 
         canvasPaint = new Paint(Paint.DITHER_FLAG);
-
-
-
     }
 
     public void startOver() {
@@ -72,7 +69,7 @@ public class DrawingView extends View {
     protected void onSizeChanged(int w, int h, int oldW, int oldH) {
         w = ((ImageView) activity.findViewById(R.id.imageView)).getWidth();
         h = ((ImageView) activity.findViewById(R.id.imageView)).getHeight();
-
+        Log.d("DrawingView", "width: " + w + " height: " + h);
         super.onSizeChanged(w, h, oldW, oldH);
         canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         drawCanvas = new Canvas(canvasBitmap);
@@ -81,12 +78,10 @@ public class DrawingView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Drawable spiralDrawable = ((ImageView) activity.findViewById(R.id.imageView)).getDrawable();
-        Bitmap bitmap = ((BitmapDrawable) spiralDrawable).getBitmap();
-        bitmap = Bitmap.createScaledBitmap(bitmap, getWidth(),getHeight(), false);
-
-
-        canvas.drawBitmap(bitmap, 0, 0, null);
+//        Drawable spiralDrawable = ((ImageView) activity.findViewById(R.id.imageView)).getDrawable();
+//        Bitmap bitmap = ((BitmapDrawable) spiralDrawable).getBitmap();
+//        bitmap = Bitmap.createScaledBitmap(bitmap, getWidth(),getHeight(), false);
+//        canvas.drawBitmap(bitmap, 0, 0, null);
         canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
         canvas.drawPath(drawPath, drawPaint);
     }

@@ -10,6 +10,8 @@ public class MyApp extends Application {
     private int[] leftHandResults;
     private int[] rightHandResults;
 
+    public static String PREF_NAME = "PATIENT";
+
     // we only need one of these because we will be doing all left and then all right
     private int testNumber;
 

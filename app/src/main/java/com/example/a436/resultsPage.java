@@ -32,7 +32,8 @@ public class resultsPage extends AppCompatActivity {
         MyApp app = (MyApp) getApplication();
         // save results if not in testMode
         if (!app.getTestMode()) {
-            SharedPreferences pref = getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
+                    Context.MODE_PRIVATE);
             // set the values for the different trials
             SharedPreferences.Editor editor = pref.edit();
             editor.putFloat("tapsAvg", (float) app.getAvgRight());

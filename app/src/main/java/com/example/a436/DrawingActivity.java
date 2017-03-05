@@ -4,11 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AlertDialog;
 
@@ -41,7 +38,6 @@ public class DrawingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawing);
         drawView = (DrawingView) findViewById(R.id.drawing);
-
     }
 
 
@@ -65,9 +61,32 @@ public class DrawingActivity extends AppCompatActivity {
                     new String[]{ Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     WRITE_EXTERNAL_STORAGE);
         } else {
-            url = saveImage();
-
+            saveDrawingHelper();
         }
+    }
+
+    public Bitmap getScreenshot(View v) {
+        View screenView = v.getRootView();
+        screenView.setDrawingCacheEnabled(true);
+        Bitmap bitmap = Bitmap.createBitmap(screenView.getDrawingCache());
+        screenView.setDrawingCacheEnabled(false);
+        return bitmap;
+    }
+
+    public String saveImage() {
+        Bitmap screenshot = getScreenshot(getWindow().getDecorView());
+        String imgSaved = MediaStore.Images.Media.insertImage(
+                getContentResolver(), screenshot,
+                UUID.randomUUID().toString() + ".png", "drawing");
+        Log.d("saveImage", "image was saved");
+
+        return imgSaved;
+    }
+
+
+    private void saveDrawingHelper() {
+        url = saveImage();
+
         drawView.destroyDrawingCache();
         Context context = this;
         AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
@@ -93,18 +112,6 @@ public class DrawingActivity extends AppCompatActivity {
             }
 
         }, 1000);
-
-    }
-
-    public String saveImage() {
-
-
-        String imgSaved = MediaStore.Images.Media.insertImage(
-                getContentResolver(), drawView.getDrawingCache(),
-                UUID.randomUUID().toString() + ".png", "drawing");
-        Log.d("saveImage", "image was saved");
-
-        return imgSaved;
     }
 
     @Override
@@ -112,7 +119,7 @@ public class DrawingActivity extends AppCompatActivity {
         switch(requestCode) {
             case WRITE_EXTERNAL_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    saveImage();
+                    saveDrawingHelper();
                 } else {
                     Log.d("permissionDenied", "permission to save picture was denied");
                 }

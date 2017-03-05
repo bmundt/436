@@ -35,8 +35,8 @@ public class SpiralResults extends AppCompatActivity {
         Double d = (new Double(getIntent().getStringExtra("score")));
 
         if (!((MyApp) getApplication()).getTestMode()) {
-            SharedPreferences pref = getPreferences(Context.MODE_PRIVATE);
-            // set the values for the different trials
+            SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
+                    Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = pref.edit();
             editor.putFloat("spiral", (float) d.floatValue());
             editor.commit();

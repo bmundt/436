@@ -28,11 +28,14 @@ public class LoginScreen extends Activity {
             @Override
             public void onClick(View v) {
                 patientID = ed1.getText().toString();
-                SharedPreferences pref = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
+                        Context.MODE_PRIVATE);
                 // set the values for the different trials
                 SharedPreferences.Editor editor = pref.edit();
                 editor.putInt("patientID", Integer.parseInt(patientID));
+                Log.d("LoginScreen", "This is the patient ID: " + pref.getInt("patientID", -1));
                 editor.commit();
+
                 Toast.makeText(getApplicationContext(),
                         "Signing In...",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(LoginScreen.this, MainActivity.class);
