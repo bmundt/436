@@ -20,4 +20,20 @@
         android:onClick="aa"
         />
 
+    <Button
+        android:id="@+id/lefthand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Test Left Hand" />
+
+    <Button
+        android:id="@+id/righthand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Test Right Hand" />
+
 </RelativeLayout>

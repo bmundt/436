@@ -2,22 +2,13 @@
 <items version="2" >
 
     <item
-        is-multidex="false"
-        jar="/Users/djkiernicki/.android/build-cache/68ded5e4eebfc6c54f91e021d68244d06a541eaf/output/jars/libs/internal_impl-25.0.1.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="/Users/djkiernicki/.android/build-cache/a3cb8934b4021be72cf6473c13217b4c71b35209/output/jars/classes.jar"
+        jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
-        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/internal_impl-25.0.1_21d62e663607fcd610d7308990afe9339b0792b9.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/djkiernicki/.android/build-cache/afbc564fc3fc848f2f88d2121b07a46c77b90444/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="4e01b82d664e1a8253b2b9658e74b5da35c8771d">
-        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/classes_df0625e838ad1094a8c3de3bac73b1566f1f4989.jar" />
+        sha1="f7ac4b327fdb9e2ee386f5adc46164927658de4b">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_6b91efa06675e0f756b61e8f31b9dad346fc5285/classes.dex" />
     </item>
     <item
         is-multidex="false"
@@ -38,6 +29,24 @@
         <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/google-http-client-jackson2-1.22.0_bc2119918fd11b4cca1991388c75144f03a7f834.jar" />
     </item>
     <item
+        is-multidex="true"
+        jar="/Users/djkiernicki/.android/build-cache/6d7b88e584097ab1e3af06fce153256ca3645968/output/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="f83b00041ecfba705603fec40363416c7de69719">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_bcf5b3094b941bd472757b8216ddbddf77dfcf8e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/djkiernicki/.android/build-cache/f4c0a1b96411702a57208bd41c0dbc78a44e337e/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_65034c4babb9d967ed3143b862ab2bd0b06f57ba/classes.dex" />
+    </item>
+    <item
         is-multidex="false"
         jar="/Users/djkiernicki/.android/build-cache/b5b59f8af9f0674aab46dbecf03aab25197c6717/output/jars/classes.jar"
         jumboMode="false"
@@ -56,6 +65,15 @@
         <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_6796fa29f369f39986e3cc04e8c6ec15406fbd5c/classes.dex" />
     </item>
     <item
+        is-multidex="true"
+        jar="/Users/djkiernicki/.android/build-cache/d212a4fc9bced70d51a3563cd2f3c4d0a384f5c9/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_371b45aba1c1da2ba6cb0c470da0b15f986cf475/classes.dex" />
+    </item>
+    <item
         is-multidex="false"
         jar="/Users/djkiernicki/.android/build-cache/027bcaabcd8ececa7234d454925f98a8d9186230/output/jars/libs/internal_impl-25.0.1.jar"
         jumboMode="false"
@@ -65,31 +83,22 @@
         <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/internal_impl-25.0.1_943087ba8f1f325a87b53480d8d71eb2e42970fa.jar" />
     </item>
     <item
-        is-multidex="false"
-        jar="/Users/djkiernicki/.android/build-cache/eae47a02609ba2cebc3dba7adba85b36d16553e2/output/jars/classes.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="/Users/djkiernicki/.android/build-cache/4f723b64096e0d6ef6497f446bb5b8ef6b40336f/output/jars/classes.jar"
+        jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="bd75f9f0296fe220da6d0ad961831b04541c4452">
-        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/classes_979fab39b3ac97074ec040c443ece00c8a9393c8.jar" />
+        sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_4ea4d195e70737ea69a74780b5d33de9e3e42c5d/classes.dex" />
     </item>
     <item
-        is-multidex="false"
-        jar="/Users/djkiernicki/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client/1.22.0/244350c0c845c583717ade13f5666a452fd0cfa/google-api-client-1.22.0.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="/Users/djkiernicki/.android/build-cache/e35cacff550dc3420056a19a5fb29f18b4f7f691/output/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="0244350c0c845c583717ade13f5666a452fd0cfa">
-        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/google-api-client-1.22.0_2e8aafa9e94b0e2069547f25c0faeaa552fa2051.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/djkiernicki/.android/build-cache/027bcaabcd8ececa7234d454925f98a8d9186230/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
-        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/classes_aa4d5882ff1ff2d9ac8099f2bbd94e4e0134a5f5.jar" />
+        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_fd92fa2d8d307e4cb221f7a35f597bc7f45f00bb/classes.dex" />
     </item>
     <item
         is-multidex="false"
@@ -128,6 +137,168 @@
         <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/support-annotations-25.0.1_1815d6b34327e7792975d81d1d55e1d937b51f00.jar" />
     </item>
     <item
+        is-multidex="true"
+        jar="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c532247c76d41651d4eb77466a1456771a72d006">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_74330a874f61d25b8221722c5bb50bd412200df3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/djkiernicki/.android/build-cache/6d7b88e584097ab1e3af06fce153256ca3645968/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6a1479afe9f1b3645e1cd9a87318976893472818">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_fd851e84507a52e537d985d8179a3384cc29669f/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/djkiernicki/.android/build-cache/137f03e21759319d177017fb54b402aa816da376/output/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="f83b00041ecfba705603fec40363416c7de69719">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/internal_impl-25.0.1_1e464a20f785ede067c7fde2aa5cf6a2366b8dd4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/djkiernicki/.android/build-cache/369e546833a765f245bcc79438bc29671658ab80/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b831d3902674d096189451d46fce219e2c2904b7">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/classes_064d0765fa2fdf8dba7564f6cf260b25b4d2dc06.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/djkiernicki/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-android/1.22.0/6d1e1a76a16a244ab2f41775791be1dd0ec2878a/google-http-client-android-1.22.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6d1e1a76a16a244ab2f41775791be1dd0ec2878a">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/google-http-client-android-1.22.0_e0f6b52260337cb4e4cc3fa0235235cbee81476a.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/djkiernicki/.android/build-cache/af570774eb8efe828cc957c8ae4a8e491de75715/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="26c6eef571592c91f29e56fda0bac73321de0c92">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_a57f080d53aa5229ad0ae6806b38eedf61938f82/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/djkiernicki/.android/build-cache/411f1d7074b543008d8899a82bb63cc1ac066b40/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="1ac56e5801e986583cbe27f2cce57f626cc7ff93">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/classes_e1389fa21364d8c0bb8f38a163747e93671e4660.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/djkiernicki/.android/build-cache/e94f92a74074ddb20e07dcada615e340c29c8ff2/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_6940274528d84c895f37886127e0a979ef9e01ae/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/djkiernicki/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client-android/1.22.0/7a0fe12b7d8189a821934d6f9d6586d00180e461/google-api-client-android-1.22.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="7a0fe12b7d8189a821934d6f9d6586d00180e461">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/google-api-client-android-1.22.0_370355dfe2703cfff7ffc1d2f70945fe9ef981cd.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/djkiernicki/.android/build-cache/0304c85b240134a1d51739cb95b8573ab80cbb57/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3d13e510077b35fe8e49930a627dd849ad5da0dc">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/classes_ef74d70b736097f27749f8b624abfe05c36a0dbd.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/djkiernicki/.android/build-cache/93b21db2d17caea0556e82f83ed2ce4f9f1ec77c/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_d120a9fbb672bdb3363dd6ca72b4d65648c4631c/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/djkiernicki/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.1/f7be08ec23c21485b9b5a1cf1654c2ec8c58168d/jsr305-3.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="f7be08ec23c21485b9b5a1cf1654c2ec8c58168d">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/jsr305-3.0.1_65892a8ac3cd746328e235e4e10875f37d5afddb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/djkiernicki/.android/build-cache/68ded5e4eebfc6c54f91e021d68244d06a541eaf/output/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/internal_impl-25.0.1_21d62e663607fcd610d7308990afe9339b0792b9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/djkiernicki/.android/build-cache/afbc564fc3fc848f2f88d2121b07a46c77b90444/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4e01b82d664e1a8253b2b9658e74b5da35c8771d">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/classes_df0625e838ad1094a8c3de3bac73b1566f1f4989.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/djkiernicki/.android/build-cache/e35cacff550dc3420056a19a5fb29f18b4f7f691/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_0b85ce054e05673c190cd226b47d70126e8cd847/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/djkiernicki/.android/build-cache/eae47a02609ba2cebc3dba7adba85b36d16553e2/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bd75f9f0296fe220da6d0ad961831b04541c4452">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/classes_979fab39b3ac97074ec040c443ece00c8a9393c8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/djkiernicki/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client/1.22.0/244350c0c845c583717ade13f5666a452fd0cfa/google-api-client-1.22.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="0244350c0c845c583717ade13f5666a452fd0cfa">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/google-api-client-1.22.0_2e8aafa9e94b0e2069547f25c0faeaa552fa2051.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/djkiernicki/.android/build-cache/027bcaabcd8ececa7234d454925f98a8d9186230/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/classes_aa4d5882ff1ff2d9ac8099f2bbd94e4e0134a5f5.jar" />
+    </item>
+    <item
         is-multidex="false"
         jar="/Users/djkiernicki/.android/build-cache/541bb088254da87110fe91db66824e0ac62f7f9b/output/jars/classes.jar"
         jumboMode="false"
@@ -144,15 +315,6 @@
         revision="25.0.2"
         sha1="c62423966e97071131e9c16d89ffaa003fe6a5d1">
         <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/classes_9c4095c08b0fb21cd3591dcc4723d1d71854c43e.jar" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="a58295b969d7781343b79d41cdbda407d347354e">
-        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_74330a874f61d25b8221722c5bb50bd412200df3/classes.dex" />
     </item>
     <item
         is-multidex="false"
@@ -183,39 +345,12 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/djkiernicki/.android/build-cache/137f03e21759319d177017fb54b402aa816da376/output/jars/libs/internal_impl-25.0.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="f83b00041ecfba705603fec40363416c7de69719">
-        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/internal_impl-25.0.1_1e464a20f785ede067c7fde2aa5cf6a2366b8dd4.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/djkiernicki/.android/build-cache/369e546833a765f245bcc79438bc29671658ab80/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="b831d3902674d096189451d46fce219e2c2904b7">
-        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/classes_064d0765fa2fdf8dba7564f6cf260b25b4d2dc06.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/djkiernicki/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client/1.22.0/d441fc58329c4a4c067acec04ac361627f66ecc8/google-http-client-1.22.0.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
         sha1="d441fc58329c4a4c067acec04ac361627f66ecc8">
         <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/google-http-client-1.22.0_a9e842082c9ceb6ab730b6cb0691ae2af6db72c8.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/djkiernicki/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-android/1.22.0/6d1e1a76a16a244ab2f41775791be1dd0ec2878a/google-http-client-android-1.22.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="6d1e1a76a16a244ab2f41775791be1dd0ec2878a">
-        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/google-http-client-android-1.22.0_e0f6b52260337cb4e4cc3fa0235235cbee81476a.jar" />
     </item>
     <item
         is-multidex="false"
@@ -237,30 +372,12 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/djkiernicki/.android/build-cache/411f1d7074b543008d8899a82bb63cc1ac066b40/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="1ac56e5801e986583cbe27f2cce57f626cc7ff93">
-        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/classes_e1389fa21364d8c0bb8f38a163747e93671e4660.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/djkiernicki/.android/build-cache/68ded5e4eebfc6c54f91e021d68244d06a541eaf/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
         sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
         <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/classes_469186804d90c28dde9571dffbbe1997d0c3c7fd.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/djkiernicki/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client-android/1.22.0/7a0fe12b7d8189a821934d6f9d6586d00180e461/google-api-client-android-1.22.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="7a0fe12b7d8189a821934d6f9d6586d00180e461">
-        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/google-api-client-android-1.22.0_370355dfe2703cfff7ffc1d2f70945fe9ef981cd.jar" />
     </item>
     <item
         is-multidex="false"
@@ -281,22 +398,31 @@
         <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/classes_75d1d911e757c692895b8638f17e47af24ecd112.jar" />
     </item>
     <item
-        is-multidex="false"
-        jar="/Users/djkiernicki/.android/build-cache/0304c85b240134a1d51739cb95b8573ab80cbb57/output/jars/classes.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="/Users/djkiernicki/.android/build-cache/af570774eb8efe828cc957c8ae4a8e491de75715/output/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="3d13e510077b35fe8e49930a627dd849ad5da0dc">
-        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/classes_ef74d70b736097f27749f8b624abfe05c36a0dbd.jar" />
+        sha1="c0bd6ffb002a85b5e7cad29f8558d1cc59539679">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_e0c2285585b7fd81792d5b04cf3dd247a2e2b936/classes.dex" />
     </item>
     <item
-        is-multidex="false"
-        jar="/Users/djkiernicki/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.1/f7be08ec23c21485b9b5a1cf1654c2ec8c58168d/jsr305-3.0.1.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="/Users/djkiernicki/.android/build-cache/f4c0a1b96411702a57208bd41c0dbc78a44e337e/output/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="f7be08ec23c21485b9b5a1cf1654c2ec8c58168d">
-        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/pre-dexed/debug/jsr305-3.0.1_65892a8ac3cd746328e235e4e10875f37d5afddb.jar" />
+        sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_53fa86c20d83b5ca27b394cf0e4b72d00c290bf2/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/djkiernicki/.android/build-cache/d212a4fc9bced70d51a3563cd2f3c4d0a384f5c9/output/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c5b7145fb34779b6639147b8f2f8dd77c0db771b">
+        <dex dex="/Users/djkiernicki/StudioProjects/436/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_6d960a7e3a0d67baad2e9ece8ff74f7a12ce8b92/classes.dex" />
     </item>
 
 </items>

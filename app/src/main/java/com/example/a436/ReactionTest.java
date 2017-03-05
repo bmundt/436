@@ -23,15 +23,43 @@ public class ReactionTest extends Activity {
     private long startTime;
     private ArrayList<Long> times = new ArrayList<Long>();
     private int counter = 0;
+    private int left = 0;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reaction_test);
-        Log.d(TAG, "Inside on create");
-        //ArrayList<Button> buttons = new ArrayList<Button>();
-        Clicky();
+        final Button b = (Button) findViewById(R.id.rbb1);
+        ///Getting the Screen dimensions for API 1+
+        b.setVisibility(View.INVISIBLE);
+        runTest();
+
+    }
+
+    public void runTest() {
+        final Button l = (Button) findViewById(R.id.lefthand);
+        final Button r = (Button) findViewById(R.id.righthand);
+        if(left == 0) {
+            left = 1;
+            l.setVisibility(View.VISIBLE);
+            r.setVisibility(View.INVISIBLE);
+            l.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    l.setVisibility(View.GONE);
+                    Clicky();
+                }
+            });
+        } else {
+            r.setVisibility(View.VISIBLE);
+            l.setVisibility(View.GONE);
+            r.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    r.setVisibility(View.GONE);
+                    Clicky();
+                }
+            });
+        }
 
     }
 
@@ -58,24 +86,25 @@ public class ReactionTest extends Activity {
         b.setLayoutParams(params);
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(counter == 10) {
+                if(counter == 20) {
                     final long elapsedTime = System.currentTimeMillis() - startTime;
                     times.add(elapsedTime);
                     Intent intent = new Intent(ReactionTest.this, ReactionResults.class);
-
-                    // currentContext.startActivity(activityChangeIntent);
                     intent.putExtra("TIMES", times);
                     startActivity(intent);
-                } else {
-                    // Perform action on click
-
+                } else if(counter == 10) {
                     final long elapsedTime = System.currentTimeMillis() - startTime;
                     times.add(elapsedTime);
-                    b.setVisibility(View.INVISIBLE);
+                    b.setVisibility(View.GONE);
+                    runTest();
+                    // Perform action on click
+                } else {
+                    final long elapsedTime = System.currentTimeMillis() - startTime;
+                    times.add(elapsedTime);
+                    b.setVisibility(View.GONE);
                     Clicky();
                 }
 
-                // currentContext.startActivity(activityChangeIntent);
             }
         });
     }

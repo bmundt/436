@@ -47,4 +47,10 @@ public class resultsPage extends AppCompatActivity {
 
 
     }
+
+    public void toHome(View v)
+    {
+        Intent intent = new Intent(resultsPage.this, MainActivity.class);
+        startActivity(intent);
+    }
 }
