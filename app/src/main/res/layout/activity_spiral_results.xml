@@ -45,5 +45,13 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="8dp" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Return to Main Menu"
+        android:onClick="mainMenuButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        />
 
 </RelativeLayout>

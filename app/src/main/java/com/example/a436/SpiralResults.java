@@ -89,14 +89,14 @@ public class SpiralResults extends Activity {
         photoPickerIntent.setDataAndType(data, "image/png");
 
         //we invoke activity and get somethign back from it
-        startActivityForResult(photoPickerIntent,  IMAGE_GALLERY_REQUEST);
+        startActivityForResult(photoPickerIntent, IMAGE_GALLERY_REQUEST);
 
     }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK){
+        if (resultCode == RESULT_OK) {
             //if we are here, everything processed successfully
             if (requestCode == IMAGE_GALLERY_REQUEST) {
                 //if we are here, we heard back from image gallery
@@ -123,8 +123,12 @@ public class SpiralResults extends Activity {
                 }
 
 
-
             }
         }
+    }
+
+    public void mainMenuButton(View v) {
+        Intent intent = new Intent(SpiralResults.this, MainActivity.class);
+        startActivity(intent);
     }
 }
