@@ -1,6 +1,7 @@
 package com.example.a436;
 
 import android.app.Application;
+import android.util.Log;
 
 /**
  * Created by brmun on 2/2/2017.
@@ -19,8 +20,8 @@ public class MyApp extends Application {
 
     public MyApp() {
         super();
-        leftHandResults = new int[3];
-        rightHandResults = new int[3];
+        leftHandResults = new int[5];
+        rightHandResults = new int[5];
         testNumber = 0;
     }
 
@@ -35,6 +36,7 @@ public class MyApp extends Application {
     public void newLeftHandTest(int result) {
         // for the transition from right to left
         if (testNumber >= rightHandResults.length - 1) {
+            leftHandResults[testNumber] = result;
             testNumber = 0;
         } else {
             leftHandResults[testNumber] = result;
@@ -45,6 +47,7 @@ public class MyApp extends Application {
     public void newRightHandTest(int result) {
         // for the transition from left to right
         if (testNumber >= rightHandResults.length - 1) {
+            rightHandResults[testNumber] = result;
             testNumber = 0;
         } else {
             rightHandResults[testNumber] = result;

@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -64,10 +65,21 @@ public class PostResults extends Activity
     private static final String[] SCOPES = { SheetsScopes.SPREADSHEETS };
 
     private Integer patientID;
-    private Integer taps1;
-    private Integer taps2;
-    private Integer taps3;
-    private Double tapsAvg;
+    private Integer tapsleft1;
+    private Integer tapsleft2;
+    private Integer tapsleft3;
+    private Integer tapsleft4;
+    private Integer tapsleft5;
+
+    private Integer tapsright1;
+    private Integer tapsright2;
+    private Integer tapsright3;
+    private Integer tapsright4;
+    private Integer tapsright5;
+
+    private Double tapsrightAvg;
+    private Double tapsleftAvg;
+
     private Double spiralResult;
     private Double levelResult;
 
@@ -89,7 +101,21 @@ public class PostResults extends Activity
         SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
                 Context.MODE_PRIVATE);
         patientID = pref.getInt("patientID", 0);
-        tapsAvg = new Double(pref.getFloat("tapsAvg", 0.0F));
+        tapsleft1 = pref.getInt("taps left 1", 0);
+        tapsleft2 = pref.getInt("taps left 2", 0);
+        tapsleft3 = pref.getInt("taps left 3", 0);
+        tapsleft4 = pref.getInt("taps left 4", 0);
+        tapsleft5 = pref.getInt("taps left 5", 0);
+
+        tapsright1 = pref.getInt("taps right 1", 0);
+        tapsright2 = pref.getInt("taps right 2", 0);
+        tapsright3 = pref.getInt("taps right 3", 0);
+        tapsright4 = pref.getInt("taps right 4", 0);
+        tapsright5 = pref.getInt("taps right 5", 0);
+
+        tapsrightAvg = new Double(pref.getFloat("tapsrightAvg", 0.0F));
+        tapsleftAvg = new Double(pref.getFloat("tapsleftAvg", 0.0F));
+
         spiralResult = new Double(pref.getFloat("spiral", 0.0F));
         levelResult = new Double(pref.getFloat("level", 0.0F));
 
@@ -390,12 +416,25 @@ public class PostResults extends Activity
             List<List<Object>> values = new ArrayList<List<Object>>();
             List<Object> data1 = new ArrayList<Object>();
             data1.add(patientID);
-            data1.add(taps1);
-            data1.add(taps2);
-            data1.add(taps3);
-            data1.add(tapsAvg);
+            data1.add(tapsleft1);
+            data1.add(tapsleft2);
+            data1.add(tapsleft3);
+            data1.add(tapsleft4);
+            data1.add(tapsleft5);
+
+            data1.add(tapsright1);
+            data1.add(tapsright2);
+            data1.add(tapsright3);
+            data1.add(tapsright4);
+            data1.add(tapsright5);
+
+            data1.add(tapsleftAvg);
+            data1.add(tapsrightAvg);
+
             data1.add(spiralResult);
             data1.add(levelResult);
+
+
             Calendar calendar = Calendar.getInstance(Locale.getDefault());
             int hour = calendar.get(Calendar.HOUR_OF_DAY);
             int minute = calendar.get(Calendar.MINUTE);
@@ -404,7 +443,7 @@ public class PostResults extends Activity
             int month = calendar.get(Calendar.MONTH) + 1;
             int year = calendar.get(Calendar.YEAR);
             String dateStr = "" + month + "/" + date + "/" + year + " at " + hour + ":" + minute;
-            //data1.add(dateStr);
+            data1.add(dateStr);
             //There are obviously more dynamic ways to do these, but you get the picture
             values.add(data1);
             ValueRange valueRange = new ValueRange();

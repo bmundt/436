@@ -36,7 +36,8 @@ public class resultsPage extends AppCompatActivity {
                     Context.MODE_PRIVATE);
             // set the values for the different trials
             SharedPreferences.Editor editor = pref.edit();
-            editor.putFloat("tapsAvg", (float) app.getAvgRight());
+            editor.putFloat("tapsrightAvg", (float) app.getAvgRight());
+            editor.putFloat("tapsleftAvg", (float) app.getAvgLeft());
             editor.commit();
         }
         TextView leftHand = (TextView) findViewById(R.id.leftHand);

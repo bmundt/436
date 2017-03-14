@@ -1,7 +1,9 @@
 package com.example.a436;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -69,7 +71,16 @@ public class TapTestActivity extends AppCompatActivity {
                     ((MyApp) getApplication()).newRightHandTest(totalTaps);
                 }
 
+
                 int testNum = getRealTestNum();
+
+                SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
+                        Context.MODE_PRIVATE);
+                // set the values for the different trials
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putInt("taps " + hand +" "+testNum, totalTaps);
+                editor.commit();
+
                 if(testNum == 1 && hand.compareTo("left") == 0){
                     tryAgain.setVisibility(View.VISIBLE);
                     switchHands = true;
@@ -103,7 +114,7 @@ public class TapTestActivity extends AppCompatActivity {
                     Then after they hit okay will reset the page as right hand.*/
             AlertDialog instructions = new AlertDialog.Builder(TapTestActivity.this).create();
             instructions.setTitle("Instructions");
-            instructions.setMessage("Please Switch to your right hand, and perform 3 trials");
+            instructions.setMessage("Please Switch to your right hand, and perform 5 trials");
             instructions.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
