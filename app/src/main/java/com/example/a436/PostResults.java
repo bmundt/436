@@ -83,6 +83,9 @@ public class PostResults extends Activity
     private Double spiralResult;
     private Double levelResult;
 
+    private Long leftReaction;
+    private long rightReaction;
+
     /**
      * Create the main activity.
      * @param savedInstanceState previously saved instance data.
@@ -118,6 +121,9 @@ public class PostResults extends Activity
 
         spiralResult = new Double(pref.getFloat("spiral", 0.0F));
         levelResult = new Double(pref.getFloat("level", 0.0F));
+
+        leftReaction = new Long(pref.getLong("average reaction left", 0));
+        rightReaction = new Long(pref.getLong("average reaction right", 0));
 
         ViewGroup.LayoutParams tlp = new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -410,30 +416,33 @@ public class PostResults extends Activity
             }
             return results;*/
             String spreadsheetId = "13fbFdZSWjjP_DakUX2liVe8pgM4PovPHA96PNd2YYMk";
-            String range = "Class Data!A1:G1";
+
+            String range1 = "Tapping Test (LH)!A1:G1";
+            String range2 = "Tapping Test (RH)!A1:G1";
+            String range3 = "Tapping Test (LF)!A1:G1";
+            String range4 = "Tapping Test (RF)!A1:G1";
+            String range5 = "Spiral Test (LH)!A1:J1";
+            String range6 = "Spiral Test (RH)!A1:J1";
+            String range7 = "Balloon Test (LH)!A1:F1";
+            String range8 = "Balloon Test (RH)!A1:F1";
+            String range9 = "Level Test (LH)!A1:G1";
+            String range10 = "Level Test (RH)!A1:G1";
+
+
+
             List<String> results = new ArrayList<String>();
             results.add("Results added to spreadsheet");
             List<List<Object>> values = new ArrayList<List<Object>>();
             List<Object> data1 = new ArrayList<Object>();
-            data1.add(patientID);
-            data1.add(tapsleft1);
-            data1.add(tapsleft2);
-            data1.add(tapsleft3);
-            data1.add(tapsleft4);
-            data1.add(tapsleft5);
-
-            data1.add(tapsright1);
-            data1.add(tapsright2);
-            data1.add(tapsright3);
-            data1.add(tapsright4);
-            data1.add(tapsright5);
-
-            data1.add(tapsleftAvg);
-            data1.add(tapsrightAvg);
-
-            data1.add(spiralResult);
-            data1.add(levelResult);
-
+            List<Object> data2 = new ArrayList<Object>();
+            List<Object> data3 = new ArrayList<Object>();
+            List<Object> data4 = new ArrayList<Object>();
+            List<Object> data5 = new ArrayList<Object>();
+            List<Object> data6 = new ArrayList<Object>();
+            List<Object> data7 = new ArrayList<Object>();
+            List<Object> data8 = new ArrayList<Object>();
+            List<Object> data9 = new ArrayList<Object>();
+            List<Object> data10 = new ArrayList<Object>();
 
             Calendar calendar = Calendar.getInstance(Locale.getDefault());
             int hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -443,14 +452,116 @@ public class PostResults extends Activity
             int month = calendar.get(Calendar.MONTH) + 1;
             int year = calendar.get(Calendar.YEAR);
             String dateStr = "" + month + "/" + date + "/" + year + " at " + hour + ":" + minute;
+
+            SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
+                    Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref.edit();
+
+            int day = pref.getInt("day",1);
+
+            data1.add("p" + patientID+"t02");
             data1.add(dateStr);
+            data1.add(day);
+            data1.add(tapsleftAvg);
+            data1.add("");
+            data1.add("");
+
+
+            data2.add("p" + patientID+"t02");
+            data2.add(dateStr);
+            data2.add(day);
+            data2.add(tapsrightAvg);
+            data2.add("");
+            data2.add("");
+
+
+            data6.add("p" + patientID+"t02");
+            data6.add(dateStr);
+            data6.add(day);
+            data6.add("");
+            data6.add("");
+            data6.add("");
+            data6.add(spiralResult);
+
+            data7.add("p" + patientID+"t02");
+            data7.add(dateStr);
+            data7.add(day);
+            data7.add(10);
+            data7.add(leftReaction);
+            data7.add("");
+
+            data8.add("p" + patientID+"t02");
+            data8.add(dateStr);
+            data8.add(day);
+            data8.add(10);
+            data8.add(rightReaction);
+            data8.add("");
+
+            data10.add("p" + patientID+"t02");
+            data10.add(dateStr);
+            data10.add(day);
+            data10.add(levelResult);
+            data10.add("");
+            data10.add("");
+
+            editor.putInt("day", day+1);
+            editor.commit();
+
             //There are obviously more dynamic ways to do these, but you get the picture
+            ValueRange valueRange;
+
+            values = new ArrayList<List<Object>>();
             values.add(data1);
-            ValueRange valueRange = new ValueRange();
+            valueRange = new ValueRange();
             valueRange.setMajorDimension("ROWS");
-            valueRange.setRange(range);
+            valueRange.setRange(range1);
             valueRange.setValues(values);
-            this.mService.spreadsheets().values().append(spreadsheetId, range, valueRange).setValueInputOption("RAW")
+            this.mService.spreadsheets().values().append(spreadsheetId, range1, valueRange).setValueInputOption("RAW")
+                    .execute();
+
+            values = new ArrayList<List<Object>>();
+            values.add(data2);
+            valueRange = new ValueRange();
+            valueRange.setMajorDimension("ROWS");
+            valueRange.setRange(range2);
+            valueRange.setValues(values);
+            this.mService.spreadsheets().values().append(spreadsheetId, range2, valueRange).setValueInputOption("RAW")
+                    .execute();
+
+            values = new ArrayList<List<Object>>();
+            values.add(data6);
+            valueRange = new ValueRange();
+            valueRange.setMajorDimension("ROWS");
+            valueRange.setRange(range6);
+            valueRange.setValues(values);
+            this.mService.spreadsheets().values().append(spreadsheetId, range6, valueRange).setValueInputOption("RAW")
+                    .execute();
+
+            values = new ArrayList<List<Object>>();
+            values.add(data7);
+            valueRange = new ValueRange();
+            valueRange.setMajorDimension("ROWS");
+            valueRange.setRange(range7);
+            valueRange.setValues(values);
+            this.mService.spreadsheets().values().append(spreadsheetId, range7, valueRange).setValueInputOption("RAW")
+                    .execute();
+
+            values = new ArrayList<List<Object>>();
+            values.add(data8);
+            valueRange = new ValueRange();
+            valueRange.setMajorDimension("ROWS");
+            valueRange.setRange(range8);
+            valueRange.setValues(values);
+            this.mService.spreadsheets().values().append(spreadsheetId, range8, valueRange).setValueInputOption("RAW")
+                    .execute();
+
+            values = new ArrayList<List<Object>>();
+            values.add(data10);
+            valueRange = new ValueRange();
+            valueRange.setMajorDimension("ROWS");
+            valueRange.setRange(range10);
+            valueRange.setValues(values);
+            this.mService.spreadsheets().values().append(spreadsheetId, range10, valueRange).setValueInputOption("RAW")
                     .execute();
             /*this.mService.spreadsheets().values().update(spreadsheetId, range, valueRange)
                     .setValueInputOption("USER_ENTERED")

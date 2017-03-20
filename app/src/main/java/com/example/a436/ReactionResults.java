@@ -1,6 +1,8 @@
 package com.example.a436;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +35,15 @@ public class ReactionResults extends AppCompatActivity {
         results = results + "The right hand average is: " + avgr + "\n";
 
         mText.setText(results);
+
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
+                Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.putLong("average reaction left", avgl);
+        editor.putLong("average reaction right", avgr);
+        editor.commit();
     }
 
 
