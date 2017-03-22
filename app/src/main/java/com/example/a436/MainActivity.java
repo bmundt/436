@@ -82,5 +82,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, PostResults.class);
         startActivity(intent);
     }
+
+    public void curlTest(View V) {
+        Intent intent = new Intent(MainActivity.this, CurlActivity.class);
+        startActivity(intent);
+    }
 }
 

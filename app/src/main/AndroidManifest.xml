@@ -21,14 +21,15 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER"/>
-                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.HOME" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginScreen">
-        </activity>
+        <activity android:name=".LoginScreen"></activity>
         <activity android:name=".TapTestActivity" />
         <activity android:name=".InstrScreen" />
         <activity android:name=".resultsPage" />
@@ -58,7 +59,8 @@
         </activity>
         <activity android:name=".ReactionInstr" />
         <activity android:name=".ReactionTest" />
-        <activity android:name=".ReactionResults"></activity>
+        <activity android:name=".ReactionResults" />
+        <activity android:name=".CurlActivity"></activity>
     </application>
 
 </manifest>
