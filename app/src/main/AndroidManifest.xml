@@ -29,7 +29,7 @@
                 <category android:name="android.intent.category.HOME" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginScreen"></activity>
+        <activity android:name=".LoginScreen" />
         <activity android:name=".TapTestActivity" />
         <activity android:name=".InstrScreen" />
         <activity android:name=".resultsPage" />
@@ -60,7 +60,8 @@
         <activity android:name=".ReactionInstr" />
         <activity android:name=".ReactionTest" />
         <activity android:name=".ReactionResults" />
-        <activity android:name=".CurlActivity"></activity>
+        <activity android:name=".CurlActivity" />
+        <activity android:name=".CurlCalibration"></activity>
     </application>
 
 </manifest>
