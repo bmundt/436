@@ -61,7 +61,8 @@
         <activity android:name=".ReactionTest" />
         <activity android:name=".ReactionResults" />
         <activity android:name=".CurlActivity" />
-        <activity android:name=".CurlCalibration"></activity>
+        <activity android:name=".CurlCalibration" />
+        <activity android:name=".LevelInstr"></activity>
     </application>
 
 </manifest>

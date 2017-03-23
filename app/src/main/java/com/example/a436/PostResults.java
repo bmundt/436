@@ -80,8 +80,10 @@ public class PostResults extends Activity
     private Double tapsrightAvg;
     private Double tapsleftAvg;
 
-    private Double spiralResult;
-    private Double levelResult;
+    private Double rightSpiralResult;
+    private Double leftSpiralResult;
+    private Double rightLevelResult;
+    private Double leftLevelResult;
 
     private Long leftReaction;
     private long rightReaction;
@@ -119,8 +121,10 @@ public class PostResults extends Activity
         tapsrightAvg = new Double(pref.getFloat("tapsrightAvg", 0.0F));
         tapsleftAvg = new Double(pref.getFloat("tapsleftAvg", 0.0F));
 
-        spiralResult = new Double(pref.getFloat("spiral", 0.0F));
-        levelResult = new Double(pref.getFloat("level", 0.0F));
+        rightSpiralResult = new Double(pref.getFloat("rightSpiral", 0.0F));
+        leftSpiralResult = new Double(pref.getFloat("leftSpiral", 0.0F));
+        rightLevelResult = new Double(pref.getFloat("rightlevel", 0.0F));
+        leftLevelResult = new Double(pref.getFloat("leftlevel", 0.0F));
 
         leftReaction = new Long(pref.getLong("average reaction left", 0));
         rightReaction = new Long(pref.getLong("average reaction right", 0));
@@ -474,6 +478,13 @@ public class PostResults extends Activity
             data2.add("");
             data2.add("");
 
+            data5.add("p" + patientID+"t02");
+            data5.add(dateStr);
+            data5.add(day);
+            data5.add("");
+            data5.add("");
+            data5.add("");
+            data5.add(leftSpiralResult);
 
             data6.add("p" + patientID+"t02");
             data6.add(dateStr);
@@ -481,7 +492,7 @@ public class PostResults extends Activity
             data6.add("");
             data6.add("");
             data6.add("");
-            data6.add(spiralResult);
+            data6.add(rightSpiralResult);
 
             data7.add("p" + patientID+"t02");
             data7.add(dateStr);
@@ -497,10 +508,17 @@ public class PostResults extends Activity
             data8.add(rightReaction);
             data8.add("");
 
+            data9.add("p" + patientID+"t02");
+            data9.add(dateStr);
+            data9.add(day);
+            data9.add(leftLevelResult);
+            data9.add("");
+            data9.add("");
+
             data10.add("p" + patientID+"t02");
             data10.add(dateStr);
             data10.add(day);
-            data10.add(levelResult);
+            data10.add(rightLevelResult);
             data10.add("");
             data10.add("");
 

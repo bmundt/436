@@ -1,5 +1,6 @@
 package com.example.a436;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,13 +9,12 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.SystemClock;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
-public class CurlActivity extends AppCompatActivity implements SensorEventListener {
+public class CurlActivity extends Activity implements SensorEventListener {
 
     private SensorManager mSensorManager;
     private Sensor proximity;

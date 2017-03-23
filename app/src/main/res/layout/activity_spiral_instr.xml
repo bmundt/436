@@ -21,7 +21,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <TextView
-        android:text="This exercise will test your ability to draw a spiral. The picture below is an image of the spiral that you will draw. You will have the chance to practice drawing before performing the test. Please use your dominant hand."
+        android:text="This exercise will test your ability to draw a spiral. The picture below is an image of the spiral that you will draw. You will have the chance to practice drawing before performing the test. Please use your left hand first."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView4"
@@ -35,8 +35,9 @@
         app:srcCompat="@drawable/spiral"
         android:id="@+id/imageView2"
         android:paddingBottom="60dp"
-        android:layout_alignParentEnd="true"
-        android:paddingTop="150dp" />
+        android:paddingTop="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:text="Click the 'Next' button to practice drawing the spiral..."

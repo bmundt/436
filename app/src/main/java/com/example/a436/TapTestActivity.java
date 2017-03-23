@@ -5,8 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.app.AlertDialog;
+import android.app.Activity;
 import android.view.Gravity;
 import android.view.View;
 import android.app.Activity;
@@ -25,7 +25,7 @@ import android.widget.TextView;
  * Created by brmun on 2/2/2017.
  */
 
-public class TapTestActivity extends AppCompatActivity {
+public class TapTestActivity extends Activity {
 
     private boolean timerStarted;
     private int taps;

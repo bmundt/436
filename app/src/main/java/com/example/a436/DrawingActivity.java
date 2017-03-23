@@ -1,5 +1,6 @@
 package com.example.a436;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,12 +33,16 @@ public class DrawingActivity extends AppCompatActivity {
     private String url;
     private String scoreString;
 
+    String hand;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawing);
         drawView = (DrawingView) findViewById(R.id.drawing);
+        hand = getIntent().getExtras().getString("hand");
+
     }
 
 
@@ -108,6 +113,7 @@ public class DrawingActivity extends AppCompatActivity {
                 Intent intent = new Intent(DrawingActivity.this, SpiralResults.class);
                 intent.putExtra("URL", url);
                 intent.putExtra("score", scoreString);
+                intent.putExtra("hand", hand);
                 startActivity(intent);
             }
 
