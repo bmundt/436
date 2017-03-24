@@ -74,6 +74,7 @@ public class Level extends Activity implements OrientationListener {
 	private int totalTaps;
 	private CountDownTimer timer;
 	public TextView text;
+	String hand;
 
 	ArrayList Xlist = new ArrayList<Double>(2000);
 	ArrayList Ylist = new ArrayList<Double>(2000);
@@ -86,6 +87,7 @@ public class Level extends Activity implements OrientationListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+		hand = getIntent().getExtras().getString("hand");
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		text = (TextView) this.findViewById(R.id.timeLeft);
         CONTEXT = this;
@@ -136,6 +138,7 @@ public class Level extends Activity implements OrientationListener {
 				goToNextActivity.putExtra("YList", Ylist);
 				goToNextActivity.putExtra("middleX", middleX);
 				goToNextActivity.putExtra("middleY", middleY);
+				goToNextActivity.putExtra("hand", hand);
 				startActivity(goToNextActivity);
 			}
 		}, 19000);

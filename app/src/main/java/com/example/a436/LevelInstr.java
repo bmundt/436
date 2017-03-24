@@ -1,22 +1,23 @@
 package com.example.a436;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class PracticeSpiral extends AppCompatActivity {
+public class LevelInstr extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_practice_spiral);
+        setContentView(R.layout.activity_level_instr);
     }
 
-    public void toTest(View v)
+    public void nextButton(View v)
     {
-        Intent intent = new Intent(PracticeSpiral.this, DrawingActivity.class);
+        Intent intent = new Intent(LevelInstr.this, Level.class);
         intent.putExtra("hand", "left");
         startActivity(intent);
     }
 }
+

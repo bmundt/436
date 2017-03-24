@@ -3,14 +3,14 @@ package com.example.a436;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ReactionResults extends AppCompatActivity {
+public class ReactionResults extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

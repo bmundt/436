@@ -20,8 +20,8 @@ public class MyApp extends Application {
 
     public MyApp() {
         super();
-        leftHandResults = new int[5];
-        rightHandResults = new int[5];
+        leftHandResults = new int[3];
+        rightHandResults = new int[3];
         testNumber = 0;
     }
 

@@ -2,7 +2,7 @@ package com.example.a436;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;
 import android.util.Log;
@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void levelTest(View v) {
-        Intent intent = new Intent(MainActivity.this, Level.class);
+        Intent intent = new Intent(MainActivity.this, LevelInstr.class);
         startActivity(intent);
     }
 

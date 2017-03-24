@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,10 +26,25 @@ public class SpiralResults extends Activity {
     public static final int IMAGE_GALLERY_REQUEST = 20;
     private ImageView resultDisplay;
 
+    String hand;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spiral_results);
+        hand = getIntent().getExtras().getString("hand");
+
+        if(hand.equals("left")) {
+            Button btn = (Button)findViewById(R.id.toRight);
+            btn.setVisibility(View.VISIBLE);
+            Button btn2 = (Button)findViewById(R.id.toHome);
+            btn2.setVisibility(View.INVISIBLE);
+        } else {
+            Button btn = (Button)findViewById(R.id.toRight);
+            btn.setVisibility(View.INVISIBLE);
+            Button btn2 = (Button)findViewById(R.id.toHome);
+            btn2.setVisibility(View.VISIBLE);
+        }
 
         //get a reference to an image view that holds an image user will see
         resultDisplay = (ImageView) findViewById(R.id.resultDisplay);
@@ -38,7 +54,12 @@ public class SpiralResults extends Activity {
             SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
                     Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = pref.edit();
-            editor.putFloat("spiral", (float) d.floatValue());
+            if(hand.equals("left")) {
+                editor.putFloat("leftSpiral", (float) d.floatValue());
+
+            } else {
+                editor.putFloat("rightSpiral", (float) d.floatValue());
+            }
             editor.commit();
         }
 
@@ -127,8 +148,15 @@ public class SpiralResults extends Activity {
         }
     }
 
-    public void mainMenuButton(View v) {
+    public void toHome(View v) {
         Intent intent = new Intent(SpiralResults.this, MainActivity.class);
         startActivity(intent);
     }
+
+    public void toRightTest(View v) {
+        Intent intent = new Intent(SpiralResults.this, DrawingActivity.class);
+        intent.putExtra("hand", "right");
+        startActivity(intent);
+    }
+
 }
