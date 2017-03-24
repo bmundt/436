@@ -25,8 +25,9 @@ public class CurlCalibration extends AppCompatActivity implements  SensorEventLi
     int whichVal;
     private SensorManager mSensorManager;
     private Sensor proximity;
-    private Sensor accelerometer;
-    private Sensor magnetometer;
+    private Sensor rotation;
+//    private Sensor accelerometer;
+//    private Sensor magnetometer;
     private TextView distView;
     float distance;
     private final float[] mAccelerometerReading = new float[3];
@@ -34,39 +35,38 @@ public class CurlCalibration extends AppCompatActivity implements  SensorEventLi
 
     private final float[] mRotationMatrix = new float[9];
     private final float[] mOrientationAngles = new float[3];
+    private float zAngle;
 
     private final int START = 0;
     private final int HALF = 1;
     private final int COMPLETE = 2;
 
     private final String START_TAG = "START";
-    private final String HALF_TAG = "HALF";
-    private final String COMPLETE_TAG = "COMPLETE";
+    private final String ELBOW_TAG = "ELBOW";
+    private final String SHOULDER_TAG = "SHOULDER";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_curl_calibration);
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        magnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+//        accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+//        magnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         proximity = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+        rotation = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
         distView = (TextView) findViewById(R.id.distance);
         whichVal = 0;
     }
 
     public void calibrate(View v) {
-        updateOrientationAngles();
+//        updateOrientationAngles();
         String text = "Orientation Angles:\n" +
-                "\tAngle 1: " + String.valueOf(mOrientationAngles[0]) + "\n" +
-                "\tAngle 2: " + String.valueOf(mOrientationAngles[1]) + "\n" +
-                "\tAngle 3: " + String.valueOf(mOrientationAngles[2]) + "\n" +
+                "\tZ Angle: " + String.valueOf(zAngle) + "\n" +
                 "Distance: " + String.valueOf(distance);
         distView.setText(text);
 
         // here we will set the calibration numbers in the shared preferences
         if (whichVal <= COMPLETE) {
-
             SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
                     Context.MODE_PRIVATE);
             // set the values for the different trials
@@ -77,16 +77,14 @@ public class CurlCalibration extends AppCompatActivity implements  SensorEventLi
                     floatTag = START_TAG;
                     break;
                 case HALF:
-                    floatTag = HALF_TAG;
+                    floatTag = ELBOW_TAG;
                     break;
                 case COMPLETE:
-                    floatTag = COMPLETE_TAG;
+                    floatTag = SHOULDER_TAG;
                     break;
             }
 
-            editor.putFloat(floatTag + "_1", mOrientationAngles[0]);
-            editor.putFloat(floatTag + "_2", mOrientationAngles[1]);
-            editor.putFloat(floatTag + "_3", mOrientationAngles[2]);
+            editor.putFloat(floatTag, zAngle);
             editor.commit();
             whichVal++;
         } else {
@@ -99,10 +97,12 @@ public class CurlCalibration extends AppCompatActivity implements  SensorEventLi
     @Override
     protected void onResume() {
         super.onResume();
-        mSensorManager.registerListener(this, accelerometer,
-                SensorManager.SENSOR_DELAY_NORMAL, SensorManager.SENSOR_DELAY_UI);
-        mSensorManager.registerListener(this, magnetometer,
-                SensorManager.SENSOR_DELAY_NORMAL, SensorManager.SENSOR_DELAY_UI);
+//        mSensorManager.registerListener(this, accelerometer,
+//                SensorManager.SENSOR_DELAY_NORMAL, SensorManager.SENSOR_DELAY_UI);
+//        mSensorManager.registerListener(this, magnetometer,
+//                SensorManager.SENSOR_DELAY_NORMAL, SensorManager.SENSOR_DELAY_UI);
+        mSensorManager.registerListener(this, rotation, SensorManager.SENSOR_DELAY_NORMAL,
+                SensorManager.SENSOR_DELAY_UI);
         mSensorManager.registerListener(this, proximity, SensorManager.SENSOR_DELAY_NORMAL,
                 SensorManager.SENSOR_DELAY_UI);
     }
@@ -121,30 +121,33 @@ public class CurlCalibration extends AppCompatActivity implements  SensorEventLi
             case Sensor.TYPE_PROXIMITY:
                 distance = event.values[0];
                 break;
-            case Sensor.TYPE_ACCELEROMETER:
-                System.arraycopy(event.values, 0, mAccelerometerReading,
-                        0, mAccelerometerReading.length);
-                updateOrientationAngles();
+            case Sensor.TYPE_ROTATION_VECTOR:
+                zAngle = event.values[2];
                 break;
-            case Sensor.TYPE_MAGNETIC_FIELD:
-                System.arraycopy(event.values, 0, mMagnetometerReading,
-                        0, mMagnetometerReading.length);
-                updateOrientationAngles();
-                break;
+//            case Sensor.TYPE_ACCELEROMETER:
+//                System.arraycopy(event.values, 0, mAccelerometerReading,
+//                        0, mAccelerometerReading.length);
+//                updateOrientationAngles();
+//                break;
+//            case Sensor.TYPE_MAGNETIC_FIELD:
+//                System.arraycopy(event.values, 0, mMagnetometerReading,
+//                        0, mMagnetometerReading.length);
+//                updateOrientationAngles();
+//                break;
         }
     }
 
-    public void updateOrientationAngles() {
-        // Update rotation matrix, which is needed to update orientation angles.
-        mSensorManager.getRotationMatrix(mRotationMatrix, null,
-                mAccelerometerReading, mMagnetometerReading);
-
-        // "mRotationMatrix" now has up-to-date information.
-
-        mSensorManager.getOrientation(mRotationMatrix, mOrientationAngles);
-
-        // "mOrientationAngles" now has up-to-date information.
-    }
+//    public void updateOrientationAngles() {
+//        // Update rotation matrix, which is needed to update orientation angles.
+//        mSensorManager.getRotationMatrix(mRotationMatrix, null,
+//                mAccelerometerReading, mMagnetometerReading);
+//
+//        // "mRotationMatrix" now has up-to-date information.
+//
+//        mSensorManager.getOrientation(mRotationMatrix, mOrientationAngles);
+//
+//        // "mOrientationAngles" now has up-to-date information.
+//    }
 
 
     @Override

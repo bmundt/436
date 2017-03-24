@@ -10,57 +10,60 @@ import android.hardware.SensorManager;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.TextView;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class CurlActivity extends AppCompatActivity implements SensorEventListener {
 
     private SensorManager mSensorManager;
     private Sensor proximity;
-    private Sensor accelerometer;
-    private Sensor magnetometer;
+//    private Sensor accelerometer;
+//    private Sensor magnetometer;
+    private Sensor rotation;
+//    private Sensor linear_accelerometer;
     private TextView instructions;
     private TextView curlCount;
     float distance;
-    private final float[] mAccelerometerReading = new float[3];
-    private final float[] mMagnetometerReading = new float[3];
 
     private final float[] mRotationMatrix = new float[9];
     private final float[] mOrientationAngles = new float[3];
 
-    private final float[] START_ORIENTATION = new float[3];
-    private final float[] HALF_ORIENTATION = new float[3];
-    private final float[] COMPLETE_ORIENTATION = new float[3];
+    private float START_ORIENTATION = Float.MAX_VALUE;
+    private float ELBOW_ORIENTATION = Float.MAX_VALUE;
+    private float SHOULDER_ORIENTATION = Float.MAX_VALUE;
 
     private final String START_TAG = "START";
-    private final String HALF_TAG = "HALF";
-    private final String COMPLETE_TAG = "COMPLETE";
+    private final String ELBOW_TAG = "ELBOW";
+    private final String SHOULDER_TAG = "SHOULDER";
 
     private Chronometer chron;
-    private boolean half = false;
-    private boolean complete = false;
-    private boolean backAtHalf = false;
-    private int reps = 0;
+    private boolean elbow;
+    private boolean shoulder;
+    private boolean backAtElbow;
+    private boolean isStarted;
+    private int reps;
     private final int MAX_REPS = 10;
-    private final float margin = .1F;
+    private final float margin = .3F;
     private long totalTime;
+
+
+    // get accelerometer force until 0.0
+    // then track it again backwards
 
 
     /* Tested Angle Values
      START
-     1: -.501
-     2: -0.094
      3: -0.056
 
      HALF
-     1: -0.762
-     2: -0.062
      3: 1.896
 
      COMPLETE
-     1: 0.510
-     2: -0.059
      3: -3.112
 
 
@@ -73,11 +76,18 @@ public class CurlActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_curl);
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        magnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+//        accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+//        magnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        rotation = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+//        linear_accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
         proximity = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
         curlCount = (TextView) findViewById(R.id.curlCount);
         chron = new Chronometer(getApplicationContext());
+        elbow = false;
+        backAtElbow = false;
+        shoulder = false;
+        isStarted = false;
+        reps = 0;
     }
 
     /*
@@ -91,37 +101,25 @@ public class CurlActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onResume() {
         super.onResume();
-        // check here for calibration values and send to calibrate if missing
         SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
                 Context.MODE_PRIVATE);
-        float startVal = Float.MAX_VALUE;
-        float halfVal = Float.MAX_VALUE;
-        float completeVal = Float.MAX_VALUE;
-        int actualVal = 0;
-        for (int i = 0; i < START_ORIENTATION.length; i++) {
-            actualVal = i + 1;
-            startVal = pref.getFloat(START_TAG + "_" + actualVal, Float.MAX_VALUE);
-            halfVal = pref.getFloat(START_TAG + "_" + actualVal, Float.MAX_VALUE);
-            completeVal = pref.getFloat(START_TAG + "_" + actualVal, Float.MAX_VALUE);
 
-            if (startVal == Float.MAX_VALUE || halfVal == Float.MAX_VALUE ||
-                    completeVal == Float.MAX_VALUE) {
-                // start the calibration activity
-                Intent intent = new Intent(CurlActivity.this, CurlCalibration.class);
-                startActivity(intent);
-            } else {
-                START_ORIENTATION[i] = startVal;
-                HALF_ORIENTATION[i] = halfVal;
-                COMPLETE_ORIENTATION[i] = completeVal;
-            }
+        START_ORIENTATION = pref.getFloat(START_TAG, Float.MAX_VALUE);
+        ELBOW_ORIENTATION = pref.getFloat(ELBOW_TAG, Float.MAX_VALUE);
+        SHOULDER_ORIENTATION = pref.getFloat(SHOULDER_TAG, Float.MAX_VALUE);
+        Log.d(START_TAG, String.valueOf(SHOULDER_ORIENTATION));
+        Log.d(ELBOW_TAG, String.valueOf(ELBOW_ORIENTATION));
+        Log.d(SHOULDER_TAG, String.valueOf(SHOULDER_ORIENTATION));
+
+        if (START_ORIENTATION == Float.MAX_VALUE || ELBOW_ORIENTATION == Float.MAX_VALUE ||
+                SHOULDER_ORIENTATION == Float.MAX_VALUE) {
+            // start the calibration activity
+            Intent intent = new Intent(CurlActivity.this, CurlCalibration.class);
+            startActivity(intent);
         }
 
-
-
-        mSensorManager.registerListener(this, accelerometer,
-                SensorManager.SENSOR_DELAY_NORMAL, SensorManager.SENSOR_DELAY_UI);
-        mSensorManager.registerListener(this, magnetometer,
-                SensorManager.SENSOR_DELAY_NORMAL, SensorManager.SENSOR_DELAY_UI);
+        mSensorManager.registerListener(this, rotation, SensorManager.SENSOR_DELAY_NORMAL,
+                SensorManager.SENSOR_DELAY_UI);
         mSensorManager.registerListener(this, proximity, SensorManager.SENSOR_DELAY_NORMAL,
                 SensorManager.SENSOR_DELAY_UI);
     }
@@ -140,69 +138,55 @@ public class CurlActivity extends AppCompatActivity implements SensorEventListen
             case Sensor.TYPE_PROXIMITY:
                 distance = event.values[0];
                 break;
-            case Sensor.TYPE_ACCELEROMETER:
-                System.arraycopy(event.values, 0, mAccelerometerReading,
-                        0, mAccelerometerReading.length);
-                updateOrientationAngles();
-                break;
-            case Sensor.TYPE_MAGNETIC_FIELD:
-                System.arraycopy(event.values, 0, mMagnetometerReading,
-                        0, mMagnetometerReading.length);
-                updateOrientationAngles();
-                break;
-        }
-
-        // orientation is fixed at this point
-        // so check to see where in a rep we are, if we complete then we
-        // increase rep count and reset variables
-        if (reps < MAX_REPS) {
-            if (half) {
-                // at least half way
-                if (complete) {
-
-                    if (backAtHalf) {
-                        // check for backAtStart, if so then reset and increment reps
-                        if (compareAngles(mOrientationAngles, START_ORIENTATION)) {
-                            reps++;
-                            backAtHalf = false;
-                            complete = false;
-                            half = false;
-                            curlCount.setText("Curl Count: "+ reps);
+            case Sensor.TYPE_ROTATION_VECTOR:
+                // now we check to see where the phone has been
+                float zAngle = event.values[2];
+                Log.d("zAngle", String.valueOf(zAngle));
+                if (reps < MAX_REPS && isStarted) {
+                    if (elbow) {
+                        // we are at least at elbow, check for shoulder
+                        if (shoulder) {
+                            // we are at least at shoulder, check for backAtElbow
+                            if (backAtElbow) {
+                                // almost there check if at the beginning
+                                if (compareAngles(START_ORIENTATION, zAngle)) {
+                                    // completed curl reset everything and increase reps
+                                    reps++;
+                                    elbow = false;
+                                    backAtElbow = false;
+                                    shoulder = false;
+                                    Log.d("COMPLETED CURL", String.valueOf(reps));
+                                    curlCount.setText("Curl Count: " + String.valueOf(reps));
+                                }
+                            } else {
+                                if (compareAngles(ELBOW_ORIENTATION, zAngle)) {
+                                    backAtElbow = true;
+                                    Log.d("BACK AT ELBOW", String.valueOf(zAngle));
+                                }
+                            }
+                        } else {
+                            // not at shoulder yet
+                            if (compareAngles(SHOULDER_ORIENTATION, zAngle) &&
+                                    distance == 0.0) {
+                                shoulder = true;
+                                Log.d("SHOULDER", String.valueOf(zAngle));
+                            }
                         }
                     } else {
-                        if (compareAngles(mOrientationAngles, HALF_ORIENTATION))
-                            backAtHalf = true;
+                        // check for elbow
+                        if (compareAngles(ELBOW_ORIENTATION, zAngle)) {
+                            elbow = true;
+                            Log.d(ELBOW_TAG, String.valueOf(zAngle));
+                        }
                     }
-                } else {
-                    // check for complete
-                    if (compareAngles(mOrientationAngles, COMPLETE_ORIENTATION) &&
-                            distance - margin == 0.0)
-                        complete = true;
+                } else if (reps == MAX_REPS) {
+                    chron.stop();
+                    totalTime = SystemClock.elapsedRealtime() - chron.getBase();
+                    curlCount.setText("Curl Count: 10\nTime: " + totalTime + "milliseconds");
+                    reps++;
                 }
-            } else {
-                // not half way, so check if we are
-                if (compareAngles(mOrientationAngles, HALF_ORIENTATION))
-                    half = true;
-            }
-        } else {
-            chron.stop();
-            totalTime = SystemClock.elapsedRealtime() - chron.getBase();
-            curlCount.setText("Curl Count: 10\nTime: " + totalTime + "milliseconds");
         }
     }
-
-    public void updateOrientationAngles() {
-        // Update rotation matrix, which is needed to update orientation angles.
-        mSensorManager.getRotationMatrix(mRotationMatrix, null,
-                mAccelerometerReading, mMagnetometerReading);
-
-        // "mRotationMatrix" now has up-to-date information.
-
-        mSensorManager.getOrientation(mRotationMatrix, mOrientationAngles);
-
-        // "mOrientationAngles" now has up-to-date information.
-    }
-
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -210,17 +194,10 @@ public class CurlActivity extends AppCompatActivity implements SensorEventListen
 
     public void startTimer(View v) {
         chron.start();
+        isStarted = true;
     }
 
-    private boolean compareAngles(float[] floats1, float[] floats2) {
-        float val1 = Math.abs(floats1[0] - floats2[0]);
-        float val2 = Math.abs(floats1[1] - floats2[1]);
-        float val3 = Math.abs(floats1[2] - floats2[2]);
-
-        if (val1 <= margin && val2 <= margin && val3 <= margin) {
-            return true;
-        } else {
-            return false;
-        }
+    private boolean compareAngles(float f1, float f2) {
+        return Math.abs(f1 - f2) <= margin;
     }
 }

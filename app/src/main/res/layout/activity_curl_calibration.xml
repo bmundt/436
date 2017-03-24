@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="Distance Here"
+        android:text="Press the Button at the star of the curl, at half way (or your elbow) and then when you touch your shoulder"
         android:id="@+id/distance"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
