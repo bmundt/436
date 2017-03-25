@@ -15,7 +15,7 @@ public class LoginScreen extends Activity {
 
     Button login;
     EditText ed1;
-    String patientID;
+    int patientID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +27,12 @@ public class LoginScreen extends Activity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                patientID = ed1.getText().toString();
+                patientID = Integer.parseInt(ed1.getText().toString());
                 SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
                         Context.MODE_PRIVATE);
                 // set the values for the different trials
                 SharedPreferences.Editor editor = pref.edit();
-                editor.putString("patientID", patientID);
+                editor.putInt("patientID", patientID);
                 Log.d("LoginScreen", "This is the patient ID: " + pref.getString("patientID", "Not Found"));
                 editor.commit();
 

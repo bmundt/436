@@ -42,9 +42,9 @@ public class MainActivity extends Activity {
         super.onResume();
         SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
                 Context.MODE_PRIVATE);
-        String patientID = pref.getString("patientID", "");
+        int patientID = pref.getInt("patientID", -1);
         Log.d("Main", "This is the patient ID: " + patientID);
-        if (patientID == "") {
+        if (patientID == -1) {
             Intent intent = new Intent(MainActivity.this, LoginScreen.class);
             startActivity(intent);
         }
