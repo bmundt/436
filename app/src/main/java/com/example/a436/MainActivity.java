@@ -42,9 +42,9 @@ public class MainActivity extends Activity {
         super.onResume();
         SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
                 Context.MODE_PRIVATE);
-        int patientID = pref.getInt("patientID", -1);
+        String patientID = pref.getString("patientID", "");
         Log.d("Main", "This is the patient ID: " + patientID);
-        if (patientID == -1) {
+        if (patientID == "") {
             Intent intent = new Intent(MainActivity.this, LoginScreen.class);
             startActivity(intent);
         }
@@ -85,6 +85,11 @@ public class MainActivity extends Activity {
 
     public void curlTest(View V) {
         Intent intent = new Intent(MainActivity.this, CurlActivity.class);
+        startActivity(intent);
+    }
+
+    public void login(View v) {
+        Intent intent = new Intent(MainActivity.this, LoginScreen.class);
         startActivity(intent);
     }
 }

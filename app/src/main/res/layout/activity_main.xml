@@ -51,10 +51,16 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/test_mode_toggle"
                     android:text="Test Mode"/>
+
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Send All Test Results"
+                    android:text="Login"
+                    android:onClick="login"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Send Results"
                     android:onClick="sendResults"/>
             </LinearLayout>
 
