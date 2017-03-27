@@ -25,6 +25,10 @@ public class MyApp extends Application {
         testNumber = 0;
     }
 
+    public int getNumTrials() {
+        return leftHandResults.length;
+    }
+
     public int trialResults(String hand, int num) {
         if (hand == "left") {
             return leftHandResults[num];

@@ -44,5 +44,6 @@
     <string name="config_switch_vertically">Invert vertically</string>
     <string name="config_switch_horizontally">Invert horizontally</string>
     <string name="config_rotate_axis">Rotate axis</string>
+    <string name="calibration_instructions">Press the Button at the star of the curl, at half way (or your elbow) and then when you touch your shoulder</string>
 
 </resources>

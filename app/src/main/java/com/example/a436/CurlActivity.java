@@ -40,6 +40,7 @@ public class CurlActivity extends AppCompatActivity implements SensorEventListen
     private final String START_TAG = "START";
     private final String ELBOW_TAG = "ELBOW";
     private final String SHOULDER_TAG = "SHOULDER";
+    private final int CLOSE_ENOUGH = 2;
 
     private Chronometer chron;
     private boolean elbow;
@@ -48,7 +49,7 @@ public class CurlActivity extends AppCompatActivity implements SensorEventListen
     private boolean isStarted;
     private int reps;
     private final int MAX_REPS = 10;
-    private final float margin = .3F;
+    private final float margin = .2F;
     private long totalTime;
 
 
@@ -81,6 +82,7 @@ public class CurlActivity extends AppCompatActivity implements SensorEventListen
         rotation = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
 //        linear_accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
         proximity = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+        instructions = (TextView) findViewById(R.id.instructions);
         curlCount = (TextView) findViewById(R.id.curlCount);
         chron = new Chronometer(getApplicationContext());
         elbow = false;
@@ -140,43 +142,48 @@ public class CurlActivity extends AppCompatActivity implements SensorEventListen
                 break;
             case Sensor.TYPE_ROTATION_VECTOR:
                 // now we check to see where the phone has been
-                float zAngle = event.values[2];
-                Log.d("zAngle", String.valueOf(zAngle));
+                float xAngle = event.values[0];
+
                 if (reps < MAX_REPS && isStarted) {
+                    Log.d("xAngle", String.valueOf(xAngle));
                     if (elbow) {
                         // we are at least at elbow, check for shoulder
                         if (shoulder) {
                             // we are at least at shoulder, check for backAtElbow
                             if (backAtElbow) {
                                 // almost there check if at the beginning
-                                if (compareAngles(START_ORIENTATION, zAngle)) {
+                                if (compareAngles(START_ORIENTATION, xAngle)) {
                                     // completed curl reset everything and increase reps
                                     reps++;
                                     elbow = false;
                                     backAtElbow = false;
                                     shoulder = false;
                                     Log.d("COMPLETED CURL", String.valueOf(reps));
+                                    instructions.setText("BACK AT START OF CURL");
                                     curlCount.setText("Curl Count: " + String.valueOf(reps));
                                 }
                             } else {
-                                if (compareAngles(ELBOW_ORIENTATION, zAngle)) {
+                                if (compareAngles(ELBOW_ORIENTATION, xAngle)) {
                                     backAtElbow = true;
-                                    Log.d("BACK AT ELBOW", String.valueOf(zAngle));
+                                    instructions.setText("HIT ELBOW ON BACKSWING");
+                                    Log.d("BACK AT ELBOW", String.valueOf(xAngle));
                                 }
                             }
                         } else {
                             // not at shoulder yet
-                            if (compareAngles(SHOULDER_ORIENTATION, zAngle) &&
-                                    distance == 0.0) {
+                            if (compareAngles(SHOULDER_ORIENTATION, xAngle) &&
+                                    distance <= CLOSE_ENOUGH) {
                                 shoulder = true;
-                                Log.d("SHOULDER", String.valueOf(zAngle));
+                                instructions.setText("AT SHOULDER");
+                                Log.d("SHOULDER", String.valueOf(xAngle));
                             }
                         }
                     } else {
                         // check for elbow
-                        if (compareAngles(ELBOW_ORIENTATION, zAngle)) {
+                        if (compareAngles(ELBOW_ORIENTATION, xAngle)) {
                             elbow = true;
-                            Log.d(ELBOW_TAG, String.valueOf(zAngle));
+                            instructions.setText("AT ELBOW");
+                            Log.d(ELBOW_TAG, String.valueOf(xAngle));
                         }
                     }
                 } else if (reps == MAX_REPS) {
@@ -195,6 +202,7 @@ public class CurlActivity extends AppCompatActivity implements SensorEventListen
     public void startTimer(View v) {
         chron.start();
         isStarted = true;
+        Log.d("TIMER", "TIMER STARTED");
     }
 
     private boolean compareAngles(float f1, float f2) {

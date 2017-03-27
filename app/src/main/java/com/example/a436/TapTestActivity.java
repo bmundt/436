@@ -114,7 +114,8 @@ public class TapTestActivity extends Activity {
                     Then after they hit okay will reset the page as right hand.*/
             AlertDialog instructions = new AlertDialog.Builder(TapTestActivity.this).create();
             instructions.setTitle("Instructions");
-            instructions.setMessage("Please Switch to your right hand, and perform 5 trials");
+            instructions.setMessage("Please Switch to your right hand, and perform" +
+                            ((MyApp) getApplication()).getNumTrials() + "trials");
             instructions.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {

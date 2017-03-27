@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="Press the Button at the star of the curl, at half way (or your elbow) and then when you touch your shoulder"
+        android:text="@string/calibration_instructions"
         android:id="@+id/distance"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
@@ -21,6 +21,7 @@
         android:layout_height="0dp"
         android:layout_below="@+id/distance"
         android:layout_weight="1"
+        android:id="@+id/calibrate_btn"
         android:text="Calibrate"
         android:onClick="calibrate"/>
 </LinearLayout>

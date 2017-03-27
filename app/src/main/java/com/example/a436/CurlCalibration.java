@@ -1,14 +1,18 @@
 package com.example.a436;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.content.Context;
 import android.hardware.Sensor;
@@ -34,6 +38,8 @@ public class CurlCalibration extends Activity implements  SensorEventListener {
 
     private final float[] mRotationMatrix = new float[9];
     private final float[] mOrientationAngles = new float[3];
+    private float xAngle;
+    private float yAngle;
     private float zAngle;
 
     private final int START = 0;
@@ -43,6 +49,9 @@ public class CurlCalibration extends Activity implements  SensorEventListener {
     private final String START_TAG = "START";
     private final String ELBOW_TAG = "ELBOW";
     private final String SHOULDER_TAG = "SHOULDER";
+    private final int CLOSE_ENOUGH = 2;
+
+    protected Button calibrate_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +64,21 @@ public class CurlCalibration extends Activity implements  SensorEventListener {
         rotation = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
         distView = (TextView) findViewById(R.id.distance);
         whichVal = 0;
+        calibrate_btn = (Button) findViewById(R.id.calibrate_btn);
     }
 
     public void calibrate(View v) {
 //        updateOrientationAngles();
         String text = "Orientation Angles:\n" +
+                "\tX Angle: " + String.valueOf(xAngle) + "\n" +
+                "\tY Angle: " + String.valueOf(yAngle) + "\n" +
                 "\tZ Angle: " + String.valueOf(zAngle) + "\n" +
                 "Distance: " + String.valueOf(distance);
         distView.setText(text);
+
+        Log.d("xAngle", String.valueOf(xAngle));
+        Log.d("yAngle", String.valueOf(yAngle));
+        Log.d("zAngle", String.valueOf(zAngle));
 
         // here we will set the calibration numbers in the shared preferences
         if (whichVal <= COMPLETE) {
@@ -83,9 +99,32 @@ public class CurlCalibration extends Activity implements  SensorEventListener {
                     break;
             }
 
-            editor.putFloat(floatTag, zAngle);
+            editor.putFloat(floatTag, xAngle);
             editor.commit();
-            whichVal++;
+            if (whichVal == COMPLETE && distance > CLOSE_ENOUGH) {
+
+                // display dialog
+                AlertDialog calibrationError = new AlertDialog.Builder(CurlCalibration.this).create();
+                calibrationError.setTitle("Calibration Error");
+                calibrationError.setMessage("The phone was not close enough to your shoulder during " +
+                "the third calibration press. Please recalibrate");
+                calibrationError.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                distView.setText(R.string.calibration_instructions);
+                                dialog.dismiss();
+                            }
+                        });
+                calibrationError.show();
+                whichVal = START;
+            } else if (whichVal == COMPLETE && distance <= CLOSE_ENOUGH) {
+                distView.setText("Calibration Complete");
+                calibrate_btn.setText("GO TO TEST");
+                whichVal++;
+            } else {
+                whichVal++;
+            }
+
         } else {
             // go back to actual test, possibly instructions
             Intent intent = new Intent(CurlCalibration.this, CurlActivity.class);
@@ -121,6 +160,8 @@ public class CurlCalibration extends Activity implements  SensorEventListener {
                 distance = event.values[0];
                 break;
             case Sensor.TYPE_ROTATION_VECTOR:
+                xAngle = event.values[0];
+                yAngle = event.values[1];
                 zAngle = event.values[2];
                 break;
 //            case Sensor.TYPE_ACCELEROMETER:
