@@ -419,7 +419,7 @@ public class PostResults extends Activity
                 }
             }
             return results;*/
-            String spreadsheetId = "13fbFdZSWjjP_DakUX2liVe8pgM4PovPHA96PNd2YYMk";
+            String spreadsheetId = "1YvI3CjS4ZlZQDYi5PaiA7WGGcoCsZfLoSFM0IdvdbDU";
 
             String range1 = "Tapping Test (LH)!A1:G1";
             String range2 = "Tapping Test (RH)!A1:G1";
