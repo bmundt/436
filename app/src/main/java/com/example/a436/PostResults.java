@@ -547,6 +547,15 @@ public class PostResults extends Activity
                     .execute();
 
             values = new ArrayList<List<Object>>();
+            values.add(data5);
+            valueRange = new ValueRange();
+            valueRange.setMajorDimension("ROWS");
+            valueRange.setRange(range5);
+            valueRange.setValues(values);
+            this.mService.spreadsheets().values().append(spreadsheetId, range5, valueRange).setValueInputOption("RAW")
+                    .execute();
+
+            values = new ArrayList<List<Object>>();
             values.add(data6);
             valueRange = new ValueRange();
             valueRange.setMajorDimension("ROWS");
@@ -571,6 +580,15 @@ public class PostResults extends Activity
             valueRange.setRange(range8);
             valueRange.setValues(values);
             this.mService.spreadsheets().values().append(spreadsheetId, range8, valueRange).setValueInputOption("RAW")
+                    .execute();
+
+            values = new ArrayList<List<Object>>();
+            values.add(data9);
+            valueRange = new ValueRange();
+            valueRange.setMajorDimension("ROWS");
+            valueRange.setRange(range9);
+            valueRange.setValues(values);
+            this.mService.spreadsheets().values().append(spreadsheetId, range9, valueRange).setValueInputOption("RAW")
                     .execute();
 
             values = new ArrayList<List<Object>>();
