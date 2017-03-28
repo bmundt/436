@@ -62,7 +62,7 @@ public class LevelResults extends Activity {
             SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
                     Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = pref.edit();
-            if(hand == "left") {
+            if(hand.equals("left")) {
                 editor.putFloat("leftlevel", avgDist.floatValue());
             } else {
                 editor.putFloat("rightlevel", avgDist.floatValue());

@@ -109,8 +109,7 @@ public class PostResults extends Activity
         tapsleft1 = pref.getInt("taps left 1", 0);
         tapsleft2 = pref.getInt("taps left 2", 0);
         tapsleft3 = pref.getInt("taps left 3", 0);
-        tapsleft4 = pref.getInt("taps left 4", 0);
-        tapsleft5 = pref.getInt("taps left 5", 0);
+
 
         tapsright1 = pref.getInt("taps right 1", 0);
         tapsright2 = pref.getInt("taps right 2", 0);
@@ -466,7 +465,9 @@ public class PostResults extends Activity
             data1.add("p" + patientID+"t02");
             data1.add(dateStr);
             data1.add(day);
-            data1.add(tapsleftAvg);
+            data1.add(tapsleft1);
+            data1.add(tapsleft2);
+            data1.add(tapsleft3);
             data1.add("");
             data1.add("");
 
@@ -474,7 +475,9 @@ public class PostResults extends Activity
             data2.add("p" + patientID+"t02");
             data2.add(dateStr);
             data2.add(day);
-            data2.add(tapsrightAvg);
+            data2.add(tapsright1);
+            data2.add(tapsright2);
+            data2.add(tapsright3);
             data2.add("");
             data2.add("");
 
