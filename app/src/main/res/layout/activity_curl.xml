@@ -37,5 +37,11 @@
         android:text="Curl Count: 0"
         android:id="@+id/curlCount"
         android:textSize="32sp"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/main_menu_btn"
+        android:text="main menu"
+        android:onClick="mainMenu"/>
 
 </LinearLayout>

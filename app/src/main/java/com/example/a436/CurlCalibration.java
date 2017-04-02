@@ -86,21 +86,24 @@ public class CurlCalibration extends Activity implements  SensorEventListener {
                     Context.MODE_PRIVATE);
             // set the values for the different trials
             SharedPreferences.Editor editor = pref.edit();
-            String floatTag = "";
             switch (whichVal) {
                 case START:
-                    floatTag = START_TAG;
+                    editor.putFloat(START_TAG, xAngle);
+                    editor.commit();
+                    Log.d("Angle " + START_TAG, String.valueOf(xAngle));
                     break;
                 case HALF:
-                    floatTag = ELBOW_TAG;
+                    editor.putFloat(ELBOW_TAG, xAngle);
+                    editor.commit();
+                    Log.d("Angle " + ELBOW_TAG, String.valueOf(xAngle));
                     break;
                 case COMPLETE:
-                    floatTag = SHOULDER_TAG;
+                    editor.putFloat(SHOULDER_TAG, xAngle);
+                    editor.commit();
+                    Log.d("Angle " + SHOULDER_TAG, String.valueOf(xAngle));
                     break;
             }
 
-            editor.putFloat(floatTag, xAngle);
-            editor.commit();
             if (whichVal == COMPLETE && distance > CLOSE_ENOUGH) {
 
                 // display dialog

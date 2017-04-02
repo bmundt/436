@@ -42,6 +42,7 @@ public class MainActivity extends Activity {
         super.onResume();
         SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
                 Context.MODE_PRIVATE);
+//        int patientID = -1;
         int patientID = pref.getInt("patientID", -1);
         Log.d("Main", "This is the patient ID: " + patientID);
         if (patientID == -1) {
