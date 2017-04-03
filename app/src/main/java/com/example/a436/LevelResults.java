@@ -82,6 +82,13 @@ public class LevelResults extends Activity {
         TextView score = (TextView) findViewById(R.id.score);
         score.setText("Score: " + avgDist);
 
+        Intent intentL = new Intent(LevelResults.this, SendResults.class);
+        intentL.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_LEVEL.ordinal());
+        startActivity(intentL);
+
+        Intent intentR = new Intent(LevelResults.this, SendResults.class);
+        intentR.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_LEVEL.ordinal());
+        startActivity(intentR);
     }
 
     public void toHome(View v)

@@ -30,6 +30,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -68,6 +69,8 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
     private String userID;
     private MyApp myApp;
 
+    SharedPreferences pref;
+
     final public static String EXTRA_VALUE = "com.example.sheets436.VALUE";
     final public static String EXTRA_USER = "com.example.sheets436.USER";
     final public static String EXTRA_TYPE = "com.example.sheets436.TYPE";
@@ -104,6 +107,8 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
                 ViewGroup.LayoutParams.WRAP_CONTENT);
 
         myApp = (MyApp) getApplication();
+        pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
+                Context.MODE_PRIVATE);
 
         mCallApiButton = new Button(this);
         mCallApiButton.setText(BUTTON_TEXT);
@@ -136,8 +141,9 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
         Intent intent = getIntent();
         updateValue = intent.getFloatExtra(EXTRA_VALUE, 0);
 
-        userID = intent.getStringExtra(EXTRA_USER);
-        if (userID == null) {
+        userID = "p" + pref.getInt(PID_STR, -1) + "t02";
+        if (userID == null || userID == "p-1t02") {
+            Log.d("SEND_RESULTS", "patient id not found");
             finish();
         }
         updateType = UpdateType.values()[intent.getIntExtra(EXTRA_TYPE, 0)];
@@ -423,8 +429,7 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
             int year = calendar.get(Calendar.YEAR);
             String dateStr = "" + month + "/" + date + "/" + year + " at " + hour + ":" + minute;
 
-            SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
-                    Context.MODE_PRIVATE);
+
             SharedPreferences.Editor editor = pref.edit();
 
             int day = pref.getInt("day",1);
@@ -444,49 +449,81 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
             switch(updateType) {
                 case LH_TAP:
                     for (int i = 0; i <= myApp.getNumTrials(); i++) {
-                        data.add(pref.getInt(TAPS + "_RIGHT_" + i, 0));
                         data.add(pref.getInt(TAPS + "_LEFT_" + i, 0));
                     }
+                    float avgLTaps = pref.getFloat(TAPS_L_AVG, 0.0F);
+                    data.add(avgLTaps);
                     range = "Tapping Test (LH) !A1:F1";
+                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_TAP.ordinal());
+                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, avgLTaps);
                     break;
                 case RH_TAP:
                     for (int i = 0; i <= myApp.getNumTrials(); i++) {
                         data.add(pref.getInt(TAPS + "_RIGHT_" + i, 0));
-                        data.add(pref.getInt(TAPS + "_LEFT_" + i, 0));
                     }
-                    range = "Tapping Test (LH) !A1:F1";
+                    range = "Tapping Test (RH) !A1:F1";
+                    float avgRTaps = pref.getFloat(TAPS_L_AVG, 0.0F);
+                    data.add(avgRTaps);
+                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_TAP.ordinal());
+                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, avgRTaps);
                     break;
                 case LH_SPIRAL:
                     data.add(pref.getFloat(SPIRAL_L, 0.0F));
                     range = "Spiral Test (LH) !A1:C1";
+                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_SPIRAL.ordinal());
+                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(SPIRAL_L, 0.0F));
                     break;
                 case RH_SPIRAL:
                     data.add(pref.getFloat(SPIRAL_R, 0.0F));
                     range = "Spiral Test (RH) !A1:C1";
+                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_SPIRAL.ordinal());
+                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(SPIRAL_R, 0.0F));
                     break;
                 case LH_LEVEL:
                     data.add(pref.getFloat(LEVEL_L, 0.0F));
                     range = "Level Test (LH) !A1:C1";
+                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_LEVEL.ordinal());
+                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(LEVEL_L, 0.0F));
                     break;
                 case RH_LEVEL:
                     data.add(pref.getFloat(LEVEL_R, 0.0F));
                     range = "Level Test (RH) !A1:C1";
-                    break;
-                case RH_POP:
-                    data.add(pref.getFloat(REACTION_L, 0.0F));
-                    range = "Balloon Test (LH) !A1:C1";
+                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_LEVEL.ordinal());
+                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(LEVEL_R, 0.0F));
                     break;
                 case LH_POP:
+                    data.add(pref.getFloat(REACTION_L, 0.0F));
+                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_POP.ordinal());
+                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(REACTION_L, 0.0F));
+                    range = "Balloon Test (LH) !A1:C1";
+                    break;
+                case RH_POP:
                     data.add(pref.getFloat(REACTION_R, 0.0F));
                     range = "Balloon Test (RH) !A1:C1";
+                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_POP.ordinal());
+                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(REACTION_R, 0.0F));
                     break;
                 case LH_CURL:
                     range = "Curl Test (LH) !A1:C1";
                     data.add(pref.getLong(CURL_L, 0L));
+                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_CURL.ordinal());
+                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(CURL_L, 0.0F));
                     break;
                 case RH_CURL:
                     range = "Curl Test (RH) !A1:C1";
                     data.add(pref.getLong(CURL_R, 0L));
+                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_CURL.ordinal());
+                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(CURL_R, 0.0F));
                     break;
             }
             values.add(data);
@@ -495,8 +532,7 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
             valueRange.setRange(range);
             mService.spreadsheets().values().append(spreadsheetID, range, valueRange)
                     .setValueInputOption("RAW").execute();
-
-
+            startActivity(sheetsIntent);
         }
     }
 

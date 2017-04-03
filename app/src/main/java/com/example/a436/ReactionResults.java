@@ -45,6 +45,14 @@ public class ReactionResults extends Activity {
         editor.putLong(REACTION_L, avgl);
         editor.putLong(REACTION_R, avgr);
         editor.commit();
+
+        Intent intentL = new Intent(ReactionResults.this, SendResults.class);
+        intentL.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_POP.ordinal());
+        startActivity(intentL);
+
+        Intent intentR = new Intent(ReactionResults.this, SendResults.class);
+        intentR.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_POP.ordinal());
+        startActivity(intentR);
     }
 
 

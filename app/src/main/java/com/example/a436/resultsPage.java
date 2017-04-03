@@ -18,7 +18,7 @@ import android.view.MenuItem;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-
+import static com.example.a436.MyApp.*;
 
 public class resultsPage extends AppCompatActivity {
 
@@ -36,8 +36,8 @@ public class resultsPage extends AppCompatActivity {
                     Context.MODE_PRIVATE);
             // set the values for the different trials
             SharedPreferences.Editor editor = pref.edit();
-            editor.putFloat("tapsrightAvg", (float) app.getAvgRight());
-            editor.putFloat("tapsleftAvg", (float) app.getAvgLeft());
+            editor.putFloat(TAPS_L_AVG, (float) app.getAvgRight());
+            editor.putFloat(TAPS_R_AVG, (float) app.getAvgLeft());
             editor.commit();
         }
         TextView leftHand = (TextView) findViewById(R.id.leftHand);
@@ -46,7 +46,13 @@ public class resultsPage extends AppCompatActivity {
         TextView rightHand = (TextView) findViewById(R.id.rightHand);
         rightHand.append(Double.toString(app.getAvgRight()));
 
+        Intent intentL = new Intent(resultsPage.this, SendResults.class);
+        intentL.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_TAP.ordinal());
+        startActivity(intentL);
 
+        Intent intentR = new Intent(resultsPage.this, SendResults.class);
+        intentR.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_TAP.ordinal());
+        startActivity(intentR);
     }
 
     public void toHome(View v)

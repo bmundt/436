@@ -57,8 +57,15 @@ public class SpiralResults extends Activity {
             if(hand.equals("left")) {
                 editor.putFloat(SPIRAL_L, (float) d.floatValue());
 
+                Intent intentL = new Intent(SpiralResults.this, SendResults.class);
+                intentL.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_SPIRAL.ordinal());
+                startActivity(intentL);
+
             } else {
                 editor.putFloat(SPIRAL_R, (float) d.floatValue());
+                Intent intentR = new Intent(SpiralResults.this, SendResults.class);
+                intentR.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_SPIRAL.ordinal());
+                startActivity(intentR);
             }
             editor.commit();
         }
