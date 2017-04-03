@@ -175,13 +175,17 @@ public class PostResults extends Activity
      * appropriate.
      */
     private void getResultsFromApi() {
-        if (! isGooglePlayServicesAvailable()) {
+        if (!isGooglePlayServicesAvailable()) {
+            Log.d("SHEETS", "google play services not available");
             acquireGooglePlayServices();
         } else if (mCredential.getSelectedAccountName() == null) {
+            Log.d("SHEETS", "account is null");
             chooseAccount();
-        } else if (! isDeviceOnline()) {
+        } else if (!isDeviceOnline()) {
+            Log.d("SHEETS", "device is offline");
             mOutputText.setText("No network connection available.");
         } else {
+            Log.d("SHEETS", "executing");
             new MakeRequestTask(mCredential).execute();
         }
     }
@@ -200,9 +204,11 @@ public class PostResults extends Activity
     private void chooseAccount() {
         if (EasyPermissions.hasPermissions(
                 this, Manifest.permission.GET_ACCOUNTS)) {
+            Log.d("SHEETS", "has get accounts permission");
             String accountName = getPreferences(Context.MODE_PRIVATE)
                     .getString(PREF_ACCOUNT_NAME, null);
             if (accountName != null) {
+                Log.d("SHEETS", "account in preferences is:" + accountName);
                 mCredential.setSelectedAccountName(accountName);
                 getResultsFromApi();
             } else {
@@ -212,6 +218,7 @@ public class PostResults extends Activity
                         REQUEST_ACCOUNT_PICKER);
             }
         } else {
+            Log.d("SHEETS", "doesn't have get accounts permission");
             // Request the GET_ACCOUNTS permission via a user dialog
             EasyPermissions.requestPermissions(
                     this,
@@ -642,7 +649,8 @@ public class PostResults extends Activity
                             PostResults.REQUEST_AUTHORIZATION);
                 } else {
                     mOutputText.setText("The following error occurred:\n"
-                            + mLastError.getMessage());
+                            + mLastError.getCause() +
+                    "\nAPI Level: " + android.os.Build.VERSION.SDK_INT);
                 }
             } else {
                 mOutputText.setText("Request cancelled.");

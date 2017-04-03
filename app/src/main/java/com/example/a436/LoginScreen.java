@@ -21,7 +21,12 @@ public class LoginScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
-
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
+                Context.MODE_PRIVATE);
+        // set the values for the different trials
+        SharedPreferences.Editor editor = pref.edit();
+        editor.remove("patientID");
+        editor.commit();
         login = (Button)findViewById(R.id.button3);
         ed1 = (EditText)findViewById(R.id.editText);
         login.setOnClickListener(new View.OnClickListener() {
@@ -33,7 +38,7 @@ public class LoginScreen extends Activity {
                 // set the values for the different trials
                 SharedPreferences.Editor editor = pref.edit();
                 editor.putInt("patientID", patientID);
-                Log.d("LoginScreen", "This is the patient ID: " + pref.getString("patientID", "Not Found"));
+                Log.d("LoginScreen", "This is the patient ID: " + patientID);
                 editor.commit();
 
                 Toast.makeText(getApplicationContext(),
