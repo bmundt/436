@@ -19,7 +19,7 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-
+import static com.example.a436.MyApp.*;
 
 public class SpiralResults extends Activity {
 
@@ -55,10 +55,10 @@ public class SpiralResults extends Activity {
                     Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = pref.edit();
             if(hand.equals("left")) {
-                editor.putFloat("leftSpiral", (float) d.floatValue());
+                editor.putFloat(SPIRAL_L, (float) d.floatValue());
 
             } else {
-                editor.putFloat("rightSpiral", (float) d.floatValue());
+                editor.putFloat(SPIRAL_R, (float) d.floatValue());
             }
             editor.commit();
         }

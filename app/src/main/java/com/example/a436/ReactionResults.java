@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import static com.example.a436.MyApp.*;
 
 public class ReactionResults extends Activity {
 
@@ -41,8 +42,8 @@ public class ReactionResults extends Activity {
 
         SharedPreferences.Editor editor = pref.edit();
 
-        editor.putLong("average reaction left", avgl);
-        editor.putLong("average reaction right", avgr);
+        editor.putLong(REACTION_L, avgl);
+        editor.putLong(REACTION_R, avgr);
         editor.commit();
     }
 

@@ -11,6 +11,17 @@ public class MyApp extends Application {
     private int[] leftHandResults;
     private int[] rightHandResults;
 
+
+    public static String TAPS = "TAPS";
+    public static String SPIRAL_L = "SPIRAL_LEFT";
+    public static String SPIRAL_R = "SPIRAL_RIGHT";
+    public static String LEVEL_L = "LEVEL_LEFT";
+    public static String LEVEL_R = "LEVEL_RIGHT";
+    public static String REACTION_L = "REACTION_LEFT";
+    public static String REACTION_R = "REACTION_RIGHT";
+    public static String CURL_L = "CURL_LEFT";
+    public static String CURL_R = "CURL_RIGHT";
+
     public static String PREF_NAME = "PATIENT";
 
     // we only need one of these because we will be doing all left and then all right
