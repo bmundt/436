@@ -419,6 +419,7 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
                 writeToSheet();
                 return null;
             } catch (Exception e) {
+                Log.d(LOG_TAG, "Exception: " + e.toString());
                 cancel(true);
                 return null;
             }
@@ -479,28 +480,28 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
                     break;
                 case LH_SPIRAL:
                     data.add(pref.getFloat(SPIRAL_L, 0.0F));
-                    range = "Spiral Test (LH) !A1:C1";
+                    range = "Spiral Test (LH)!A1:C1";
                     sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_SPIRAL.ordinal());
                     sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
                     sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(SPIRAL_L, 0.0F));
                     break;
                 case RH_SPIRAL:
                     data.add(pref.getFloat(SPIRAL_R, 0.0F));
-                    range = "Spiral Test (RH) !A1:C1";
+                    range = "Spiral Test (RH)!A1:C1";
                     sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_SPIRAL.ordinal());
                     sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
                     sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(SPIRAL_R, 0.0F));
                     break;
                 case LH_LEVEL:
                     data.add(pref.getFloat(LEVEL_L, 0.0F));
-                    range = "Level Test (LH) !A1:C1";
+                    range = "Level Test (LH)!A1:C1";
                     sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_LEVEL.ordinal());
                     sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
                     sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(LEVEL_L, 0.0F));
                     break;
                 case RH_LEVEL:
                     data.add(pref.getFloat(LEVEL_R, 0.0F));
-                    range = "Level Test (RH) !A1:C1";
+                    range = "Level Test (RH)!A1:C1";
                     sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_LEVEL.ordinal());
                     sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
                     sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(LEVEL_R, 0.0F));
@@ -510,17 +511,17 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
                     sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_POP.ordinal());
                     sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
                     sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(REACTION_L, 0.0F));
-                    range = "Balloon Test (LH) !A1:C1";
+                    range = "Balloon Test (LH)!A1:C1";
                     break;
                 case RH_POP:
                     data.add(pref.getFloat(REACTION_R, 0.0F));
-                    range = "Balloon Test (RH) !A1:C1";
+                    range = "Balloon Test (RH)!A1:C1";
                     sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_POP.ordinal());
                     sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
                     sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(REACTION_R, 0.0F));
                     break;
                 case LH_CURL:
-                    range = "Curl Test (LH) !A1:C1";
+                    range = "Curl Test (LH)!A1:C1";
                     data.add(pref.getLong(CURL_L, 0L));
                     sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_CURL.ordinal());
                     sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
@@ -541,8 +542,9 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
             valueRange.setValues(values);
             Log.d("SEND_RESULTS", "about to send results to our sheet");
 
-            mService.spreadsheets().values().append(spreadsheetID, range, valueRange)
+            AppendValuesResponse response = mService.spreadsheets().values().append(spreadsheetID, range, valueRange)
                     .setValueInputOption("RAW").execute();
+            Log.d(LOG_TAG, response.toString());
             Log.d("SEND_RESULTS", "sent data to our spreadsheet");
             startActivity(sheetsIntent);
             Log.d("SEND_RESULTS", "sent data to their spreadsheet");
