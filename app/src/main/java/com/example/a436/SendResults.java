@@ -167,25 +167,25 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
     private String getSheetID(UpdateType type) {
         switch (type) {
             case LH_TAP:
-                return "'Tapping Test (LH)'";
+                return "'Tapping Test(LH)'";
             case RH_TAP:
-                return "'Tapping Test (RH)'";
+                return "'Tapping Test(RH)'";
             case LH_SPIRAL:
-                return "'Spiral Test (LH)'";
+                return "'Spiral Test(LH)'";
             case RH_SPIRAL:
-                return "'Spiral Test (RH)'";
+                return "'Spiral Test(RH)'";
             case LH_LEVEL:
-                return "'Level Test (LH)'";
+                return "'Level Test(LH)'";
             case RH_LEVEL:
-                return "'Level Test (RH)'";
+                return "'Level Test(RH)'";
             case LH_POP:
-                return "'Balloon Test (LH)'";
+                return "'Balloon Test(LH)'";
             case RH_POP:
-                return "'Balloon Test (RH)'";
+                return "'Balloon Test(RH)'";
             case RH_CURL:
-                return "'Curling Test (RH)'";
+                return "'Curling Test(RH)'";
             case LH_CURL:
-                return "'Curling Test (LH)'";
+                return "'Curling Test(LH)'";
             default:
                 return null;
         }
@@ -462,7 +462,7 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
                     }
                     float avgLTaps = pref.getFloat(TAPS_L_AVG, 0.0F);
                     data.add(avgLTaps);
-                    range = "Tapping Test (LH) !A1:F1";
+                    range = "Tapping Test (LH)!A1:F1";
                     sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_TAP.ordinal());
                     sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
                     sheetsIntent.putExtra(Sheets.EXTRA_VALUE, avgLTaps);
@@ -471,7 +471,7 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
                     for (int i = 0; i <= myApp.getNumTrials(); i++) {
                         data.add(pref.getInt(TAPS + "_RIGHT_" + i, 0));
                     }
-                    range = "Tapping Test (RH) !A1:F1";
+                    range = "Tapping Test (RH)!A1:F1";
                     float avgRTaps = pref.getFloat(TAPS_L_AVG, 0.0F);
                     data.add(avgRTaps);
                     sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_TAP.ordinal());
