@@ -51,7 +51,7 @@ public class resultsPage extends AppCompatActivity {
         startActivity(intentL);
 
         Intent intentR = new Intent(resultsPage.this, SendResults.class);
-        intentR.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_TAP.ordinal());
+        intentR.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_TAP.ordinal());
         startActivity(intentR);
     }
 

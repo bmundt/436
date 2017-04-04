@@ -56,18 +56,18 @@ public class SpiralResults extends Activity {
             SharedPreferences.Editor editor = pref.edit();
             if(hand.equals("left")) {
                 editor.putFloat(SPIRAL_L, (float) d.floatValue());
-
+                editor.commit();
                 Intent intentL = new Intent(SpiralResults.this, SendResults.class);
                 intentL.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_SPIRAL.ordinal());
                 startActivity(intentL);
 
             } else {
                 editor.putFloat(SPIRAL_R, (float) d.floatValue());
+                editor.commit();
                 Intent intentR = new Intent(SpiralResults.this, SendResults.class);
                 intentR.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_SPIRAL.ordinal());
                 startActivity(intentR);
             }
-            editor.commit();
         }
 
         TextView text = (TextView) findViewById(R.id.textView9);

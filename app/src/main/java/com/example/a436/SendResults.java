@@ -510,7 +510,7 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
                     data.add(pref.getFloat(REACTION_L, 0.0F));
                     sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_POP.ordinal());
                     sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
-                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(REACTION_L, 0.0F));
+                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(REACTION_L, 0F));
                     range = "Balloon Test (LH)!A1:C1";
                     break;
                 case RH_POP:
@@ -518,7 +518,7 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
                     range = "Balloon Test (RH)!A1:C1";
                     sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_POP.ordinal());
                     sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
-                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(REACTION_R, 0.0F));
+                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(REACTION_R, 0F));
                     break;
                 case LH_CURL:
                     range = "Curl Test (LH)!A1:C1";

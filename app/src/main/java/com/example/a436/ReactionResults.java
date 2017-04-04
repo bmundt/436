@@ -42,8 +42,12 @@ public class ReactionResults extends Activity {
 
         SharedPreferences.Editor editor = pref.edit();
 
-        editor.putLong(REACTION_L, avgl);
-        editor.putLong(REACTION_R, avgr);
+        float avgl_seconds = avgl / 1000.0F;
+        float avgr_seconds = avgr / 1000.0F;
+
+
+        editor.putFloat(REACTION_L, avgl_seconds);
+        editor.putFloat(REACTION_R, avgr_seconds);
         editor.commit();
 
         Intent intentL = new Intent(ReactionResults.this, SendResults.class);
