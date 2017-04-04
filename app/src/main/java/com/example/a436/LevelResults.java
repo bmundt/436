@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.lang.Math;
 
 import java.util.ArrayList;
+import static com.example.a436.MyApp.*;
 
 public class LevelResults extends Activity {
     LevelResultsView drawView;
@@ -63,9 +64,9 @@ public class LevelResults extends Activity {
                     Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = pref.edit();
             if(hand.equals("left")) {
-                editor.putFloat("leftlevel", avgDist.floatValue());
+                editor.putFloat(LEVEL_L, avgDist.floatValue());
             } else {
-                editor.putFloat("rightlevel", avgDist.floatValue());
+                editor.putFloat(LEVEL_R, avgDist.floatValue());
             }
             editor.commit();
         }
@@ -81,6 +82,15 @@ public class LevelResults extends Activity {
         TextView score = (TextView) findViewById(R.id.score);
         score.setText("Score: " + avgDist);
 
+        if (hand.equals("left")) {
+            Intent intentL = new Intent(LevelResults.this, SendResults.class);
+            intentL.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_LEVEL.ordinal());
+            startActivity(intentL);
+        } else {
+            Intent intentR = new Intent(LevelResults.this, SendResults.class);
+            intentR.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_LEVEL.ordinal());
+            startActivity(intentR);
+        }
     }
 
     public void toHome(View v)

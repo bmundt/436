@@ -1,11 +1,11 @@
 package com.example.a436;
 
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
-import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
@@ -29,7 +29,6 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
@@ -49,8 +48,8 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import static com.example.a436.MyApp.*;
 
-public class PostResults extends Activity
-        implements EasyPermissions.PermissionCallbacks {
+public class SendResults extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
+
     GoogleAccountCredential mCredential;
     private TextView mOutputText;
     private Button mCallApiButton;
@@ -61,33 +60,33 @@ public class PostResults extends Activity
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
     static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1003;
 
-    private static final String BUTTON_TEXT = "Submit Results";
+    private static final String BUTTON_TEXT = "Call Google Sheets API";
     private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = { SheetsScopes.SPREADSHEETS };
 
-    private Integer patientID;
-    private Integer tapsleft1;
-    private Integer tapsleft2;
-    private Integer tapsleft3;
-    private Integer tapsleft4;
-    private Integer tapsleft5;
+    private float updateValue;
+    private String sheetID;
+    private String userID;
+    private MyApp myApp;
+    private final static String LOG_TAG = "SEND_RESULTS";
 
-    private Integer tapsright1;
-    private Integer tapsright2;
-    private Integer tapsright3;
-    private Integer tapsright4;
-    private Integer tapsright5;
+    SharedPreferences pref;
 
-    private Double tapsrightAvg;
-    private Double tapsleftAvg;
+    final public static String EXTRA_VALUE = "com.example.sheets436.VALUE";
+    final public static String EXTRA_USER = "com.example.sheets436.USER";
+    final public static String EXTRA_TYPE = "com.example.sheets436.TYPE";
 
-    private Double rightSpiralResult;
-    private Double leftSpiralResult;
-    private Double rightLevelResult;
-    private Double leftLevelResult;
+    final private static String spreadsheetID = "13fbFdZSWjjP_DakUX2liVe8pgM4PovPHA96PNd2YYMk";
 
-    private Long leftReaction;
-    private long rightReaction;
+    public enum UpdateType {
+        LH_TAP, RH_TAP,
+        LH_SPIRAL, RH_SPIRAL,
+        LH_LEVEL, RH_LEVEL,
+        LH_POP, RH_POP,
+        LH_CURL, RH_CURL
+    }
+
+    private UpdateType updateType;
 
     /**
      * Create the main activity.
@@ -104,35 +103,13 @@ public class PostResults extends Activity
         activityLayout.setOrientation(LinearLayout.VERTICAL);
         activityLayout.setPadding(16, 16, 16, 16);
 
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
-                Context.MODE_PRIVATE);
-        patientID = pref.getInt("patientID", 0);
-        tapsleft1 = pref.getInt(TAPS + "_LEFT_" + 1, 0);
-        tapsleft2 = pref.getInt(TAPS + "_LEFT_" + 2, 0);
-        tapsleft3 = pref.getInt(TAPS + "_LEFT_" + 3, 0);
-
-
-        tapsright1 = pref.getInt(TAPS + "_RIGHT_" + 1, 0);
-        tapsright2 = pref.getInt(TAPS + "_RIGHT_" + 2, 0);
-        tapsright3 = pref.getInt(TAPS + "_RIGHT_" + 3, 0);
-
-        tapsrightAvg = new Double(pref.getFloat(TAPS_R_AVG, 0.0F));
-        tapsleftAvg = new Double(pref.getFloat(TAPS_L_AVG, 0.0F));
-
-        rightSpiralResult = new Double(pref.getFloat(SPIRAL_R, 0.0F));
-        leftSpiralResult = new Double(pref.getFloat(SPIRAL_L, 0.0F));
-        rightLevelResult = new Double(pref.getFloat(LEVEL_R, 0.0F));
-        leftLevelResult = new Double(pref.getFloat(LEVEL_L, 0.0F));
-
-        leftReaction = new Long(pref.getLong(REACTION_L, 0));
-        rightReaction = new Long(pref.getLong(REACTION_R, 0));
-
-        Log.d("POST_RESULTS", "Left Reaction: " + leftReaction);
-        Log.d("POST_RESULTS", "Right Reaction: " + rightReaction);
-
         ViewGroup.LayoutParams tlp = new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        myApp = (MyApp) getApplication();
+        pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
+                Context.MODE_PRIVATE);
 
         mCallApiButton = new Button(this);
         mCallApiButton.setText(BUTTON_TEXT);
@@ -161,13 +138,58 @@ public class PostResults extends Activity
 
         setContentView(activityLayout);
 
+        // Retrieve information from calling activity
+        Intent intent = getIntent();
+        updateValue = intent.getFloatExtra(EXTRA_VALUE, 0);
+
+        userID = "t02p" + pref.getInt(PID_STR, -1);
+        if (userID == null || userID == "p-1t02") {
+            Log.d("SEND_RESULTS", "patient id not found");
+            finish();
+        }
+        updateType = UpdateType.values()[intent.getIntExtra(EXTRA_TYPE, 0)];
+        sheetID = getSheetID(UpdateType.values()[intent.getIntExtra(EXTRA_TYPE, 0)]);
+        if (sheetID == null) {
+            finish();
+        }
+
         // Initialize credentials and service object.
         mCredential = GoogleAccountCredential.usingOAuth2(
                 getApplicationContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
     }
 
-
+    /**
+     * Gets a ID for the sheet to be updated.
+     * @param type the enum representing which test type has results to write to sheets
+     * @return string representing the sheet in A1 format
+     */
+    private String getSheetID(UpdateType type) {
+        switch (type) {
+            case LH_TAP:
+                return "'Tapping Test(LH)'";
+            case RH_TAP:
+                return "'Tapping Test(RH)'";
+            case LH_SPIRAL:
+                return "'Spiral Test(LH)'";
+            case RH_SPIRAL:
+                return "'Spiral Test(RH)'";
+            case LH_LEVEL:
+                return "'Level Test(LH)'";
+            case RH_LEVEL:
+                return "'Level Test(RH)'";
+            case LH_POP:
+                return "'Balloon Test(LH)'";
+            case RH_POP:
+                return "'Balloon Test(RH)'";
+            case RH_CURL:
+                return "'Curling Test(RH)'";
+            case LH_CURL:
+                return "'Curling Test(LH)'";
+            default:
+                return null;
+        }
+    }
 
     /**
      * Attempt to call the API, after verifying that all the preconditions are
@@ -177,18 +199,16 @@ public class PostResults extends Activity
      * appropriate.
      */
     private void getResultsFromApi() {
-        if (!isGooglePlayServicesAvailable()) {
-            Log.d("SHEETS", "google play services not available");
+        if (! isGooglePlayServicesAvailable()) {
             acquireGooglePlayServices();
         } else if (mCredential.getSelectedAccountName() == null) {
-            Log.d("SHEETS", "account is null");
             chooseAccount();
         } else if (!isDeviceOnline()) {
-            Log.d("SHEETS", "device is offline");
-            mOutputText.setText("No network connection available.");
+            mOutputText.setText(R.string.no_net);
         } else {
-            Log.d("SHEETS", "executing");
+            Log.d("SEND_RESULTS", mCredential.getSelectedAccountName());
             new MakeRequestTask(mCredential).execute();
+            finish();
         }
     }
 
@@ -206,11 +226,9 @@ public class PostResults extends Activity
     private void chooseAccount() {
         if (EasyPermissions.hasPermissions(
                 this, Manifest.permission.GET_ACCOUNTS)) {
-            Log.d("SHEETS", "has get accounts permission");
             String accountName = getPreferences(Context.MODE_PRIVATE)
                     .getString(PREF_ACCOUNT_NAME, null);
             if (accountName != null) {
-                Log.d("SHEETS", "account in preferences is:" + accountName);
                 mCredential.setSelectedAccountName(accountName);
                 getResultsFromApi();
             } else {
@@ -220,7 +238,7 @@ public class PostResults extends Activity
                         REQUEST_ACCOUNT_PICKER);
             }
         } else {
-            Log.d("SHEETS", "doesn't have get accounts permission");
+            Log.d("SEND_RESULTS", "NO Permissions");
             // Request the GET_ACCOUNTS permission via a user dialog
             EasyPermissions.requestPermissions(
                     this,
@@ -247,9 +265,7 @@ public class PostResults extends Activity
         switch(requestCode) {
             case REQUEST_GOOGLE_PLAY_SERVICES:
                 if (resultCode != RESULT_OK) {
-                    mOutputText.setText(
-                            "This app requires Google Play Services. Please install " +
-                                    "Google Play Services on your device and relaunch this app.");
+                    mOutputText.setText(R.string.no_goog);
                 } else {
                     getResultsFromApi();
                 }
@@ -305,6 +321,7 @@ public class PostResults extends Activity
     @Override
     public void onPermissionsGranted(int requestCode, List<String> list) {
         // Do nothing.
+        Log.d(LOG_TAG, "permission granted");
     }
 
     /**
@@ -317,6 +334,7 @@ public class PostResults extends Activity
     @Override
     public void onPermissionsDenied(int requestCode, List<String> list) {
         // Do nothing.
+        Log.d(LOG_TAG, "permission denied");
     }
 
     /**
@@ -353,6 +371,7 @@ public class PostResults extends Activity
         final int connectionStatusCode =
                 apiAvailability.isGooglePlayServicesAvailable(this);
         if (apiAvailability.isUserResolvableError(connectionStatusCode)) {
+            Log.d(LOG_TAG, "cannot acquire google play services");
             showGooglePlayServicesAvailabilityErrorDialog(connectionStatusCode);
         }
     }
@@ -368,7 +387,7 @@ public class PostResults extends Activity
             final int connectionStatusCode) {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
         Dialog dialog = apiAvailability.getErrorDialog(
-                PostResults.this,
+                SendResults.this,
                 connectionStatusCode,
                 REQUEST_GOOGLE_PLAY_SERVICES);
         dialog.show();
@@ -380,7 +399,6 @@ public class PostResults extends Activity
      */
     private class MakeRequestTask extends AsyncTask<Void, Void, List<String>> {
         private com.google.api.services.sheets.v4.Sheets mService = null;
-        private Exception mLastError = null;
 
         MakeRequestTask(GoogleAccountCredential credential) {
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
@@ -398,64 +416,17 @@ public class PostResults extends Activity
         @Override
         protected List<String> doInBackground(Void... params) {
             try {
-                return getDataFromApi();
+                writeToSheet();
+                return null;
             } catch (Exception e) {
-                mLastError = e;
+                Log.d(LOG_TAG, "Exception: " + e.toString());
                 cancel(true);
                 return null;
             }
         }
 
-        /**
-         * Fetch a list of names and majors of students in a sample spreadsheet:
-         * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-         * @return List of names and majors
-         * @throws IOException
-         */
-        private List<String> getDataFromApi() throws IOException {
-            /*String spreadsheetId = "13fbFdZSWjjP_DakUX2liVe8pgM4PovPHA96PNd2YYMk";
-            String range = "Class Data!A2:B";
-            List<String> results = new ArrayList<String>();
-            ValueRange response = this.mService.spreadsheets().values()
-                    .get(spreadsheetId, range)
-                    .execute();
-            List<List<Object>> values = response.getValues();
-            if (values != null) {
-                results.add("Id, Taps");
-                for (List row : values) {
-                    results.add(row.get(0) + ", " + row.get(1));
-                }
-            }
-            return results;*/
-            String spreadsheetId = "1YvI3CjS4ZlZQDYi5PaiA7WGGcoCsZfLoSFM0IdvdbDU";
-
-            String range1 = "Tapping Test (LH)!A1:G1";
-            String range2 = "Tapping Test (RH)!A1:G1";
-            String range3 = "Tapping Test (LF)!A1:G1";
-            String range4 = "Tapping Test (RF)!A1:G1";
-            String range5 = "Spiral Test (LH)!A1:J1";
-            String range6 = "Spiral Test (RH)!A1:J1";
-            String range7 = "Balloon Test (LH)!A1:F1";
-            String range8 = "Balloon Test (RH)!A1:F1";
-            String range9 = "Level Test (LH)!A1:G1";
-            String range10 = "Level Test (RH)!A1:G1";
-
-
-
-            List<String> results = new ArrayList<String>();
-            results.add("Results added to spreadsheet");
-            List<List<Object>> values = new ArrayList<List<Object>>();
-            List<Object> data1 = new ArrayList<Object>();
-            List<Object> data2 = new ArrayList<Object>();
-            List<Object> data3 = new ArrayList<Object>();
-            List<Object> data4 = new ArrayList<Object>();
-            List<Object> data5 = new ArrayList<Object>();
-            List<Object> data6 = new ArrayList<Object>();
-            List<Object> data7 = new ArrayList<Object>();
-            List<Object> data8 = new ArrayList<Object>();
-            List<Object> data9 = new ArrayList<Object>();
-            List<Object> data10 = new ArrayList<Object>();
-
+        // @throws IOException
+        private void writeToSheet() throws IOException {
             Calendar calendar = Calendar.getInstance(Locale.getDefault());
             int hour = calendar.get(Calendar.HOUR_OF_DAY);
             int minute = calendar.get(Calendar.MINUTE);
@@ -465,198 +436,182 @@ public class PostResults extends Activity
             int year = calendar.get(Calendar.YEAR);
             String dateStr = "" + month + "/" + date + "/" + year + " at " + hour + ":" + minute;
 
-            SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
-                    Context.MODE_PRIVATE);
+
             SharedPreferences.Editor editor = pref.edit();
 
             int day = pref.getInt("day",1);
 
-            data1.add("p" + patientID+"t02");
-            data1.add(dateStr);
-            data1.add(day);
-            data1.add(tapsleft1);
-            data1.add(tapsleft2);
-            data1.add(tapsleft3);
-            data1.add("");
-            data1.add("");
+            Intent intent = getIntent();
+
+            Log.d("SEND_RESULTS", "In Write To Sheet");
 
 
-            data2.add("p" + patientID+"t02");
-            data2.add(dateStr);
-            data2.add(day);
-            data2.add(tapsright1);
-            data2.add(tapsright2);
-            data2.add(tapsright3);
-            data2.add("");
-            data2.add("");
-
-            data5.add("p" + patientID+"t02");
-            data5.add(dateStr);
-            data5.add(day);
-            data5.add("");
-            data5.add("");
-            data5.add("");
-            data5.add(leftSpiralResult);
-
-            data6.add("p" + patientID+"t02");
-            data6.add(dateStr);
-            data6.add(day);
-            data6.add("");
-            data6.add("");
-            data6.add("");
-            data6.add(rightSpiralResult);
-
-            data7.add("p" + patientID+"t02");
-            data7.add(dateStr);
-            data7.add(day);
-            data7.add(10);
-            data7.add(leftReaction);
-            data7.add("");
-
-            data8.add("p" + patientID+"t02");
-            data8.add(dateStr);
-            data8.add(day);
-            data8.add(10);
-            data8.add(rightReaction);
-            data8.add("");
-
-            data9.add("p" + patientID+"t02");
-            data9.add(dateStr);
-            data9.add(day);
-            data9.add(leftLevelResult);
-            data9.add("");
-            data9.add("");
-
-            data10.add("p" + patientID+"t02");
-            data10.add(dateStr);
-            data10.add(day);
-            data10.add(rightLevelResult);
-            data10.add("");
-            data10.add("");
-
-            editor.putInt("day", day+1);
-            editor.commit();
-
-            //There are obviously more dynamic ways to do these, but you get the picture
-            ValueRange valueRange;
-
-            values = new ArrayList<List<Object>>();
-            values.add(data1);
-            valueRange = new ValueRange();
-            valueRange.setMajorDimension("ROWS");
-            valueRange.setRange(range1);
-            valueRange.setValues(values);
-            this.mService.spreadsheets().values().append(spreadsheetId, range1, valueRange).setValueInputOption("RAW")
-                    .execute();
-
-            values = new ArrayList<List<Object>>();
-            values.add(data2);
-            valueRange = new ValueRange();
-            valueRange.setMajorDimension("ROWS");
-            valueRange.setRange(range2);
-            valueRange.setValues(values);
-            this.mService.spreadsheets().values().append(spreadsheetId, range2, valueRange).setValueInputOption("RAW")
-                    .execute();
-
-            values = new ArrayList<List<Object>>();
-            values.add(data5);
-            valueRange = new ValueRange();
-            valueRange.setMajorDimension("ROWS");
-            valueRange.setRange(range5);
-            valueRange.setValues(values);
-            this.mService.spreadsheets().values().append(spreadsheetId, range5, valueRange).setValueInputOption("RAW")
-                    .execute();
-
-            values = new ArrayList<List<Object>>();
-            values.add(data6);
-            valueRange = new ValueRange();
-            valueRange.setMajorDimension("ROWS");
-            valueRange.setRange(range6);
-            valueRange.setValues(values);
-            this.mService.spreadsheets().values().append(spreadsheetId, range6, valueRange).setValueInputOption("RAW")
-                    .execute();
-
-            values = new ArrayList<List<Object>>();
-            values.add(data7);
-            valueRange = new ValueRange();
-            valueRange.setMajorDimension("ROWS");
-            valueRange.setRange(range7);
-            valueRange.setValues(values);
-            this.mService.spreadsheets().values().append(spreadsheetId, range7, valueRange).setValueInputOption("RAW")
-                    .execute();
-
-            values = new ArrayList<List<Object>>();
-            values.add(data8);
-            valueRange = new ValueRange();
-            valueRange.setMajorDimension("ROWS");
-            valueRange.setRange(range8);
-            valueRange.setValues(values);
-            this.mService.spreadsheets().values().append(spreadsheetId, range8, valueRange).setValueInputOption("RAW")
-                    .execute();
-
-            values = new ArrayList<List<Object>>();
-            values.add(data9);
-            valueRange = new ValueRange();
-            valueRange.setMajorDimension("ROWS");
-            valueRange.setRange(range9);
-            valueRange.setValues(values);
-            this.mService.spreadsheets().values().append(spreadsheetId, range9, valueRange).setValueInputOption("RAW")
-                    .execute();
-
-            values = new ArrayList<List<Object>>();
-            values.add(data10);
-            valueRange = new ValueRange();
-            valueRange.setMajorDimension("ROWS");
-            valueRange.setRange(range10);
-            valueRange.setValues(values);
-            this.mService.spreadsheets().values().append(spreadsheetId, range10, valueRange).setValueInputOption("RAW")
-                    .execute();
-            /*this.mService.spreadsheets().values().update(spreadsheetId, range, valueRange)
-                    .setValueInputOption("USER_ENTERED")
-                    .execute();*/
-
-            return results;
-        }
-
-
-
-        @Override
-        protected void onPreExecute() {
-            mOutputText.setText("");
-            mProgress.show();
-        }
-
-        @Override
-        protected void onPostExecute(List<String> output) {
-            mProgress.hide();
-            if (output == null || output.size() == 0) {
-                mOutputText.setText("No results returned.");
-            } else {
-                output.add(0, "Data retrieved using the Google Sheets API:");
-                mOutputText.setText(TextUtils.join("\n", output));
+            // data to send to insert
+            List<String> results = new ArrayList<String>();
+            results.add("Results added to spreasheet");
+            List<List<Object>> values = new ArrayList<List<Object>>();
+            List<Object> data = new ArrayList<Object>();
+            data.add(userID);
+            data.add(dateStr);
+            String range = "";
+            Intent sheetsIntent = new Intent(SendResults.this, com.example.a436.Sheets.class);
+            switch(updateType) {
+                case LH_TAP:
+                    for (int i = 0; i <= myApp.getNumTrials(); i++) {
+                        data.add(pref.getInt(TAPS + "_LEFT_" + i, 0));
+                    }
+                    float avgLTaps = pref.getFloat(TAPS_L_AVG, 0.0F);
+                    data.add(avgLTaps);
+                    range = "Tapping Test (LH)!A1:F1";
+                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_TAP.ordinal());
+                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, avgLTaps);
+                    break;
+                case RH_TAP:
+                    for (int i = 0; i <= myApp.getNumTrials(); i++) {
+                        data.add(pref.getInt(TAPS + "_RIGHT_" + i, 0));
+                    }
+                    range = "Tapping Test (RH)!A1:F1";
+                    float avgRTaps = pref.getFloat(TAPS_L_AVG, 0.0F);
+                    data.add(avgRTaps);
+                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_TAP.ordinal());
+                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, avgRTaps);
+                    break;
+                case LH_SPIRAL:
+                    data.add(pref.getFloat(SPIRAL_L, 0.0F));
+                    range = "Spiral Test (LH)!A1:C1";
+                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_SPIRAL.ordinal());
+                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(SPIRAL_L, 0.0F));
+                    break;
+                case RH_SPIRAL:
+                    data.add(pref.getFloat(SPIRAL_R, 0.0F));
+                    range = "Spiral Test (RH)!A1:C1";
+                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_SPIRAL.ordinal());
+                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(SPIRAL_R, 0.0F));
+                    break;
+                case LH_LEVEL:
+                    data.add(pref.getFloat(LEVEL_L, 0.0F));
+                    range = "Level Test (LH)!A1:C1";
+                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_LEVEL.ordinal());
+                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(LEVEL_L, 0.0F));
+                    break;
+                case RH_LEVEL:
+                    data.add(pref.getFloat(LEVEL_R, 0.0F));
+                    range = "Level Test (RH)!A1:C1";
+                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_LEVEL.ordinal());
+                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(LEVEL_R, 0.0F));
+                    break;
+                case LH_POP:
+                    data.add(pref.getFloat(REACTION_L, 0.0F));
+                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_POP.ordinal());
+                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(REACTION_L, 0F));
+                    range = "Balloon Test (LH)!A1:C1";
+                    break;
+                case RH_POP:
+                    data.add(pref.getFloat(REACTION_R, 0.0F));
+                    range = "Balloon Test (RH)!A1:C1";
+                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_POP.ordinal());
+                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(REACTION_R, 0F));
+                    break;
+                case LH_CURL:
+                    range = "Curl Test (LH)!A1:C1";
+                    data.add(pref.getLong(CURL_L, 0L));
+                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_CURL.ordinal());
+                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(CURL_L, 0.0F));
+                    break;
+                case RH_CURL:
+                    range = "Curl Test (RH) !A1:C1";
+                    data.add(pref.getLong(CURL_R, 0L));
+                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_CURL.ordinal());
+                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(CURL_R, 0.0F));
+                    break;
             }
-        }
+            values.add(data);
+            ValueRange valueRange = new ValueRange();
+            valueRange.setMajorDimension("ROWS");
+            valueRange.setRange(range);
+            valueRange.setValues(values);
+            Log.d("SEND_RESULTS", "about to send results to our sheet");
 
-        @Override
-        protected void onCancelled() {
-            mProgress.hide();
-            if (mLastError != null) {
-                if (mLastError instanceof GooglePlayServicesAvailabilityIOException) {
-                    showGooglePlayServicesAvailabilityErrorDialog(
-                            ((GooglePlayServicesAvailabilityIOException) mLastError)
-                                    .getConnectionStatusCode());
-                } else if (mLastError instanceof UserRecoverableAuthIOException) {
-                    startActivityForResult(
-                            ((UserRecoverableAuthIOException) mLastError).getIntent(),
-                            PostResults.REQUEST_AUTHORIZATION);
-                } else {
-                    mOutputText.setText("The following error occurred:\n"
-                            + mLastError.getCause() +
-                    "\nAPI Level: " + android.os.Build.VERSION.SDK_INT);
-                }
-            } else {
-                mOutputText.setText("Request cancelled.");
-            }
+            AppendValuesResponse response = mService.spreadsheets().values().append(spreadsheetID, range, valueRange)
+                    .setValueInputOption("RAW").execute();
+            Log.d(LOG_TAG, response.toString());
+            Log.d("SEND_RESULTS", "sent data to our spreadsheet");
+            startActivity(sheetsIntent);
+            Log.d("SEND_RESULTS", "sent data to their spreadsheet");
         }
+    }
+
+
+        /**
+         * Writes new trial value to the userID and sheetID specified by an intent.
+         * The spreadsheet is located at
+         */
+//        private void writeToSheet() throws IOException {
+//            ValueRange response = this.mService.spreadsheets().values()
+//                    .get(spreadsheetID, sheetID + "!A2:A")
+//                    .execute();
+//            List<List<Object>> sheet = response.getValues();
+//            int rowIdx = 2;
+//            if (sheet != null) {
+//                for (List row : sheet) {
+//                    if (row.get(0).equals(userID)) {
+//                        break;
+//                    }
+//                    rowIdx++;
+//                }
+//            }
+//
+//            response = this.mService.spreadsheets().values()
+//                    .get(spreadsheetID, sheetID + "!" + rowIdx + ":" + rowIdx)
+//                    .execute();
+//            sheet = response.getValues();
+//            String colIdx = "A";
+//            if (sheet != null) {
+//                colIdx = columnToLetter(sheet.get(0).size() + 1);
+//            }
+//
+//            String updateCell = sheetID + "!" + colIdx + rowIdx;
+//            List<List<Object>> values = new ArrayList<>();
+//            List<Object> row = new ArrayList<>();
+//
+//            if (colIdx.equals("A")) {
+//                row.add(userID);
+//                updateCell += ":B" + rowIdx;
+//            }
+//
+//            row.add(updateValue);
+//            values.add(row);
+//
+//            ValueRange valueRange = new ValueRange();
+//            valueRange.setValues(values);
+//
+//            // Call the API
+//            this.mService.spreadsheets().values()
+//                    .update(spreadsheetID, updateCell, valueRange)
+//                    .setValueInputOption("RAW")
+//                    .execute();
+//        }
+//    }
+
+    private String columnToLetter(int column) {
+        int temp;
+        String letter = "";
+        while (column > 0)
+        {
+            temp = (column - 1) % 26;
+            letter = ((char)(temp + 65)) + letter;
+            column = (column - temp - 1) / 26;
+        }
+        return letter;
     }
 }

@@ -20,7 +20,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import static com.example.a436.MyApp.*;
 /**
  * Created by brmun on 2/2/2017.
  */
@@ -63,23 +63,23 @@ public class TapTestActivity extends Activity {
             @Override
             public void onFinish() {
                 totalTaps = taps;
-                text.setText("Total Taps: " + totalTaps);
-
-                if (hand.compareTo("left") == 0) {
-                    ((MyApp) getApplication()).newLeftHandTest(totalTaps);
-                } else {
-                    ((MyApp) getApplication()).newRightHandTest(totalTaps);
-                }
-
-
-                int testNum = getRealTestNum();
-
                 SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
                         Context.MODE_PRIVATE);
                 // set the values for the different trials
                 SharedPreferences.Editor editor = pref.edit();
-                editor.putInt("taps " + hand +" "+testNum, totalTaps);
+                text.setText("Total Taps: " + totalTaps);
+
+                int testNum = getRealTestNum();
+                if (hand.compareTo("left") == 0) {
+                    ((MyApp) getApplication()).newLeftHandTest(totalTaps);
+                    editor.putInt(TAPS + "_LEFT_" + testNum, totalTaps);
+                } else {
+                    ((MyApp) getApplication()).newRightHandTest(totalTaps);
+                    editor.putInt(TAPS + "_RIGHT_" + testNum, totalTaps);
+                }
                 editor.commit();
+
+                testNum = getRealTestNum();
 
                 if(testNum == 1 && hand.compareTo("left") == 0){
                     tryAgain.setVisibility(View.VISIBLE);
