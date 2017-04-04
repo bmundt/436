@@ -451,7 +451,7 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
             results.add("Results added to spreasheet");
             List<List<Object>> values = new ArrayList<List<Object>>();
             List<Object> data = new ArrayList<Object>();
-            data.add("t02p" + userID);
+            data.add(userID);
             data.add(dateStr);
             String range = "";
             Intent sheetsIntent = new Intent(SendResults.this, com.example.a436.Sheets.class);
