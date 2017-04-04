@@ -142,7 +142,7 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
         Intent intent = getIntent();
         updateValue = intent.getFloatExtra(EXTRA_VALUE, 0);
 
-        userID = "p" + pref.getInt(PID_STR, -1) + "t02";
+        userID = "t02p" + pref.getInt(PID_STR, -1);
         if (userID == null || userID == "p-1t02") {
             Log.d("SEND_RESULTS", "patient id not found");
             finish();
