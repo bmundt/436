@@ -47,6 +47,7 @@ import java.util.Locale;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
+import static com.example.a436.MyApp.*;
 
 public class PostResults extends Activity
         implements EasyPermissions.PermissionCallbacks {
@@ -106,27 +107,28 @@ public class PostResults extends Activity
         SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
                 Context.MODE_PRIVATE);
         patientID = pref.getInt("patientID", 0);
-        tapsleft1 = pref.getInt("taps left 1", 0);
-        tapsleft2 = pref.getInt("taps left 2", 0);
-        tapsleft3 = pref.getInt("taps left 3", 0);
+        tapsleft1 = pref.getInt(TAPS + "_LEFT_" + 1, 0);
+        tapsleft2 = pref.getInt(TAPS + "_LEFT_" + 2, 0);
+        tapsleft3 = pref.getInt(TAPS + "_LEFT_" + 3, 0);
 
 
-        tapsright1 = pref.getInt("taps right 1", 0);
-        tapsright2 = pref.getInt("taps right 2", 0);
-        tapsright3 = pref.getInt("taps right 3", 0);
-        tapsright4 = pref.getInt("taps right 4", 0);
-        tapsright5 = pref.getInt("taps right 5", 0);
+        tapsright1 = pref.getInt(TAPS + "_RIGHT_" + 1, 0);
+        tapsright2 = pref.getInt(TAPS + "_RIGHT_" + 2, 0);
+        tapsright3 = pref.getInt(TAPS + "_RIGHT_" + 3, 0);
 
-        tapsrightAvg = new Double(pref.getFloat("tapsrightAvg", 0.0F));
-        tapsleftAvg = new Double(pref.getFloat("tapsleftAvg", 0.0F));
+        tapsrightAvg = new Double(pref.getFloat(TAPS_R_AVG, 0.0F));
+        tapsleftAvg = new Double(pref.getFloat(TAPS_L_AVG, 0.0F));
 
-        rightSpiralResult = new Double(pref.getFloat("rightSpiral", 0.0F));
-        leftSpiralResult = new Double(pref.getFloat("leftSpiral", 0.0F));
-        rightLevelResult = new Double(pref.getFloat("rightlevel", 0.0F));
-        leftLevelResult = new Double(pref.getFloat("leftlevel", 0.0F));
+        rightSpiralResult = new Double(pref.getFloat(SPIRAL_R, 0.0F));
+        leftSpiralResult = new Double(pref.getFloat(SPIRAL_L, 0.0F));
+        rightLevelResult = new Double(pref.getFloat(LEVEL_R, 0.0F));
+        leftLevelResult = new Double(pref.getFloat(LEVEL_L, 0.0F));
 
-        leftReaction = new Long(pref.getLong("average reaction left", 0));
-        rightReaction = new Long(pref.getLong("average reaction right", 0));
+        leftReaction = new Long(pref.getLong(REACTION_L, 0));
+        rightReaction = new Long(pref.getLong(REACTION_R, 0));
+
+        Log.d("POST_RESULTS", "Left Reaction: " + leftReaction);
+        Log.d("POST_RESULTS", "Right Reaction: " + rightReaction);
 
         ViewGroup.LayoutParams tlp = new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,

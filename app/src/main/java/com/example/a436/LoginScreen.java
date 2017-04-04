@@ -33,7 +33,7 @@ public class LoginScreen extends Activity {
                 // set the values for the different trials
                 SharedPreferences.Editor editor = pref.edit();
                 editor.putInt("patientID", patientID);
-                Log.d("LoginScreen", "This is the patient ID: " + pref.getString("patientID", "Not Found"));
+                Log.d("LoginScreen", "This is the patient ID: " + pref.getInt("patientID", -1));
                 editor.commit();
 
                 Toast.makeText(getApplicationContext(),

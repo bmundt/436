@@ -68,6 +68,7 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
     private String sheetID;
     private String userID;
     private MyApp myApp;
+    private final static String LOG_TAG = "SEND_RESULTS";
 
     SharedPreferences pref;
 
@@ -202,9 +203,10 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
             acquireGooglePlayServices();
         } else if (mCredential.getSelectedAccountName() == null) {
             chooseAccount();
-        } else if (! isDeviceOnline()) {
+        } else if (!isDeviceOnline()) {
             mOutputText.setText(R.string.no_net);
         } else {
+            Log.d("SEND_RESULTS", mCredential.getSelectedAccountName());
             new MakeRequestTask(mCredential).execute();
             finish();
         }
@@ -236,6 +238,7 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
                         REQUEST_ACCOUNT_PICKER);
             }
         } else {
+            Log.d("SEND_RESULTS", "NO Permissions");
             // Request the GET_ACCOUNTS permission via a user dialog
             EasyPermissions.requestPermissions(
                     this,
@@ -318,6 +321,7 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
     @Override
     public void onPermissionsGranted(int requestCode, List<String> list) {
         // Do nothing.
+        Log.d(LOG_TAG, "permission granted");
     }
 
     /**
@@ -330,6 +334,7 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
     @Override
     public void onPermissionsDenied(int requestCode, List<String> list) {
         // Do nothing.
+        Log.d(LOG_TAG, "permission denied");
     }
 
     /**
@@ -366,6 +371,7 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
         final int connectionStatusCode =
                 apiAvailability.isGooglePlayServicesAvailable(this);
         if (apiAvailability.isUserResolvableError(connectionStatusCode)) {
+            Log.d(LOG_TAG, "cannot acquire google play services");
             showGooglePlayServicesAvailabilityErrorDialog(connectionStatusCode);
         }
     }
@@ -436,13 +442,15 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
 
             Intent intent = getIntent();
 
+            Log.d("SEND_RESULTS", "In Write To Sheet");
+
 
             // data to send to insert
             List<String> results = new ArrayList<String>();
             results.add("Results added to spreasheet");
             List<List<Object>> values = new ArrayList<List<Object>>();
             List<Object> data = new ArrayList<Object>();
-            data.add("P" + userID + "t02");
+            data.add("t02p" + userID);
             data.add(dateStr);
             String range = "";
             Intent sheetsIntent = new Intent(SendResults.this, com.example.a436.Sheets.class);
@@ -530,9 +538,14 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
             ValueRange valueRange = new ValueRange();
             valueRange.setMajorDimension("ROWS");
             valueRange.setRange(range);
+            valueRange.setValues(values);
+            Log.d("SEND_RESULTS", "about to send results to our sheet");
+
             mService.spreadsheets().values().append(spreadsheetID, range, valueRange)
                     .setValueInputOption("RAW").execute();
+            Log.d("SEND_RESULTS", "sent data to our spreadsheet");
             startActivity(sheetsIntent);
+            Log.d("SEND_RESULTS", "sent data to their spreadsheet");
         }
     }
 
