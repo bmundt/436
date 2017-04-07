@@ -92,5 +92,9 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(MainActivity.this, LoginScreen.class);
         startActivity(intent);
     }
+
+    public void startSway(View v) {
+        startActivity(new Intent(MainActivity.this, SwayInstructions.class));
+    }
 }
 
