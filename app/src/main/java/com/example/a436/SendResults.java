@@ -454,7 +454,7 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
             data.add(userID);
             data.add(dateStr);
             String range = "";
-            Intent sheetsIntent = new Intent(SendResults.this, com.example.a436.Sheets.class);
+            Intent sheetsIntent = new Intent(SendResults.this, com.example.a436.OldSheets.class);
             switch(updateType) {
                 case LH_TAP:
                     for (int i = 0; i <= myApp.getNumTrials(); i++) {
@@ -463,9 +463,9 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
                     float avgLTaps = pref.getFloat(TAPS_L_AVG, 0.0F);
                     data.add(avgLTaps);
                     range = "Tapping Test (LH)!A1:F1";
-                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_TAP.ordinal());
-                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
-                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, avgLTaps);
+                    sheetsIntent.putExtra(OldSheets.EXTRA_TYPE, OldSheets.UpdateType.LH_TAP.ordinal());
+                    sheetsIntent.putExtra(OldSheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(OldSheets.EXTRA_VALUE, avgLTaps);
                     break;
                 case RH_TAP:
                     for (int i = 0; i <= myApp.getNumTrials(); i++) {
@@ -474,65 +474,65 @@ public class SendResults extends AppCompatActivity implements EasyPermissions.Pe
                     range = "Tapping Test (RH)!A1:F1";
                     float avgRTaps = pref.getFloat(TAPS_L_AVG, 0.0F);
                     data.add(avgRTaps);
-                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_TAP.ordinal());
-                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
-                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, avgRTaps);
+                    sheetsIntent.putExtra(OldSheets.EXTRA_TYPE, OldSheets.UpdateType.RH_TAP.ordinal());
+                    sheetsIntent.putExtra(OldSheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(OldSheets.EXTRA_VALUE, avgRTaps);
                     break;
                 case LH_SPIRAL:
                     data.add(pref.getFloat(SPIRAL_L, 0.0F));
                     range = "Spiral Test (LH)!A1:C1";
-                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_SPIRAL.ordinal());
-                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
-                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(SPIRAL_L, 0.0F));
+                    sheetsIntent.putExtra(OldSheets.EXTRA_TYPE, OldSheets.UpdateType.LH_SPIRAL.ordinal());
+                    sheetsIntent.putExtra(OldSheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(OldSheets.EXTRA_VALUE, pref.getFloat(SPIRAL_L, 0.0F));
                     break;
                 case RH_SPIRAL:
                     data.add(pref.getFloat(SPIRAL_R, 0.0F));
                     range = "Spiral Test (RH)!A1:C1";
-                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_SPIRAL.ordinal());
-                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
-                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(SPIRAL_R, 0.0F));
+                    sheetsIntent.putExtra(OldSheets.EXTRA_TYPE, OldSheets.UpdateType.RH_SPIRAL.ordinal());
+                    sheetsIntent.putExtra(OldSheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(OldSheets.EXTRA_VALUE, pref.getFloat(SPIRAL_R, 0.0F));
                     break;
                 case LH_LEVEL:
                     data.add(pref.getFloat(LEVEL_L, 0.0F));
                     range = "Level Test (LH)!A1:C1";
-                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_LEVEL.ordinal());
-                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
-                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(LEVEL_L, 0.0F));
+                    sheetsIntent.putExtra(OldSheets.EXTRA_TYPE, OldSheets.UpdateType.LH_LEVEL.ordinal());
+                    sheetsIntent.putExtra(OldSheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(OldSheets.EXTRA_VALUE, pref.getFloat(LEVEL_L, 0.0F));
                     break;
                 case RH_LEVEL:
                     data.add(pref.getFloat(LEVEL_R, 0.0F));
                     range = "Level Test (RH)!A1:C1";
-                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_LEVEL.ordinal());
-                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
-                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(LEVEL_R, 0.0F));
+                    sheetsIntent.putExtra(OldSheets.EXTRA_TYPE, OldSheets.UpdateType.RH_LEVEL.ordinal());
+                    sheetsIntent.putExtra(OldSheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(OldSheets.EXTRA_VALUE, pref.getFloat(LEVEL_R, 0.0F));
                     break;
                 case LH_POP:
                     data.add(pref.getFloat(REACTION_L, 0.0F));
-                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_POP.ordinal());
-                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
-                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(REACTION_L, 0F));
+                    sheetsIntent.putExtra(OldSheets.EXTRA_TYPE, OldSheets.UpdateType.LH_POP.ordinal());
+                    sheetsIntent.putExtra(OldSheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(OldSheets.EXTRA_VALUE, pref.getFloat(REACTION_L, 0F));
                     range = "Balloon Test (LH)!A1:C1";
                     break;
                 case RH_POP:
                     data.add(pref.getFloat(REACTION_R, 0.0F));
                     range = "Balloon Test (RH)!A1:C1";
-                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_POP.ordinal());
-                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
-                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(REACTION_R, 0F));
+                    sheetsIntent.putExtra(OldSheets.EXTRA_TYPE, OldSheets.UpdateType.RH_POP.ordinal());
+                    sheetsIntent.putExtra(OldSheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(OldSheets.EXTRA_VALUE, pref.getFloat(REACTION_R, 0F));
                     break;
                 case LH_CURL:
                     range = "Curl Test (LH)!A1:C1";
                     data.add(pref.getLong(CURL_L, 0L));
-                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_CURL.ordinal());
-                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
-                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(CURL_L, 0.0F));
+                    sheetsIntent.putExtra(OldSheets.EXTRA_TYPE, OldSheets.UpdateType.LH_CURL.ordinal());
+                    sheetsIntent.putExtra(OldSheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(OldSheets.EXTRA_VALUE, pref.getFloat(CURL_L, 0.0F));
                     break;
                 case RH_CURL:
                     range = "Curl Test (RH) !A1:C1";
                     data.add(pref.getLong(CURL_R, 0L));
-                    sheetsIntent.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_CURL.ordinal());
-                    sheetsIntent.putExtra(Sheets.EXTRA_USER, userID);
-                    sheetsIntent.putExtra(Sheets.EXTRA_VALUE, pref.getFloat(CURL_R, 0.0F));
+                    sheetsIntent.putExtra(OldSheets.EXTRA_TYPE, OldSheets.UpdateType.RH_CURL.ordinal());
+                    sheetsIntent.putExtra(OldSheets.EXTRA_USER, userID);
+                    sheetsIntent.putExtra(OldSheets.EXTRA_VALUE, pref.getFloat(CURL_R, 0.0F));
                     break;
             }
             values.add(data);

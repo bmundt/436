@@ -15,8 +15,9 @@ import java.lang.Math;
 
 import java.util.ArrayList;
 import static com.example.a436.MyApp.*;
+import static edu.umd.cmsc436.sheets.Sheets.TestType.*;
 
-public class LevelResults extends Activity {
+public class LevelResults extends SheetsActivity {
     LevelResultsView drawView;
     ArrayList<Double> XList;
     ArrayList<Double> YList;
@@ -83,13 +84,9 @@ public class LevelResults extends Activity {
         score.setText("Score: " + avgDist);
 
         if (hand.equals("left")) {
-            Intent intentL = new Intent(LevelResults.this, SendResults.class);
-            intentL.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_LEVEL.ordinal());
-            startActivity(intentL);
+            super.sendToSheets(LH_LEVEL);
         } else {
-            Intent intentR = new Intent(LevelResults.this, SendResults.class);
-            intentR.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_LEVEL.ordinal());
-            startActivity(intentR);
+            super.sendToSheets(RH_LEVEL);
         }
     }
 

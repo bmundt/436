@@ -21,11 +21,15 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import static com.example.a436.MyApp.*;
+import static edu.umd.cmsc436.sheets.Sheets.Action.*;
+
+import edu.umd.cmsc436.sheets.Sheets;
+
 /**
  * Created by brmun on 2/2/2017.
  */
 
-public class TapTestActivity extends Activity {
+public class TapTestActivity extends Activity implements Sheets.Host{
 
     private boolean timerStarted;
     private int taps;
@@ -149,5 +153,39 @@ public class TapTestActivity extends Activity {
 
     private int getRealTestNum() {
         return ((MyApp) getApplication()).getRealTestNum();
+    }
+
+    private void sendToSheets() {
+        String spreadsheetId = "1ASIF7kZHFFaUNiBndhPKTGYaQgTEbqPNfYO5DVb1Y9Y";
+        String userId = "t99p99";
+        float data = 1.23f;
+
+        Sheets.TestType type = Sheets.TestType.RH_TAP;
+
+        if (hand == "left")
+            type = Sheets.TestType.LH_TAP;
+
+        Sheets sheet = new Sheets(this, getString(R.string.app_name), spreadsheetId);
+        sheet.writeData(type, userId, data);
+    }
+
+    @Override
+    public int getRequestCode(Sheets.Action action) {
+        switch (action) {
+            case REQUEST_PERMISSIONS:
+                return 1000;
+            case REQUEST_ACCOUNT_NAME:
+                return 1001;
+            case REQUEST_PLAY_SERVICES:
+                return 1002;
+            case REQUEST_AUTHORIZATION:
+                return 1003;
+        }
+        return 0;
+    }
+
+    @Override
+    public void notifyFinished(Exception e) {
+
     }
 }
