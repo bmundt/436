@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/textView5" />
 
     <ScrollView
@@ -57,11 +57,6 @@
                     android:layout_height="wrap_content"
                     android:text="Login"
                     android:onClick="login"/>
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Send Results"
-                    android:onClick="sendResults"/>
             </LinearLayout>
 
 
@@ -75,9 +70,10 @@
                 android:visibility="visible"
                 android:elevation="0dp"
                 android:onClick="tapTest"
+                android:layout_marginTop="5dp"
                 android:layout_below="@+id/textView5"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="20dp" />
+                />
 
             <Button
                 android:text="Level Test"
@@ -88,7 +84,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Button"
                 android:layout_below="@+id/nextbutton"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:onClick="levelTest"/>
 
             <Button
@@ -100,7 +96,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Button"
                 android:layout_below="@+id/tapbutton"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:onClick="spiralTest"/>
 
             <Button
@@ -112,7 +108,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Button"
                 android:layout_below="@+id/nextbutton"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:onClick="reactionTest"/>
 
             <Button
@@ -124,8 +120,20 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Button"
                 android:layout_below="@+id/reactionBtn"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:onClick="curlTest"/>
+
+            <Button
+                android:text="Swaying Test"
+                android:layout_width="match_parent"
+                android:id="@+id/swayBtn"
+                android:layout_height="wrap_content"
+                style="@android:style/Widget.Button.Small"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                android:layout_below="@+id/curlBtn"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="5dp"
+                android:onClick="startSway"/>
 
         </LinearLayout>
     </ScrollView>
