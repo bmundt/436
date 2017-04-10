@@ -129,9 +129,9 @@ public class SwayActivity extends AppCompatActivity {
         @Override
         public void onFinish() {
             mainButton.setText("finished");
-            //Bitmap bitmap = getDrawing(dataList);
-            //String title = (new SimpleDateFormat("yyyddMM_HHmmss")).format(Calendar.getInstance().getTime());
-            //MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, title , "");
+            Bitmap bitmap = getDrawing(dataList);
+            String title = (new SimpleDateFormat("yyyddMM_HHmmss")).format(Calendar.getInstance().getTime());
+            MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, title , "");
             Intent intent = new Intent(SwayActivity.this, SwayResults.class);
             intent.putExtra("points", dataList);
             startActivity(intent);
