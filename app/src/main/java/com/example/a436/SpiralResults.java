@@ -19,9 +19,12 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+
+import edu.umd.cmsc436.sheets.Sheets;
+
 import static com.example.a436.MyApp.*;
 
-public class SpiralResults extends Activity {
+public class SpiralResults extends SheetsActivity {
 
     public static final int IMAGE_GALLERY_REQUEST = 20;
     private ImageView resultDisplay;
@@ -57,16 +60,12 @@ public class SpiralResults extends Activity {
             if(hand.equals("left")) {
                 editor.putFloat(SPIRAL_L, (float) d.floatValue());
                 editor.commit();
-                Intent intentL = new Intent(SpiralResults.this, SendResults.class);
-                intentL.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_SPIRAL.ordinal());
-                startActivity(intentL);
+                super.sendToSheets(Sheets.TestType.LH_SPIRAL);
 
             } else {
                 editor.putFloat(SPIRAL_R, (float) d.floatValue());
                 editor.commit();
-                Intent intentR = new Intent(SpiralResults.this, SendResults.class);
-                intentR.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_SPIRAL.ordinal());
-                startActivity(intentR);
+                super.sendToSheets(Sheets.TestType.RH_SPIRAL);
             }
         }
 

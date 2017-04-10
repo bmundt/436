@@ -19,8 +19,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import static com.example.a436.MyApp.*;
+import static edu.umd.cmsc436.sheets.Sheets.TestType.*;
 
-public class resultsPage extends AppCompatActivity {
+public class resultsPage extends SheetsActivity {
 
 
     @Override
@@ -46,13 +47,16 @@ public class resultsPage extends AppCompatActivity {
         TextView rightHand = (TextView) findViewById(R.id.rightHand);
         rightHand.append(Double.toString(app.getAvgRight()));
 
-        Intent intentL = new Intent(resultsPage.this, SendResults.class);
-        intentL.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_TAP.ordinal());
-        startActivity(intentL);
+        super.sendToSheets(LH_TAP);
+        super.sendToSheets(RH_TAP);
 
-        Intent intentR = new Intent(resultsPage.this, SendResults.class);
-        intentR.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_TAP.ordinal());
-        startActivity(intentR);
+//        Intent intentL = new Intent(resultsPage.this, SendResults.class);
+//        intentL.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_TAP.ordinal());
+//        startActivity(intentL);
+//
+//        Intent intentR = new Intent(resultsPage.this, SendResults.class);
+//        intentR.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_TAP.ordinal());
+//        startActivity(intentR);
     }
 
     public void toHome(View v)

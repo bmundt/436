@@ -1,1 +1,1 @@
-include ':app', ':sheets436', ':sheets436-debug'
+include ':app', ':sheets436-0.0.2-release'

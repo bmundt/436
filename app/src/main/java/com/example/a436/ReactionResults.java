@@ -9,9 +9,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import edu.umd.cmsc436.sheets.Sheets;
+
 import static com.example.a436.MyApp.*;
 
-public class ReactionResults extends Activity {
+public class ReactionResults extends SheetsActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +53,8 @@ public class ReactionResults extends Activity {
         editor.putFloat(REACTION_R, avgr_seconds);
         editor.commit();
 
-        Intent intentL = new Intent(ReactionResults.this, SendResults.class);
-        intentL.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.LH_POP.ordinal());
-        startActivity(intentL);
-
-        Intent intentR = new Intent(ReactionResults.this, SendResults.class);
-        intentR.putExtra(Sheets.EXTRA_TYPE, Sheets.UpdateType.RH_POP.ordinal());
-        startActivity(intentR);
+        super.sendToSheets(Sheets.TestType.LH_POP);
+        super.sendToSheets(Sheets.TestType.RH_POP);
     }
 
 

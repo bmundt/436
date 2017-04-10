@@ -18,7 +18,9 @@ import android.widget.TextView;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class CurlActivity extends AppCompatActivity implements SensorEventListener {
+import edu.umd.cmsc436.sheets.Sheets;
+
+public class CurlActivity extends SheetsActivity implements SensorEventListener {
 
     private SensorManager mSensorManager;
     private Sensor proximity;
@@ -202,6 +204,7 @@ public class CurlActivity extends AppCompatActivity implements SensorEventListen
                     curlCount.setText("Curl Count: 10\nTime: " + totalTime + "milliseconds");
                     findViewById(R.id.main_menu_btn).setVisibility(View.VISIBLE);
                     reps++;
+                    super.sendToSheets(Sheets.TestType.RH_CURL);
                 }
         }
     }
