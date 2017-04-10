@@ -75,7 +75,8 @@
             android:exported="true" />
 
         <activity android:name=".SwayActivity" />
-        <activity android:name=".SheetsActivity"></activity>
+        <activity android:name=".SheetsActivity" />
+        <activity android:name=".SwayResults"></activity>
     </application>
 
 </manifest>

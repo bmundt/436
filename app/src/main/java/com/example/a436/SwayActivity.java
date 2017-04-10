@@ -98,10 +98,10 @@ public class SwayActivity extends AppCompatActivity {
     }
     //vibrates and then slight delay for reaction time to start the test
     //gets initial measure of x y z accel
-    CountDownTimer delay = new CountDownTimer(3000,1000) {
+    CountDownTimer delay = new CountDownTimer(10000,1000) {
         @Override
         public void onTick(long l) {
-            mainButton.setText("testing"+ l);
+            mainButton.setText("testing\n"+ l/1000);
         }
 
         @Override
@@ -118,7 +118,7 @@ public class SwayActivity extends AppCompatActivity {
 
         @Override
         public void onTick(long l) {
-            mainButton.setText("recording" + l);
+            mainButton.setText("recording\n" + l/1000);
             newData = a.getSensorReading();
             PointF changes = new PointF(initialMeasure[0] - newData[0],initialMeasure[2] - newData[2]);
       //      change[0] = initialMeasure[0] - newData[0];
@@ -129,10 +129,12 @@ public class SwayActivity extends AppCompatActivity {
         @Override
         public void onFinish() {
             mainButton.setText("finished");
-            Bitmap bitmap = getDrawing(dataList);
-            String title = (new SimpleDateFormat("yyyddMM_HHmmss")).format(Calendar.getInstance().getTime());
-            MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, title , "");
-
+            //Bitmap bitmap = getDrawing(dataList);
+            //String title = (new SimpleDateFormat("yyyddMM_HHmmss")).format(Calendar.getInstance().getTime());
+            //MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, title , "");
+            Intent intent = new Intent(SwayActivity.this, SwayResults.class);
+            intent.putExtra("points", dataList);
+            startActivity(intent);
             mainButton.setText("check");
             finish();
         }
