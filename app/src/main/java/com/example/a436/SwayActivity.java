@@ -19,6 +19,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.os.Vibrator;
 
@@ -33,7 +34,7 @@ public class SwayActivity extends AppCompatActivity {
     Vibrator v;
     Button mainButton;
     float[] initialMeasure = new float[3];
-    final int PIXEL_SIZE = 450;
+    final int PIXEL_SIZE = 900;
     final float ACCELERATION_LIMIT = 4.5f;
     final float CONSTANT = ((PIXEL_SIZE/2)/ACCELERATION_LIMIT);
     //holds a tuple, the 2 coordinates
@@ -45,13 +46,20 @@ public class SwayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sway);
         mainButton = (Button) findViewById(R.id.swayButtonNext);
+        //mainButton.setOnClickListener();
         v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         //gets permissions to save files/pictures
         getPermission();
+        dataList = new ArrayList<>();
         // Vibrate for 500 milliseconds
 
 
 
+    }
+
+    public void onButtonClick(View view){
+        mainButton.setText("started!");
+        delay.start();
     }
     //connecting a service to the actibity
     private ServiceConnection serviceConnection = new ServiceConnection() {
@@ -68,7 +76,13 @@ public class SwayActivity extends AppCompatActivity {
 
 
     };
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (isBound) {
+            unbindService(serviceConnection);
+        }
+    }
     @Override
     protected void onStart() {
         super.onStart();
@@ -80,28 +94,19 @@ public class SwayActivity extends AppCompatActivity {
     @Override
     protected void onStop(){
         super.onStop();
-        if(isBound){
-            getApplicationContext().unbindService(serviceConnection);
-        }
+
     }
     //vibrates and then slight delay for reaction time to start the test
     //gets initial measure of x y z accel
     CountDownTimer delay = new CountDownTimer(3000,1000) {
         @Override
         public void onTick(long l) {
-
+            mainButton.setText("testing"+ l);
         }
 
         @Override
         public void onFinish() {
             v.vibrate(200);
-            try{
-                wait(200);
-
-            }
-            catch(InterruptedException e){
-                e.printStackTrace();
-            }
             initialMeasure = a.getSensorReading();
             startTest.start();
 
@@ -113,6 +118,7 @@ public class SwayActivity extends AppCompatActivity {
 
         @Override
         public void onTick(long l) {
+            mainButton.setText("recording" + l);
             newData = a.getSensorReading();
             PointF changes = new PointF(initialMeasure[0] - newData[0],initialMeasure[2] - newData[2]);
       //      change[0] = initialMeasure[0] - newData[0];
@@ -122,12 +128,13 @@ public class SwayActivity extends AppCompatActivity {
 
         @Override
         public void onFinish() {
-
-            getDrawing(dataList);
+            mainButton.setText("finished");
             Bitmap bitmap = getDrawing(dataList);
             String title = (new SimpleDateFormat("yyyddMM_HHmmss")).format(Calendar.getInstance().getTime());
             MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, title , "");
 
+            mainButton.setText("check");
+            finish();
         }
     };
 
@@ -139,7 +146,7 @@ public class SwayActivity extends AppCompatActivity {
 
         paint.setColor(Color.RED);
         paint.setAntiAlias(true);
-        paint.setStrokeWidth(10);
+        paint.setStrokeWidth(5);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.ROUND);
@@ -150,15 +157,13 @@ public class SwayActivity extends AppCompatActivity {
                 Bitmap.Config.ARGB_8888);
 
         Canvas canvas = new Canvas(
-                Bitmap.createBitmap(
-                        PIXEL_SIZE,
-                        PIXEL_SIZE,
-                        Bitmap.Config.ARGB_8888));
 
+                       Golub);
         path.moveTo(PIXEL_SIZE/2,PIXEL_SIZE/2);
 
         for(PointF p: l){
-            path.lineTo(p.x * CONSTANT,p.y * CONSTANT);
+
+            path.lineTo((p.x * CONSTANT)+PIXEL_SIZE/2,(p.y * CONSTANT)+PIXEL_SIZE/2);
         }
 
         canvas.drawPath(path,paint);
