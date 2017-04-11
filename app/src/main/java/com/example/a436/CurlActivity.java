@@ -20,6 +20,8 @@ import java.util.ArrayList;
 
 import edu.umd.cmsc436.sheets.Sheets;
 
+import static com.example.a436.MyApp.*;
+
 public class CurlActivity extends SheetsActivity implements SensorEventListener {
 
     private SensorManager mSensorManager;
@@ -53,6 +55,8 @@ public class CurlActivity extends SheetsActivity implements SensorEventListener 
     private final int MAX_REPS = 10;
     private final float margin = .25F;
     private long totalTime;
+
+    private SharedPreferences pref;
 
 
     // get accelerometer force until 0.0
@@ -115,7 +119,7 @@ public class CurlActivity extends SheetsActivity implements SensorEventListener 
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
+        pref = getApplicationContext().getSharedPreferences(MyApp.PREF_NAME,
                 Context.MODE_PRIVATE);
 
         START_ORIENTATION = pref.getFloat(START_TAG, Float.MAX_VALUE);
@@ -204,6 +208,10 @@ public class CurlActivity extends SheetsActivity implements SensorEventListener 
                     curlCount.setText("Curl Count: 10\nTime: " + totalTime + "milliseconds");
                     findViewById(R.id.main_menu_btn).setVisibility(View.VISIBLE);
                     reps++;
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putFloat(CURL_R, ((float) totalTime) / 1000F);
+                    editor.commit();
+                    Log.d("CURL", String.valueOf(pref.getFloat(CURL_R, 0F)));
                     super.sendToSheets(Sheets.TestType.RH_CURL);
                 }
         }

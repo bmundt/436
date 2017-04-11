@@ -23,6 +23,7 @@ public class MyApp extends Application {
     public static String REACTION_R = "REACTION_RIGHT";
     public static String CURL_L = "CURL_LEFT";
     public static String CURL_R = "CURL_RIGHT";
+    public static String SWAY = "SWAY";
 
     public static String PREF_NAME = "PATIENT";
     public static String PID_STR = "patientID";

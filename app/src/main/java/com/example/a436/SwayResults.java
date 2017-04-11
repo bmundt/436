@@ -35,11 +35,9 @@ public class SwayResults extends SheetsActivity {
 
         SharedPreferences.Editor editor = pref.edit();
 
-
-
-        //editor.putFloat(, avgr_seconds);
-        //editor.commit();
-        //super.sendToSheets(Sheets.TestType.LH_POP);
+        editor.putFloat(SWAY, avg);
+        editor.commit();
+        super.sendToSheets(Sheets.TestType.HEAD_SWAY);
 
     }
 
