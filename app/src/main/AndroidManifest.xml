@@ -74,7 +74,8 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".SwayActivity" />
+        <activity android:name=".SwayActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".SheetsActivity" />
         <activity android:name=".SwayResults"></activity>
     </application>

@@ -1,6 +1,7 @@
 package com.example.a436;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PointF;
 import android.support.v7.app.AppCompatActivity;
@@ -53,5 +54,10 @@ public class SwayResults extends SheetsActivity {
         }
 
         return ans/size;
+    }
+
+    public void toHome(View v) {
+        Intent intent = new Intent(SwayResults.this, MainActivity.class);
+        startActivity(intent);
     }
 }

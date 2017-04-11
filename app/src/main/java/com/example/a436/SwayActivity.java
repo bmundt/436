@@ -101,12 +101,16 @@ public class SwayActivity extends AppCompatActivity {
     CountDownTimer delay = new CountDownTimer(10000,1000) {
         @Override
         public void onTick(long l) {
+
             mainButton.setText("testing\n"+ l/1000);
+
+            if(l < 2000) {
+                v.vibrate(1500);
+            }
         }
 
         @Override
         public void onFinish() {
-            v.vibrate(200);
             initialMeasure = a.getSensorReading();
             startTest.start();
 
@@ -128,6 +132,7 @@ public class SwayActivity extends AppCompatActivity {
 
         @Override
         public void onFinish() {
+            v.vibrate(1500);
             mainButton.setText("finished");
             Bitmap bitmap = getDrawing(dataList);
             String title = (new SimpleDateFormat("yyyddMM_HHmmss")).format(Calendar.getInstance().getTime());
