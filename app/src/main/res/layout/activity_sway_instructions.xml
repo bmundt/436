@@ -46,6 +46,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/button"
-        android:onClick="toSpiralPrac"/>
+        android:onClick="startTest"/>
     />
 </RelativeLayout>
