@@ -135,6 +135,18 @@
                 android:layout_marginTop="5dp"
                 android:onClick="startSway"/>
 
+            <Button
+                android:text="Velocity Test"
+                android:layout_width="match_parent"
+                android:id="@+id/velocityBtn"
+                android:layout_height="wrap_content"
+                style="@android:style/Widget.Button.Small"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                android:layout_below="@+id/curlBtn"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="5dp"
+                android:onClick="startVelocity"/>
+
         </LinearLayout>
     </ScrollView>
 

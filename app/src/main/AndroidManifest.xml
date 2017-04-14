@@ -74,10 +74,15 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".SwayActivity"
+        <activity
+            android:name=".SwayActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".SheetsActivity" />
-        <activity android:name=".SwayResults"></activity>
+        <activity android:name=".SwayResults" />
+        <activity android:name=".VelocityTestInstructions" />
+        <activity android:name=".VelocityTestResult" />
+        <activity android:name=".VelocityTest"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
